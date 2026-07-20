@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: cbc-school-system-api
+    name: mandongoi-school-api
     env: node
     plan: free
     buildCommand: npm install && npm run build
@@ -11,24 +11,30 @@ services:
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
-        fromDatabase:
-          name: cbc-school-db
-          property: connectionString
+        sync: false
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_EXPIRY
         value: 7d
+      - key: MPESA_CONSUMER_KEY
+        sync: false
+      - key: MPESA_CONSUMER_SECRET
+        sync: false
+      - key: MPESA_PASSKEY
+        sync: false
       - key: MPESA_ENVIRONMENT
         value: sandbox
       - key: MPESA_SHORTCODE
         value: 174379
+      - key: MPESA_CALLBACK_URL
+        sync: false
+      - key: SMS_API_KEY
+        sync: false
+      - key: SMS_SENDER_ID
+        sync: false
+      - key: SMS_PARTNER_ID
+        sync: false
       - key: CORS_ORIGIN
         value: https://mandongoicomprehesive.sc.ke
       - key: SENTRY_DSN
         value: https://796600ebb92fb6f3ff81bd68b6199307@o4511767494590464.ingest.us.sentry.io/4511767506518016
-
-databases:
-  - name: cbc-school-db
-    plan: free
-    databaseName: neondb
-    user: neondb_owner
