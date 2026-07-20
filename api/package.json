@@ -1,0 +1,62 @@
+{
+  "name": "school_system",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "/usr/lib/postgresql/15/bin/pg_ctl -D /home/barhack3r/Desktop/school_system2/pgdata -l /home/barhack3r/Desktop/school_system2/pgdata/logfile -o \"-p 5434 -k /home/barhack3r/Desktop/school_system2/pgdata\" status 2>/dev/null || /usr/lib/postgresql/15/bin/pg_ctl -D /home/barhack3r/Desktop/school_system2/pgdata -l /home/barhack3r/Desktop/school_system2/pgdata/logfile -o \"-p 5434 -k /home/barhack3r/Desktop/school_system2/pgdata\" start && lsof -ti:4000 | xargs kill -9 2>/dev/null; tsx watch src/index.ts",
+    "debug": "/usr/lib/postgresql/15/bin/pg_ctl -D /home/barhack3r/Desktop/school_system2/pgdata -l /home/barhack3r/Desktop/school_system2/pgdata/logfile -o \"-p 5434 -k /home/barhack3r/Desktop/school_system2/pgdata\" status 2>/dev/null || /usr/lib/postgresql/15/bin/pg_ctl -D /home/barhack3r/Desktop/school_system2/pgdata -l /home/barhack3r/Desktop/school_system2/pgdata/logfile -o \"-p 5434 -k /home/barhack3r/Desktop/school_system2/pgdata\" start && lsof -ti:4000 | xargs kill -9 2>/dev/null; tsx watch --inspect src/index.ts",
+    "build": "tsc",
+    "start": "NODE_OPTIONS=\"--max-old-space-size=512\" node dist/index.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/db/migrate.ts",
+    "db:seed": "tsx src/db/seed.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrianBarakaInfosecProjects/Muti_Tenat_school_management_system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BrianBarakaInfosecProjects/Muti_Tenat_school_management_system/issues"
+  },
+  "homepage": "https://github.com/BrianBarakaInfosecProjects/Muti_Tenat_school_management_system#readme",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "@sentry/node": "^10.66.0",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "drizzle-orm": "^0.45.2",
+    "express": "^4.21.2",
+    "express-rate-limit": "^8.5.2",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.2.0",
+    "pg": "^8.22.0",
+    "postgres": "^3.4.9",
+    "winston": "^3.19.0",
+    "ws": "^8.21.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.2.0",
+    "@types/node": "^22.10.5",
+    "@types/pg": "^8.20.0",
+    "@types/ws": "^8.18.1",
+    "@vitest/coverage-v8": "^4.1.10",
+    "drizzle-kit": "^0.31.10",
+    "tsx": "^4.23.0",
+    "typescript": "^5.6.3",
+    "vitest": "^4.1.10"
+  }
+}

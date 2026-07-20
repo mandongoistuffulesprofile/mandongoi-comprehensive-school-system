@@ -1,0 +1,1 @@
+ALTER TABLE "leave_notes" ADD COLUMN "approved_at" timestamp with time zone;

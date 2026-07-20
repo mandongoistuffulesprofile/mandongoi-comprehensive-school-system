@@ -1,0 +1,12 @@
+node_modules
+dist
+.env
+.env.local
+.env.*.local
+.env.neon.bak
+.env.neon.bak2
+*.log
+.DS_Store
+backups/
+pgdata/
+

@@ -1,0 +1,41 @@
+services:
+  api:
+    build: ./Muti_Tenat_school_management_system
+    restart: always
+    ports:
+      - "4000:4000"
+    env_file: ./Muti_Tenat_school_management_system/.env.production
+    depends_on:
+      db:
+        condition: service_healthy
+    command: sh -c "npx tsx src/db/migrate.ts && node dist/index.js"
+
+  frontend:
+    image: nginx:alpine
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./frontend/dist:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - api
+
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: neondb
+      POSTGRES_USER: neondb_owner
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U neondb_owner -d neondb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

@@ -1,0 +1,1 @@
+ALTER TABLE "assessments" ADD CONSTRAINT "uq_assessment_student_subject_term" UNIQUE("student_id","learning_area_id","term","academic_year","type");
