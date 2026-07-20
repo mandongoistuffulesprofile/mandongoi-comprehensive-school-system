@@ -36,6 +36,6 @@ services:
       - key: SMS_PARTNER_ID
         sync: false
       - key: CORS_ORIGIN
-        value: https://mandongoicomprehesive.sc.ke
+        value: https://mandongoicomprehensive.sc.ke
       - key: SENTRY_DSN
         value: https://796600ebb92fb6f3ff81bd68b6199307@o4511767494590464.ingest.us.sentry.io/4511767506518016

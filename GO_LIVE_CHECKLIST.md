@@ -18,7 +18,7 @@
 |------|---------|------------|
 | School name | Mandongoi Comprehensive School | System branding, SMS sender name |
 | School phone | +254 7XX XXX XXX | Staff/guardian contact |
-| School email | info@mandongoicomprehesive.sc.ke | Admin notifications |
+| School email | info@mandongoicomprehensive.sc.ke | Admin notifications |
 | Physical address | P.O. Box XXX, Nairobi | Report cards, official documents |
 | Current term + year | Term 1, 2026 | Fee structures, attendance periods |
 | Term dates | Start/end dates for each term | SMS scheduling, attendance tracking |
@@ -68,7 +68,7 @@
 
 | Item | Cost (KES) | Frequency | Notes |
 |------|------------|-----------|-------|
-| **Domain** (`mandongoicomprehesive.sc.ke`) | **350** | First year | Then KSh 1,200/year renewal — via HostPinnacle |
+| **Domain** (`mandongoicomprehensive.sc.ke`) | **350** | First year | Then KSh 1,200/year renewal — via HostPinnacle |
 | **Backend hosting** (Render) | **0** | Monthly | Free tier — sleeps after 15 min idle, wakes on demand |
 | **Frontend hosting** (Vercel) | **0** | Monthly | Free tier — 100 GB bandwidth/month |
 | **Database** (Render PostgreSQL) | **0** | Monthly | Free tier — 1 GB storage |
@@ -110,7 +110,7 @@
 | ✅ Session assignments (morning/evening/weekend) | Ready |
 | ✅ Accounting ledger + trial balance | Ready |
 | ✅ Parent portal access | Ready |
-| ✅ Custom domain (`mandongoicomprehesive.sc.ke`) | After domain purchase |
+| ✅ Custom domain (`mandongoicomprehensive.sc.ke`) | After domain purchase |
 
 ---
 
@@ -122,7 +122,7 @@
 [ ] Share school info (name, phone, email, address, term dates)
 [ ] Share staff list (names, phone, role, salary)
 [ ] Share student data (can be imported from Excel)
-[ ] Purchase domain: mandongoicomprehesive.sc.ke (KES 350)
+[ ] Purchase domain: mandongoicomprehensive.sc.ke (KES 350)
 [ ] I deploy the system to production
 [ ] I submit Go-Live to Safaricom using the Paybill
 [ ] Test a payment: send KES 1 to Paybill → verify auto-match

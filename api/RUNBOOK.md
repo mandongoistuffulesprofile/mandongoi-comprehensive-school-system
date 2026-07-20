@@ -16,7 +16,7 @@
 
 **Check:**
 ```bash
-curl https://api.mandongoicomprehesive.sc.ke/health
+curl https://api.mandongoicomprehensive.sc.ke/health
 ```
 
 **If not responding:**
@@ -87,7 +87,7 @@ grep "SMS\|sms\|Advanta" /var/log/app/error.log | tail -10
 **Check:**
 ```bash
 # Check DB size
-curl -H "Authorization: Bearer ADMIN_TOKEN" https://api.mandongoicomprehesive.sc.ke/api/admin/metrics
+curl -H "Authorization: Bearer ADMIN_TOKEN" https://api.mandongoicomprehensive.sc.ke/api/admin/metrics
 ```
 
 **Resolution:**
