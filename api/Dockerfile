@@ -14,4 +14,4 @@ EXPOSE 4000
 ENV NODE_OPTIONS="--max-old-space-size=512"
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:4000/health || exit 1
-CMD ["npx", "tsx", "src/index.ts"]
+CMD ["sh", "-c", "npx tsx src/db/migrate.ts && npx tsx src/index.ts"]
