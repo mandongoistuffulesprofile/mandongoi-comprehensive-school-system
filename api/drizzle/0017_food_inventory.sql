@@ -1,5 +1,5 @@
-ALTER TABLE "food_presets" ADD COLUMN "stock_quantity" numeric(10, 2) DEFAULT '0' NOT NULL;
-ALTER TABLE "food_presets" ADD COLUMN "reorder_level" numeric(10, 2) DEFAULT '0' NOT NULL;
+ALTER TABLE "food_presets" ADD COLUMN IF NOT EXISTS "stock_quantity" numeric(10, 2) DEFAULT '0' NOT NULL;
+ALTER TABLE "food_presets" ADD COLUMN IF NOT EXISTS "reorder_level" numeric(10, 2) DEFAULT '0' NOT NULL;
 --> statement-breakpoint
 ALTER TABLE "food_logs" ALTER COLUMN "student_id" DROP NOT NULL;
 ALTER TABLE "food_logs" ADD COLUMN "type" text DEFAULT 'consumption' NOT NULL;
