@@ -7,7 +7,10 @@ DROP TABLE IF EXISTS "timetable_slots";
 --> statement-breakpoint
 DROP TABLE IF EXISTS "timetable_versions";
 --> statement-breakpoint
-ALTER TABLE "exit_notifications" ALTER COLUMN "affected_slot_ids" TYPE text[] USING "affected_slot_ids"::text[];
+DO $$ BEGIN
+  ALTER TABLE "exit_notifications" ALTER COLUMN "affected_slot_ids" TYPE text[] USING "affected_slot_ids"::text[];
+EXCEPTION WHEN undefined_table THEN NULL;
+END $$;
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "session_assignments" (
   "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,

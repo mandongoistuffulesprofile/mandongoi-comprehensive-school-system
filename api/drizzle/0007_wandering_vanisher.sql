@@ -18,7 +18,5 @@ ALTER TABLE "school_settings" ADD COLUMN "weekend_session_rate" numeric(10, 2) D
 ALTER TABLE "staff" ADD COLUMN "teacher_type" text DEFAULT 'tsc' NOT NULL;--> statement-breakpoint
 ALTER TABLE "staff" ADD COLUMN "extra_session_rate" numeric(10, 2);--> statement-breakpoint
 ALTER TABLE "staff" ADD COLUMN "subjects" text[] DEFAULT '{}';--> statement-breakpoint
-ALTER TABLE "timetable_slots" ADD COLUMN "session_type" text DEFAULT 'regular' NOT NULL;--> statement-breakpoint
 ALTER TABLE "extra_duty_payments" ADD CONSTRAINT "extra_duty_payments_staff_id_staff_id_fk" FOREIGN KEY ("staff_id") REFERENCES "public"."staff"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "extra_duty_payments" ADD CONSTRAINT "extra_duty_payments_timetable_slot_id_timetable_slots_id_fk" FOREIGN KEY ("timetable_slot_id") REFERENCES "public"."timetable_slots"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "extra_duty_payments" ADD CONSTRAINT "extra_duty_payments_payroll_run_id_payroll_runs_id_fk" FOREIGN KEY ("payroll_run_id") REFERENCES "public"."payroll_runs"("id") ON DELETE no action ON UPDATE no action;
