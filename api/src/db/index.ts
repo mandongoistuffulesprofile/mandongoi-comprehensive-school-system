@@ -14,7 +14,6 @@ const isNeon = originalHost.includes('neon.tech');
 
 if (!isProduction && isNeon) {
   const endpointId = originalHost.split('.')[0];
-  url.hostname = '3.220.135.142';
   url.searchParams.set('options', `endpoint=${endpointId}`);
   url.searchParams.delete('sslmode');
   url.searchParams.delete('ssl');

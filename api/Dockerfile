@@ -14,10 +14,10 @@ COPY package*.json ./
 RUN npm ci --omit=dev && npm cache clean --force
 COPY --from=builder /app/dist ./dist
 COPY drizzle/ ./drizzle/
-COPY --from=builder /app/src/utils/logger.ts ./src/utils/logger.ts
 RUN mkdir -p logs && chown appuser:appuser logs
 USER appuser
 EXPOSE 4000
+ENV NODE_OPTIONS="--max-old-space-size=512"
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:4000/health || exit 1
 CMD ["node", "dist/index.js"]

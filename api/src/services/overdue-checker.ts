@@ -33,7 +33,8 @@ export async function evaluateOverdueInvoices() {
 
     let notified = 0;
     for (const inv of overdues) {
-      const daysOverdue = Math.floor((now.getTime() - new Date(inv.dueDate).getTime()) / (1000 * 60 * 60 * 24));
+      const dueDate = inv.dueDate ? new Date(inv.dueDate) : now;
+      const daysOverdue = Math.floor((now.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24));
 
       const [existing] = await db
         .select({ id: notifications.id })

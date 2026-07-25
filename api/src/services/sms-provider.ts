@@ -2,6 +2,8 @@ import { config } from '../config';
 import { logger } from '../utils/logger';
 import { stripNonGSM7, isGSM7 } from '../utils/gsm7';
 import { normalizeKenyanPhone, validateSenderId } from '../utils/phone';
+import { fetchWithTimeout, fetchWithRetry } from '../utils/fetchWithTimeout';
+import { circuitCall } from '../utils/circuitBreaker';
 
 export interface SmsProvider {
   send(phoneNumber: string, message: string, senderId?: string): Promise<SmsProviderResult>;
@@ -23,7 +25,7 @@ class AfricaTalkingProvider implements SmsProvider {
       return { success: false, errorMessage: 'SMS API key not configured' };
     }
     try {
-      const res = await fetch(
+      const res = await circuitCall('sms-africastalking', () => fetchWithRetry(
         `https://api.africastalking.com/version1/messaging`,
         {
           method: 'POST',
@@ -39,7 +41,7 @@ class AfricaTalkingProvider implements SmsProvider {
             ...(senderId ? { from: senderId } : {}),
           }),
         },
-      );
+      ));
       const json = await res.json() as any;
       if (res.ok && json.SMSMessageData?.Recipients?.length > 0) {
         const recipient = json.SMSMessageData.Recipients[0];
@@ -65,14 +67,14 @@ class GenericHttpProvider implements SmsProvider {
       return { success: false, errorMessage: 'SMS provider not configured' };
     }
     try {
-      const res = await fetch(apiUrl, {
+      const res = await circuitCall('sms-generic', () => fetchWithRetry(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${apiKey}`,
         },
         body: JSON.stringify({ sender: senderId, to: phoneNumber, message }),
-      });
+      }));
       const json = await res.json().catch(() => ({})) as Record<string, unknown>;
       if (res.ok) {
         return {
@@ -124,11 +126,11 @@ class AdvantaProvider implements SmsProvider {
         isGSM7: isGSM7(safeMessage),
       });
 
-      const res = await fetch(this.baseUrl, {
+      const res = await circuitCall('sms-advanta', () => fetchWithRetry(this.baseUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
-      });
+      }));
 
       const text = await res.text();
       let json: any;
@@ -186,11 +188,11 @@ class AdvantaProvider implements SmsProvider {
         messageLength: safeMessage.length,
       });
 
-      const res = await fetch(this.bulkUrl, {
+      const res = await circuitCall('sms-advanta-bulk', () => fetchWithRetry(this.bulkUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
-      });
+      }));
 
       const text = await res.text();
       let json: any;

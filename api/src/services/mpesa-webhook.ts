@@ -2,6 +2,7 @@ import { config } from '../config';
 import { AppError } from '../middleware/errorHandler';
 import { mpesaAuth } from './mpesa-auth';
 import { BASE_URL } from '../utils/mpesa';
+import { fetchWithTimeout } from '../utils/fetchWithTimeout';
 
 export function parseSafaricomPayload(body: any): {
   transactionId: string;
@@ -67,14 +68,14 @@ export async function registerC2BUrls(paybillShortcode: string, confirmationUrl:
     ValidationURL: validationUrl || confirmationUrl,
   };
 
-  const res = await fetch(`${BASE_URL}/mpesa/c2b/v2/register`, {
+  const res = await fetchWithTimeout(`${BASE_URL}/mpesa/c2b/v2/register`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload),
-  });
+  }, 15000);
 
   const data = await res.json();
   if (!res.ok) throw new AppError(`C2B registration failed: ${data.errorMessage || res.status}`, 502);

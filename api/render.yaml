@@ -34,7 +34,19 @@ services:
         sync: false
       - key: SMS_PARTNER_ID
         sync: false
+      - key: NODE_OPTIONS
+        value: "--max-old-space-size=512"
       - key: CORS_ORIGIN
         value: https://mandongoicomprehensive.sc.ke
+      - key: R2_ENDPOINT
+        sync: false
+      - key: R2_ACCESS_KEY_ID
+        sync: false
+      - key: R2_SECRET_ACCESS_KEY
+        sync: false
+      - key: R2_BUCKET
+        sync: false
+      - key: R2_PUBLIC_URL_BASE
+        sync: false
       - key: SENTRY_DSN
         value: https://796600ebb92fb6f3ff81bd68b6199307@o4511767494590464.ingest.us.sentry.io/4511767506518016

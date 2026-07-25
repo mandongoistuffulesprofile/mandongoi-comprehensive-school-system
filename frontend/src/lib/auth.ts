@@ -10,7 +10,7 @@ interface LoginResponse {
 interface AuthState {
   user: User | null;
   status: "idle" | "loading" | "ready";
-  login: (email: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<void>;
   logout: () => void;
   hydrate: () => Promise<void>;
 }
@@ -19,8 +19,8 @@ export const useAuth = create<AuthState>((set) => ({
   user: null,
   status: "idle",
 
-  login: async (email, password) => {
-    const data = await api.post<LoginResponse>("/auth/login", { email, password });
+  login: async (username, password) => {
+    const data = await api.post<LoginResponse>("/auth/login", { username, password });
     setToken(data.token);
     set({ user: data.user, status: "ready" });
   },

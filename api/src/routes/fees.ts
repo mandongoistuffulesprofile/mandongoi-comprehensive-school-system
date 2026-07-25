@@ -15,7 +15,7 @@ router.get('/', requireRole('schoolAdmin', 'accountant'), async (req: AuthReques
     if (grade) conditions.push(eq(feeStructures.grade, grade as string));
     if (term) conditions.push(eq(feeStructures.term, Number(term)));
     if (academicYear) conditions.push(eq(feeStructures.academicYear, Number(academicYear)));
-    if (studentType) conditions.push(eq(feeStructures.studentType, studentType as string));
+    if (studentType) conditions.push(eq(feeStructures.studentType, studentType as 'boarding' | 'day' | 'both'));
 
     const data = await db.select().from(feeStructures)
       .where(conditions.length > 0 ? and(...conditions) : undefined)

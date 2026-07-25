@@ -100,7 +100,7 @@ router.put('/:id', requireRole('schoolAdmin'), validate(updateStudentSchema), as
     const [old] = await db.select({ status: students.status, firstName: students.firstName, lastName: students.lastName, grade: students.grade }).from(students).where(eq(students.id, req.params.id)).limit(1);
     const [student] = await db.update(students).set({ ...body, updatedAt: new Date() }).where(eq(students.id, req.params.id)).returning();
     if (old && body.status && body.status !== old.status) {
-      const label = { transferred: 'Transferred', graduated: 'Graduated', withdrawn: 'Withdrawn' }[body.status] || body.status;
+      const label = { transferred: 'Transferred', graduated: 'Graduated', withdrawn: 'Withdrawn' }[body.status as string] || body.status;
       notify({
         title: `Student ${label}`,
         message: `${student.firstName} ${student.lastName} (${student.grade}) status changed from ${old.status} to ${body.status}.`,

@@ -1,6 +1,7 @@
 import { config } from '../config';
 import { AppError } from '../middleware/errorHandler';
 import { BASE_URL } from '../utils/mpesa';
+import { fetchWithTimeout } from '../utils/fetchWithTimeout';
 
 export class MpesaAuthService {
   private accessToken: string | null = null;
@@ -29,7 +30,7 @@ export class MpesaAuthService {
 
     const auth = Buffer.from(`${this.consumerKey}:${this.consumerSecret}`).toString('base64');
 
-    const res = await fetch(`${BASE_URL}/oauth/v1/generate?grant_type=client_credentials`, {
+    const res = await fetchWithTimeout(`${BASE_URL}/oauth/v1/generate?grant_type=client_credentials`, {
       headers: { Authorization: `Basic ${auth}` },
     });
 

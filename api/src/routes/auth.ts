@@ -13,9 +13,9 @@ const router = Router();
 
 router.post('/login', validateLogin, async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
-    const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);
+    const [user] = await db.select().from(users).where(eq(users.email, username)).limit(1);
 
     if (!user || !(await comparePassword(password, user.passwordHash))) {
       return res.status(401).json({ success: false, error: 'Invalid credentials' });

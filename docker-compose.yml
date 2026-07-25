@@ -1,10 +1,10 @@
 services:
   api:
-    build: ./Muti_Tenat_school_management_system
+    build: ./api
     restart: always
     ports:
       - "4000:4000"
-    env_file: ./Muti_Tenat_school_management_system/.env.production
+    env_file: ./api/.env
     depends_on:
       db:
         condition: service_healthy

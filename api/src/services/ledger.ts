@@ -2,6 +2,7 @@ import { db, type DbClient } from '../db';
 import { ledgerAccounts, ledgerEntries, ledgerLines, receipts } from '../models/schema';
 import { eq, sql } from 'drizzle-orm';
 import { AppError } from '../middleware/errorHandler';
+import { writeToDlq } from './deadLetterQueue';
 
 export type JournalLine = {
   accountId: string;
@@ -98,33 +99,43 @@ export async function autoPostFeePayment({
   invoiceId: string;
   createdBy?: string;
 }, tx?: DbClient) {
-  const assetCode = method === 'mpesa' ? '4000' : '1000';
-  const [asset] = await db
-    .select()
-    .from(ledgerAccounts)
-    .where(eq(ledgerAccounts.code, assetCode))
-    .limit(1);
-  const [income] = await db
-    .select()
-    .from(ledgerAccounts)
-    .where(eq(ledgerAccounts.code, '2000'))
-    .limit(1);
+  try {
+    const assetCode = method === 'mpesa' ? '4000' : '1000';
+    const [asset] = await db
+      .select()
+      .from(ledgerAccounts)
+      .where(eq(ledgerAccounts.code, assetCode))
+      .limit(1);
+    const [income] = await db
+      .select()
+      .from(ledgerAccounts)
+      .where(eq(ledgerAccounts.code, '2000'))
+      .limit(1);
 
-  if (!asset || !income) {
-    throw new AppError('Required ledger accounts are missing (run the seed script)', 500);
+    if (!asset || !income) {
+      throw new AppError('Required ledger accounts are missing (run the seed script)', 500);
+    }
+
+    return await postJournalEntry({
+      entryDate: new Date(),
+      description: `Fee payment received - invoice ${invoiceId}`,
+      sourceType: 'feePayment',
+      sourceId: invoiceId,
+      createdBy,
+      lines: [
+        { accountId: asset.id, debit: amount },
+        { accountId: income.id, credit: amount },
+      ],
+    }, tx);
+  } catch (err) {
+    await writeToDlq({
+      sourceType: 'ledger-autoPostFeePayment',
+      sourceId: invoiceId,
+      payload: { amount, method, invoiceId, createdBy },
+      errorMessage: err instanceof Error ? err.message : 'Unknown error',
+    });
+    throw err;
   }
-
-  return postJournalEntry({
-    entryDate: new Date(),
-    description: `Fee payment received - invoice ${invoiceId}`,
-    sourceType: 'feePayment',
-    sourceId: invoiceId,
-    createdBy,
-    lines: [
-      { accountId: asset.id, debit: amount },
-      { accountId: income.id, credit: amount },
-    ],
-  }, tx);
 }
 
 export async function autoPostPayroll({

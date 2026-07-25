@@ -3,19 +3,8 @@ import { AppError } from '../middleware/errorHandler';
 import { mpesaAuth } from './mpesa-auth';
 import { BASE_URL, generateTimestamp, normalizePhone } from '../utils/mpesa';
 import { logger } from '../utils/logger';
-
-const MAX_RETRIES = 3;
-const BASE_DELAY_MS = 500;
-
-async function fetchWithRetry(url: string, options: RequestInit, attempt = 1): Promise<Response> {
-  const res = await fetch(url, options);
-  if (res.ok) return res;
-  if (res.status < 500 || attempt >= MAX_RETRIES) return res;
-  const delay = BASE_DELAY_MS * Math.pow(2, attempt - 1) + Math.random() * 200;
-  logger.warn(`M-Pesa STK push attempt ${attempt} failed (${res.status}), retrying in ${Math.round(delay)}ms`);
-  await new Promise((r) => setTimeout(r, delay));
-  return fetchWithRetry(url, options, attempt + 1);
-}
+import { fetchWithRetry } from '../utils/fetchWithTimeout';
+import { circuitCall } from '../utils/circuitBreaker';
 
 export type StkPushInput = {
   phoneNumber: string;
@@ -37,7 +26,7 @@ export async function initiateStkPush(input: StkPushInput) {
     throw new AppError('M-Pesa callback URL is not configured', 500);
   }
 
-  const accessToken = await mpesaAuth.getToken();
+  const accessToken = await circuitCall('mpesa-auth', () => mpesaAuth.getToken());
 
   const ts = generateTimestamp();
   const password = Buffer.from(`${shortcode}${passkey}${ts}`).toString('base64');
@@ -57,14 +46,14 @@ export async function initiateStkPush(input: StkPushInput) {
     TransactionDesc: input.description || 'School fees',
   };
 
-  const pushRes = await fetchWithRetry(`${BASE_URL}/mpesa/stkpush/v1/processrequest`, {
+  const pushRes = await circuitCall('mpesa-stkpush', () => fetchWithRetry(`${BASE_URL}/mpesa/stkpush/v1/processrequest`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload),
-  });
+  }, 15000));
 
   const data = await pushRes.json();
   if (!pushRes.ok) {
