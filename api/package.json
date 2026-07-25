@@ -8,7 +8,7 @@
     "dev": "/usr/lib/postgresql/15/bin/pg_ctl -D /home/barhack3r/Desktop/school_system2/pgdata -l /home/barhack3r/Desktop/school_system2/pgdata/logfile -o \"-p 5434 -k /home/barhack3r/Desktop/school_system2/pgdata\" status 2>/dev/null || /usr/lib/postgresql/15/bin/pg_ctl -D /home/barhack3r/Desktop/school_system2/pgdata -l /home/barhack3r/Desktop/school_system2/pgdata/logfile -o \"-p 5434 -k /home/barhack3r/Desktop/school_system2/pgdata\" start && lsof -ti:4000 | xargs kill -9 2>/dev/null; tsx watch src/index.ts",
     "debug": "/usr/lib/postgresql/15/bin/pg_ctl -D /home/barhack3r/Desktop/school_system2/pgdata -l /home/barhack3r/Desktop/school_system2/pgdata/logfile -o \"-p 5434 -k /home/barhack3r/Desktop/school_system2/pgdata\" status 2>/dev/null || /usr/lib/postgresql/15/bin/pg_ctl -D /home/barhack3r/Desktop/school_system2/pgdata -l /home/barhack3r/Desktop/school_system2/pgdata/logfile -o \"-p 5434 -k /home/barhack3r/Desktop/school_system2/pgdata\" start && lsof -ti:4000 | xargs kill -9 2>/dev/null; tsx watch --inspect src/index.ts",
     "build": "tsc",
-    "start": "mkdir -p logs && npm run build && NODE_OPTIONS=\"--max-old-space-size=512\" node dist/index.js",
+    "start": "mkdir -p logs && NODE_OPTIONS=\"--max-old-space-size=512\" tsx src/index.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx src/db/migrate.ts",
     "db:seed": "tsx src/db/seed.ts",
