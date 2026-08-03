@@ -19,7 +19,7 @@ export function Pagination({
 
   return (
     <div className="flex items-center justify-between pt-4 text-sm">
-      <p className="text-surface-500">
+      <p className="text-on-surface-variant">
         {total} result{total !== 1 ? "s" : ""}
       </p>
       <div className="flex items-center gap-1">
@@ -40,8 +40,8 @@ export function Pagination({
               onClick={() => onPageChange(pageNum)}
               className={`w-8 h-8 rounded-lg text-xs font-medium transition-colors ${
                 pageNum === page
-                  ? "bg-brand-600 text-white"
-                  : "text-surface-600 hover:bg-surface-100"
+                  ? "bg-primary text-on-primary"
+                  : "text-on-surface-variant hover:bg-surface-container"
               }`}
             >
               {pageNum}

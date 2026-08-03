@@ -1,10 +1,10 @@
 import { useToast } from "../../lib/toast";
 
 const icons: Record<string, string> = {
-  success: "✓",
-  error: "✕",
-  info: "ℹ",
-  warning: "⚠",
+  success: "check_circle",
+  error: "error",
+  info: "info",
+  warning: "warning",
 };
 
 const colors: Record<string, string> = {
@@ -26,7 +26,7 @@ export function ToastContainer() {
           key={toast.id}
           className={`pointer-events-auto animate-slide-in-right flex items-start gap-3 px-4 py-3 rounded-lg border shadow-lg ${colors[toast.type]}`}
         >
-          <span className="text-lg leading-none mt-0.5">{icons[toast.type]}</span>
+          <span className="material-symbols-outlined text-lg leading-none mt-0.5">{icons[toast.type]}</span>
           <p className="text-sm flex-1">{toast.message}</p>
           <button
             onClick={() => remove(toast.id)}

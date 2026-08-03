@@ -60,7 +60,7 @@ export function DataTable<T extends { id: string }>({
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 gap-3 text-surface-400">
+      <div className="flex flex-col items-center justify-center py-16 gap-3 text-on-surface-variant">
         <Spinner className="w-6 h-6" />
         <p className="text-sm">Loading...</p>
       </div>
@@ -73,33 +73,29 @@ export function DataTable<T extends { id: string }>({
 
   return (
     <div>
-      <div className="overflow-hidden rounded-xl border border-surface-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-surface-50">
+              <tr className="bg-surface-container">
                 {columns.map((c, idx) => (
                   <th
                     key={c.header}
                     onClick={c.sortable ? () => toggleSort(idx) : undefined}
                     className={clsx(
-                      "px-4 py-3 text-left text-xs font-semibold text-surface-500 uppercase tracking-wider",
-                      c.sortable && "cursor-pointer select-none hover:text-surface-700",
+                      "px-4 py-3 text-left text-xs font-semibold text-on-surface-variant uppercase tracking-wider",
+                      c.sortable && "cursor-pointer select-none hover:text-on-surface",
                     )}
                   >
                     <span className="inline-flex items-center gap-1">
                       {c.header}
                       {c.sortable && sortCol === idx && (
-                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                          {sortDir === "asc"
-                            ? <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
-                            : <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />}
-                        </svg>
+                        <span className="material-symbols-outlined text-sm">{sortDir === "asc" ? "arrow_upward" : "arrow_downward"}</span>
                       )}
                     </span>
                   </th>
                 ))}
-                {actions && <th className="px-4 py-3 text-right text-xs font-semibold text-surface-500 uppercase tracking-wider">Actions</th>}
+                {actions && <th className="px-4 py-3 text-right text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Actions</th>}
               </tr>
             </thead>
             <tbody>
@@ -109,12 +105,12 @@ export function DataTable<T extends { id: string }>({
                   onClick={() => onRowClick?.(row)}
                   className={clsx(
                     "transition-colors",
-                    idx % 2 === 0 ? "bg-white" : "bg-surface-50/50",
-                    onRowClick ? "cursor-pointer hover:bg-brand-50" : "hover:bg-surface-50",
+                    idx % 2 === 0 ? "bg-surface-container-lowest" : "bg-surface-container",
+                    onRowClick ? "cursor-pointer hover:bg-primary/5" : "hover:bg-surface-container",
                   )}
                 >
                   {columns.map((c) => (
-                    <td key={c.header} className={clsx("px-4 py-3 text-surface-700", c.className ?? "")}>
+                    <td key={c.header} className={clsx("px-4 py-3 text-on-surface", c.className ?? "")}>
                       {c.cell(row)}
                     </td>
                   ))}

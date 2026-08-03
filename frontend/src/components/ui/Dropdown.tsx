@@ -51,32 +51,29 @@ export default function Dropdown({ value, options, onChange, placeholder, disabl
           s.button,
           accent
             ? value
-              ? "bg-white border-brand-300 text-brand-800 hover:border-brand-400 hover:bg-brand-50/40 focus:ring-brand-500/25"
-              : "bg-white border-dashed border-brand-300/50 text-brand-500 hover:border-brand-400 hover:bg-brand-50/30 hover:text-brand-600 focus:ring-brand-500/25"
+              ? "bg-surface-container-lowest border-primary text-on-surface hover:border-primary/80 focus:ring-primary/25"
+              : "bg-surface-container-lowest border-dashed border-primary/50 text-primary hover:border-primary hover:bg-primary/5 hover:text-on-surface focus:ring-primary/25"
             : value
-              ? "bg-white border-surface-300 text-surface-800 hover:border-surface-400 focus:ring-brand-500/20"
-              : "bg-white border-dashed border-surface-300 text-surface-400 hover:border-surface-400 hover:text-surface-500 focus:ring-brand-500/20",
+              ? "bg-surface-container-lowest border-outline text-on-surface hover:border-outline-variant focus:ring-primary/20"
+              : "bg-surface-container-lowest border-dashed border-outline text-on-surface-variant hover:border-outline-variant hover:text-on-surface focus:ring-primary/20",
           disabled && "opacity-40 cursor-not-allowed active:scale-100 hover:shadow-sm hover:border-dashed",
         )}
       >
-        <span className={clsx(value ? "" : accent ? "text-brand-400" : "text-surface-400")}>
+        <span className={clsx(value ? "" : accent ? "text-primary/60" : "text-on-surface-variant")}>
           {value ? selected?.label || placeholder : placeholder}
         </span>
-        <svg
-          className={clsx(
-            "w-4 h-4 transition-transform duration-200",
-            open && "rotate-180",
-            accent ? (value ? "text-brand-500" : "text-brand-400") : "text-surface-400",
-          )}
-          fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
+        <span className={clsx(
+          "material-symbols-outlined text-base transition-transform duration-200",
+          open && "rotate-180",
+          accent ? (value ? "text-primary" : "text-primary/60") : "text-on-surface-variant",
+        )}>
+          expand_more
+        </span>
       </button>
 
       {open && (
         <div className={clsx(
-          "absolute z-50 mt-2 bg-white rounded-2xl border border-surface-200",
+          "absolute z-50 mt-2 bg-surface-container-lowest rounded-2xl border border-outline-variant",
           "shadow-[0_8px_30px_rgba(0,0,0,0.12)] animate-in fade-in slide-in-from-top-2 duration-150",
           s.menu,
           menuClassName || "min-w-[180px]",
@@ -90,8 +87,8 @@ export default function Dropdown({ value, options, onChange, placeholder, disabl
                 "w-full text-left transition-colors duration-100",
                 s.item,
                 opt.value === value
-                  ? "bg-brand-50 text-brand-700 font-semibold"
-                  : "text-surface-600 hover:bg-surface-50 hover:text-surface-800",
+                  ? "bg-primary-container text-on-primary-container font-semibold"
+                  : "text-on-surface-variant hover:bg-surface-container hover:text-on-surface",
               )}
             >
               {opt.label}

@@ -14,22 +14,20 @@ export function Modal({
 }) {
   return (
     <div
-      className="fixed inset-0 bg-surface-900/50 backdrop-blur-sm flex items-start justify-center pt-16 z-50 overflow-y-auto animate-fade-in"
+      className="fixed inset-0 bg-inverse-surface/50 backdrop-blur-sm flex items-start justify-center pt-16 z-50 overflow-y-auto animate-fade-in"
       onClick={onClose}
     >
       <div
-        className={`bg-white w-full ${width} rounded-xl shadow-xl border border-surface-200 mb-16 animate-slide-up`}
+        className={`bg-surface-container-lowest w-full ${width} rounded-xl shadow-xl border border-outline-variant mb-16 animate-slide-up`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-surface-200">
-          <h2 className="text-lg font-semibold text-surface-900">{title}</h2>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-outline-variant">
+          <h2 className="text-lg font-semibold text-on-surface">{title}</h2>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-lg text-surface-400 hover:text-surface-600 hover:bg-surface-100 transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors"
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <span className="material-symbols-outlined text-xl">close</span>
           </button>
         </div>
         <div className="p-6">{children}</div>
@@ -55,7 +53,7 @@ export function ConfirmDialog({
 }) {
   return (
     <Modal title={title} onClose={onCancel} width="max-w-sm">
-      <p className="text-sm text-surface-600 mb-6">{message}</p>
+      <p className="text-sm text-on-surface-variant mb-6">{message}</p>
       <div className="flex justify-end gap-2">
         <Button variant="ghost" onClick={onCancel} disabled={loading}>
           Cancel

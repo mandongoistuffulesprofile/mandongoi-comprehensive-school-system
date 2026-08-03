@@ -31,8 +31,8 @@ export function FormField({
   error?: string;
 }) {
   const baseClass =
-    "w-full rounded-lg border border-surface-300 px-3.5 py-2.5 text-sm bg-white text-surface-900 placeholder-surface-400 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 disabled:opacity-50 disabled:bg-surface-50";
-  const errorClass = "border-red-300 focus:ring-red-500/20 focus:border-red-500";
+    "w-full rounded-lg border border-outline px-3.5 py-2.5 text-sm bg-surface-container-lowest text-on-surface placeholder-on-surface-variant transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary disabled:opacity-50 disabled:bg-surface-container";
+  const errorClass = "border-error focus:ring-error/20 focus:border-error";
 
   if (spec.type === "checkbox") {
     return (
@@ -41,11 +41,11 @@ export function FormField({
           type="checkbox"
           checked={Boolean(value)}
           onChange={(e) => onChange(e.target.checked)}
-          className="mt-0.5 rounded border-surface-300 text-brand-600 focus:ring-brand-500/20 focus:ring-2"
+          className="mt-0.5 rounded border-outline text-primary focus:ring-primary/20 focus:ring-2"
         />
         <div>
-          <span className="text-sm font-medium text-surface-700">{spec.label}</span>
-          {spec.helpText && <p className="text-xs text-surface-400 mt-0.5">{spec.helpText}</p>}
+          <span className="text-sm font-medium text-on-surface">{spec.label}</span>
+          {spec.helpText && <p className="text-xs text-on-surface-variant mt-0.5">{spec.helpText}</p>}
         </div>
       </label>
     );
@@ -55,9 +55,9 @@ export function FormField({
 
   return (
     <div>
-      <label htmlFor={inputId} className="block text-sm font-medium text-surface-700 mb-1.5 cursor-pointer">
+      <label htmlFor={inputId} className="block text-sm font-medium text-on-surface mb-1.5 cursor-pointer">
         {spec.label}
-        {spec.required && <span className="text-red-500 ml-0.5">*</span>}
+        {spec.required && <span className="text-error ml-0.5">*</span>}
       </label>
       {spec.type === "select" ? (
         <Dropdown
@@ -101,8 +101,8 @@ export function FormField({
           required={spec.required}
         />
       )}
-      {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
-      {spec.helpText && !error && <p className="text-xs text-surface-400 mt-1">{spec.helpText}</p>}
+      {error && <p className="text-xs text-error mt-1">{error}</p>}
+      {spec.helpText && !error && <p className="text-xs text-on-surface-variant mt-1">{spec.helpText}</p>}
     </div>
   );
 }
@@ -143,7 +143,7 @@ function DateSelect({ id, value, onChange, required, min, max, error }: {
     }
   };
 
-  const labelClass = "text-xs text-surface-400 font-medium";
+  const labelClass = "text-xs text-on-surface-variant font-medium";
 
   return (
     <div className="flex gap-2 items-end">

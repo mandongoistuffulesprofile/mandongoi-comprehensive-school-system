@@ -154,10 +154,8 @@ export function ResourcePage<T extends { id: string }>({
       />
 
       {error && (
-        <div className="mb-4 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-4 py-3 flex items-center gap-2">
-          <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
+        <div className="mb-4 text-sm text-on-error-container bg-error-container border border-error/20 rounded-lg px-4 py-3 flex items-center gap-2">
+          <span className="material-symbols-outlined text-error text-base shrink-0">error</span>
           {error}
         </div>
       )}
@@ -174,7 +172,7 @@ export function ResourcePage<T extends { id: string }>({
                 <div className="flex gap-1">
                   {updateItem && (
                     <button
-                      className="px-2.5 py-1 text-xs font-medium text-brand-600 hover:bg-brand-50 rounded-md transition-colors"
+                      className="px-2.5 py-1 text-xs font-medium text-primary hover:bg-primary-container rounded-md transition-colors"
                       onClick={() => openEdit(row)}
                     >
                       Edit
@@ -182,7 +180,7 @@ export function ResourcePage<T extends { id: string }>({
                   )}
                   {deleteItem && (
                     <button
-                      className="px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                      className="px-2.5 py-1 text-xs font-medium text-error hover:bg-error-container rounded-md transition-colors"
                       onClick={() => setDeleting(row)}
                     >
                       Delete
@@ -200,7 +198,7 @@ export function ResourcePage<T extends { id: string }>({
             {activeFields.map((f) => (
               <FormField key={f.name} spec={f} value={form[f.name]} onChange={(v) => updateForm(f.name, v)} />
             ))}
-            <div className="flex justify-end gap-2 pt-2 border-t border-surface-200">
+            <div className="flex justify-end gap-2 pt-2 border-t border-outline-variant">
               <Button variant="ghost" onClick={() => setEditing(null)}>
                 Cancel
               </Button>
@@ -216,18 +214,18 @@ export function ResourcePage<T extends { id: string }>({
         <div className="mt-6 max-w-2xl">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-xl font-semibold text-surface-900">{editing === "new" ? `New ${title}` : `Edit ${title}`}</h2>
-              <p className="text-sm text-surface-500 mt-0.5">Fill in the details below</p>
+              <h2 className="text-xl font-semibold text-on-surface">{editing === "new" ? `New ${title}` : `Edit ${title}`}</h2>
+              <p className="text-sm text-on-surface-variant mt-0.5">Fill in the details below</p>
             </div>
             <Button variant="ghost" onClick={() => setEditing(null)}>
               Cancel
             </Button>
           </div>
-          <div className="bg-white rounded-xl border border-surface-200 p-6 space-y-5">
+          <div className="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 space-y-5">
             {activeFields.map((f) => (
               <FormField key={f.name} spec={f} value={form[f.name]} onChange={(v) => updateForm(f.name, v)} />
             ))}
-            <div className="flex justify-end gap-2 pt-4 border-t border-surface-200">
+            <div className="flex justify-end gap-2 pt-4 border-t border-outline-variant">
               <Button variant="ghost" onClick={() => setEditing(null)}>
                 Cancel
               </Button>

@@ -2,10 +2,10 @@ import clsx from "clsx";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 const variantStyles: Record<string, string> = {
-  primary: "bg-brand-600 text-white hover:bg-brand-700 shadow-sm shadow-brand-200",
-  secondary: "bg-white text-surface-700 border border-surface-300 hover:bg-surface-50 hover:border-surface-400 shadow-sm",
-  danger: "bg-red-600 text-white hover:bg-red-700 shadow-sm shadow-red-200",
-  ghost: "text-surface-600 hover:bg-surface-100 hover:text-surface-900",
+  primary: "bg-primary text-on-primary hover:bg-primary/90 shadow-sm shadow-primary/20",
+  secondary: "bg-surface-container-lowest border border-outline-variant text-on-surface hover:bg-surface-container shadow-sm",
+  danger: "bg-error text-on-error hover:bg-error/90 shadow-sm shadow-error/20",
+  ghost: "text-on-surface-variant hover:bg-surface-container hover:text-on-surface",
 };
 
 export function Button({
@@ -25,7 +25,7 @@ export function Button({
   return (
     <button
       className={clsx(
-        "inline-flex items-center justify-center gap-2 font-medium transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500",
+        "inline-flex items-center justify-center gap-2 font-medium transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
         variantStyles[variant],
         sizes[size],
         className,
@@ -39,7 +39,7 @@ export function Spinner({ className }: { className?: string }) {
   return (
     <div
       className={clsx(
-        "w-5 h-5 rounded-full border-2 border-surface-200 border-t-brand-600 animate-spin",
+        "w-5 h-5 rounded-full border-2 border-surface-container-high border-t-primary animate-spin",
         className,
       )}
     />
@@ -48,7 +48,7 @@ export function Spinner({ className }: { className?: string }) {
 
 export function LoadingScreen({ label = "Loading..." }: { label?: string }) {
   return (
-    <div className="flex flex-col items-center justify-center py-20 gap-3 text-surface-400">
+    <div className="flex flex-col items-center justify-center py-20 gap-3 text-on-surface-variant">
       <Spinner className="w-8 h-8" />
       <p className="text-sm">{label}</p>
     </div>
@@ -66,13 +66,11 @@ export function EmptyState({
 }) {
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center">
-      <div className="w-12 h-12 rounded-full bg-surface-100 flex items-center justify-center mb-4">
-        <svg className="w-6 h-6 text-surface-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-        </svg>
+      <div className="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center mb-4">
+        <span className="material-symbols-outlined text-surface-500 text-2xl">folder_open</span>
       </div>
-      <p className="text-surface-500 font-medium">{label}</p>
-      {description && <p className="text-surface-400 text-sm mt-1">{description}</p>}
+      <p className="text-on-surface font-medium">{label}</p>
+      {description && <p className="text-on-surface-variant text-sm mt-1">{description}</p>}
       {action && <div className="mt-4">{action}</div>}
     </div>
   );
@@ -87,13 +85,11 @@ export function ErrorState({
 }) {
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center">
-      <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center mb-4">
-        <svg className="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
-        </svg>
+      <div className="w-12 h-12 rounded-full bg-error-container flex items-center justify-center mb-4">
+        <span className="material-symbols-outlined text-error text-2xl">error_outline</span>
       </div>
-      <p className="text-red-600 font-medium">Something went wrong</p>
-      <p className="text-surface-500 text-sm mt-1">{message}</p>
+      <p className="text-on-surface font-medium">Something went wrong</p>
+      <p className="text-on-surface-variant text-sm mt-1">{message}</p>
       {onRetry && (
         <Button variant="secondary" onClick={onRetry} className="mt-4">
           Try again
@@ -170,7 +166,7 @@ export function CompetencyDots({ level, max = 4 }: { level?: number; max?: numbe
           key={i}
           className={clsx(
             "w-2.5 h-2.5 rounded-full border transition-colors",
-            level && i < level ? "bg-brand-500 border-brand-500" : "border-surface-300 bg-surface-50",
+            level && i < level ? "bg-primary border-primary" : "border-outline-variant bg-surface-container-lowest",
           )}
         />
       ))}
@@ -183,13 +179,13 @@ export function StatusIndicator({ active }: { active: boolean }) {
     <span
       className={clsx(
         "inline-flex items-center gap-1.5 text-xs font-medium",
-        active ? "text-emerald-600" : "text-surface-400",
+        active ? "text-emerald-600" : "text-on-surface-variant",
       )}
     >
       <span
         className={clsx(
           "w-1.5 h-1.5 rounded-full",
-          active ? "bg-emerald-500" : "bg-surface-300",
+          active ? "bg-emerald-500" : "bg-outline-variant",
         )}
       />
       {active ? "Active" : "Inactive"}
@@ -199,8 +195,8 @@ export function StatusIndicator({ active }: { active: boolean }) {
 
 export function Card({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className={clsx("bg-white rounded-xl border border-surface-200 shadow-sm", className)}>
-      <div className="h-0.5 bg-gradient-to-r from-brand-500/30 via-accent-500/20 to-transparent rounded-t-xl" />
+    <div className={clsx("bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm", className)}>
+      <div className="h-0.5 bg-gradient-to-r from-primary/30 via-secondary-container/20 to-transparent rounded-t-xl" />
       {children}
     </div>
   );
@@ -218,10 +214,10 @@ export function PageHeader({
   return (
     <div className="flex items-start justify-between mb-6">
       <div className="flex items-start gap-3">
-        <div className="w-1 h-8 rounded-full bg-gradient-to-b from-brand-500 to-brand-600 mt-1 shrink-0" />
+        <div className="w-1 h-8 rounded-full bg-gradient-to-b from-primary to-primary/80 mt-1 shrink-0" />
         <div>
-          <h1 className="text-2xl font-bold text-surface-900">{title}</h1>
-          {description && <p className="text-sm text-surface-500 mt-1">{description}</p>}
+          <h1 className="text-2xl font-bold text-on-surface">{title}</h1>
+          {description && <p className="text-sm text-on-surface-variant mt-1">{description}</p>}
         </div>
       </div>
       {actions && <div className="flex gap-2 shrink-0">{actions}</div>}
