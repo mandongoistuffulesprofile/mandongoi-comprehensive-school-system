@@ -95,10 +95,10 @@ export default function CreateStudent() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="flex items-center gap-2 text-sm text-surface-500 mb-4">
-        <button onClick={() => navigate("/students")} className="hover:text-brand-600 transition-colors">Students</button>
+      <div className="flex items-center gap-2 text-sm text-on-surface-variant mb-4">
+        <button onClick={() => navigate("/students")} className="hover:text-primary transition-colors">Students</button>
         <span>/</span>
-        <span className="text-surface-900 font-medium">New Student</span>
+        <span className="text-on-surface font-medium">New Student</span>
         {savedCount > 0 && (
           <span className="ml-auto text-emerald-600 text-xs font-medium bg-emerald-50 px-3 py-1 rounded-full">
             {savedCount} saved this session
@@ -113,8 +113,8 @@ export default function CreateStudent() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
         <Card className="p-6 space-y-5">
-          <h3 className="font-semibold text-surface-900 text-lg flex items-center gap-2">
-            <span className="w-7 h-7 rounded-full bg-brand-100 text-brand-700 text-xs font-bold flex items-center justify-center">1</span>
+          <h3 className="font-semibold text-on-surface text-lg flex items-center gap-2">
+            <span className="w-7 h-7 rounded-full bg-primary-container text-on-primary-container text-xs font-bold flex items-center justify-center">1</span>
             Student Details
           </h3>
           <div className="grid grid-cols-2 gap-4">
@@ -133,7 +133,7 @@ export default function CreateStudent() {
 
         <div className="space-y-6">
           <Card className="p-6 space-y-5">
-            <h3 className="font-semibold text-surface-900 text-lg flex items-center gap-2">
+            <h3 className="font-semibold text-on-surface text-lg flex items-center gap-2">
               <span className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold flex items-center justify-center">2</span>
               Accommodation & Food
             </h3>
@@ -163,7 +163,7 @@ export default function CreateStudent() {
               </>
             )}
             {studentType === "day" && (
-              <div className="flex items-center gap-2 bg-surface-100 text-surface-500 text-xs px-3 py-2 rounded-lg">
+              <div className="flex items-center gap-2 bg-surface-container text-on-surface-variant text-xs px-3 py-2 rounded-lg">
                 <span>🏠</span>
                 <span>Day scholar — boarding and food fees do not apply.</span>
               </div>
@@ -171,11 +171,11 @@ export default function CreateStudent() {
           </Card>
 
           <Card className="p-6 space-y-5">
-            <h3 className="font-semibold text-surface-900 text-lg flex items-center gap-2">
-              <span className="w-7 h-7 rounded-full bg-brand-100 text-brand-700 text-xs font-bold flex items-center justify-center">3</span>
+            <h3 className="font-semibold text-on-surface text-lg flex items-center gap-2">
+              <span className="w-7 h-7 rounded-full bg-primary-container text-on-primary-container text-xs font-bold flex items-center justify-center">3</span>
               Guardian / SMS Contact
             </h3>
-            <p className="text-xs text-surface-400 -mt-2">Results, fee reminders & term dates sent to this phone</p>
+            <p className="text-xs text-on-surface-variant -mt-2">Results, fee reminders & term dates sent to this phone</p>
             <FormField spec={{ name: "guardianName", label: "Guardian Name (optional)" }} value={guardianName} onChange={(v) => setGuardianName(v as string)} />
             <FormField spec={{ name: "guardianPhone", label: "Phone (2547XXXXXXXX)", placeholder: "2547XXXXXXXX" }} value={guardianPhone} onChange={(v) => setGuardianPhone(v as string)} />
             <FormField spec={{ name: "guardianRelationship", label: "Relationship" }} value={guardianRelationship} onChange={(v) => setGuardianRelationship(v as string)} />
@@ -189,7 +189,7 @@ export default function CreateStudent() {
           onClick={() => save("another")}
           disabled={saving}
           variant="secondary"
-          className={clsx(savedCount > 0 && "ring-2 ring-brand-300")}
+          className={clsx(savedCount > 0 && "ring-2 ring-primary/30")}
         >
           {saving ? "Saving..." : savedCount > 0 ? `Save & Add Another (${savedCount + 1})` : "Save & Add Another"}
         </Button>

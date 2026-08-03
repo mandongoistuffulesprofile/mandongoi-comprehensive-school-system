@@ -34,7 +34,7 @@ export default function Users() {
             { value: "accountant", label: "Accountant" },
             { value: "parent", label: "Parent" },
           ]}} value={form.role} onChange={(v) => setForm({ ...form, role: v })} />
-          <div className="pt-2 border-t border-surface-200">
+          <div className="pt-2 border-t border-outline-variant">
             <Button onClick={submit} className="w-full">Create User</Button>
           </div>
         </div>

@@ -29,13 +29,6 @@ function setCache(key: string, data: unknown): void {
 
 router.get('/kpis', requireRole('schoolAdmin', 'accountant'), async (req: AuthRequest, res, next) => {
   try {
-    const cacheKey = 'dashboard:kpis';
-    const cached = getCached(cacheKey);
-    if (cached) {
-      res.json({ success: true, data: cached });
-      return;
-    }
-
     const result = await db.execute(sql`
       SELECT
         (SELECT COUNT(*) FROM students WHERE status = 'active')::int AS active_students,
@@ -47,7 +40,6 @@ router.get('/kpis', requireRole('schoolAdmin', 'accountant'), async (req: AuthRe
         (SELECT COUNT(*) FROM sms_campaigns WHERE status = 'sent')::int AS sent_campaigns
     `);
     const data = result.rows[0];
-    setCache(cacheKey, data);
     res.json({ success: true, data });
   } catch (err) {
     next(err);

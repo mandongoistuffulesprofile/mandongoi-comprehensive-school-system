@@ -7,7 +7,7 @@ import { notify } from './notify';
 export async function evaluateOverdueInvoices() {
   try {
     const now = new Date();
-    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const todayStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
 
     const overdues = await db
       .select({
@@ -26,7 +26,7 @@ export async function evaluateOverdueInvoices() {
       .innerJoin(students, eq(feeInvoices.studentId, students.id))
       .where(and(
         sql`${feeInvoices.balance} > 0`,
-        sql`${feeInvoices.dueDate} < ${todayStart.toISOString()}`,
+        sql`${feeInvoices.dueDate} < ${todayStart}`,
       ));
 
     if (overdues.length === 0) return;

@@ -26,7 +26,8 @@ export async function uploadFile(
   originalName: string,
   mimeType: string,
 ): Promise<string> {
-  const ext = originalName.split('.').pop() || 'png';
+  const parts = originalName.split('.');
+  const ext = parts.length > 1 ? parts.pop()! : (mimeType.split('/').pop() || 'bin');
   const key = `uploads/${Date.now()}_${crypto.randomBytes(4).toString('hex')}.${ext}`;
 
   await getClient().send(new PutObjectCommand({

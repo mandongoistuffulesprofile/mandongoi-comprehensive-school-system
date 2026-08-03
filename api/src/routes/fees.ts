@@ -38,7 +38,7 @@ router.post('/', requireRole('schoolAdmin'), async (req: AuthRequest, res, next)
       adminLevyAmount: String(req.body.adminLevyAmount || 0),
       boardingAmount: String(req.body.boardingAmount || 0),
       foodAmount: String(req.body.foodAmount || 0),
-      totalAmount: String(req.body.totalAmount),
+      totalAmount: String(req.body.totalAmount ?? 0),
     };
     const [structure] = await db.insert(feeStructures).values(data).returning();
     res.status(201).json({ success: true, data: structure });
@@ -58,7 +58,7 @@ router.put('/:id', requireRole('schoolAdmin'), async (req: AuthRequest, res, nex
       adminLevyAmount: String(req.body.adminLevyAmount || 0),
       boardingAmount: String(req.body.boardingAmount || 0),
       foodAmount: String(req.body.foodAmount || 0),
-      totalAmount: String(req.body.totalAmount),
+      totalAmount: String(req.body.totalAmount ?? 0),
     };
     const [structure] = await db.update(feeStructures).set(data).where(eq(feeStructures.id, req.params.id)).returning();
     if (!structure) return res.status(404).json({ success: false, error: 'Not found' });

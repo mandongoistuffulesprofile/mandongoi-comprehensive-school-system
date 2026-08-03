@@ -81,9 +81,9 @@ export default function LeaveNotes() {
           { header: "Grade", cell: (n) => n.grade },
           { header: "Leave Date", cell: (n) => new Date(n.leaveDate).toLocaleDateString("en-KE") },
           { header: "Expected Return", cell: (n) => new Date(n.expectedReturnDate).toLocaleDateString("en-KE") },
-          { header: "Actual Return", cell: (n) => n.actualReturnDate ? new Date(n.actualReturnDate).toLocaleDateString("en-KE") : <span className="text-surface-300">\u2014</span> },
+          { header: "Actual Return", cell: (n) => n.actualReturnDate ? new Date(n.actualReturnDate).toLocaleDateString("en-KE") : <span className="text-outline-variant">\u2014</span> },
           { header: "Status", cell: (n) => <EnumBadge value={n.status} /> },
-          { header: "Signed By", cell: (n) => n.notedByName ? <span className="text-xs text-surface-600">{n.notedByName}</span> : <span className="text-surface-300">\u2014</span> },
+          { header: "Signed By", cell: (n) => n.notedByName ? <span className="text-xs text-on-surface-variant">{n.notedByName}</span> : <span className="text-outline-variant">\u2014</span> },
         ]}
         rows={notes}
         loading={loading}
@@ -95,7 +95,7 @@ export default function LeaveNotes() {
             {n.status === "approved" && !n.actualReturnDate && (
               <button onClick={() => markReturned(n.id)} className="px-2 py-1 text-xs font-medium text-blue-600 hover:bg-blue-50 rounded">Mark Returned</button>
             )}
-            <button onClick={() => handlePrint(n)} className="px-2 py-1 text-xs font-medium text-brand-600 hover:bg-brand-50 rounded">Print</button>
+            <button onClick={() => handlePrint(n)} className="px-2 py-1 text-xs font-medium text-primary hover:bg-primary-container rounded">Print</button>
           </div>
         )}
       />
@@ -145,7 +145,7 @@ function CreateLeaveModal({ onClose, onDone }: { onClose: () => void; onDone: ()
     <Modal title="New Leave Note" onClose={onClose}>
       <div className="space-y-4 min-w-[400px]">
         <div>
-          <label className="block text-sm font-medium text-surface-700 mb-1.5">Student *</label>
+          <label className="block text-sm font-medium text-on-surface mb-1.5">Student *</label>
           <div className="relative">
             <input
               ref={inputRef}
@@ -154,19 +154,19 @@ function CreateLeaveModal({ onClose, onDone }: { onClose: () => void; onDone: ()
               onFocus={() => setShowDropdown(true)}
               onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
               placeholder="Search student by name..."
-              className="w-full rounded-lg border border-surface-300 px-3.5 py-2.5 text-sm bg-white text-surface-900 placeholder-surface-400 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
+              className="w-full rounded-lg border border-outline px-3.5 py-2.5 text-sm bg-surface-container-lowest text-on-surface placeholder-surface-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
             />
             {showDropdown && filtered.length > 0 && !selectedStudent && (
-              <div className="absolute z-50 top-full left-0 right-0 mt-1 bg-white border border-surface-200 rounded-xl shadow-xl max-h-60 overflow-y-auto">
+              <div className="absolute z-50 top-full left-0 right-0 mt-1 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xl max-h-60 overflow-y-auto">
                 {filtered.map((s) => (
                   <button
                     key={s.id}
                     type="button"
                     onMouseDown={() => { setSelectedStudent(s); setQuery(""); setShowDropdown(false); }}
-                    className="w-full text-left px-4 py-2.5 text-sm hover:bg-brand-50 transition-colors border-b border-surface-100 last:border-0"
+                    className="w-full text-left px-4 py-2.5 text-sm hover:bg-primary-container transition-colors border-b border-surface-100 last:border-0"
                   >
-                    <span className="font-medium text-surface-900">{s.firstName} {s.lastName}</span>
-                    <span className="text-surface-400 ml-2">{s.grade}</span>
+                    <span className="font-medium text-on-surface">{s.firstName} {s.lastName}</span>
+                    <span className="text-on-surface-variant ml-2">{s.grade}</span>
                   </button>
                 ))}
               </div>
@@ -178,7 +178,7 @@ function CreateLeaveModal({ onClose, onDone }: { onClose: () => void; onDone: ()
           <FormField spec={{ name: "leaveDate", label: "Leave Date", type: "date", required: true }} value={leaveDate} onChange={(v) => setLeaveDate(v as string)} />
           <FormField spec={{ name: "expectedReturnDate", label: "Expected Return", type: "date", required: true }} value={expectedReturnDate} onChange={(v) => setExpectedReturnDate(v as string)} />
         </div>
-        <div className="flex justify-end gap-2 pt-2 border-t border-surface-200">
+        <div className="flex justify-end gap-2 pt-2 border-t border-outline-variant">
           <Button variant="ghost" onClick={onClose}>Cancel</Button>
           <Button onClick={submit} disabled={saving || !selectedStudent}>{saving ? "Saving..." : "Create Leave Note"}</Button>
         </div>
@@ -251,8 +251,8 @@ function PrintLeaveModal({ note, onClose }: { note: LeaveNote; onClose: () => vo
       <div className="min-w-[400px]" ref={printRef}>
         <Card className="p-6 space-y-3">
           <h2 className="text-lg font-bold text-center">{note.studentName}</h2>
-          <p className="text-xs text-center text-surface-400">{note.grade}</p>
-          <div className="border-t border-surface-200 my-3" />
+          <p className="text-xs text-center text-on-surface-variant">{note.grade}</p>
+          <div className="border-t border-outline-variant my-3" />
           {[
             ["Reason", note.reason],
             ["Leave Date", new Date(note.leaveDate).toLocaleDateString("en-KE")],
@@ -262,24 +262,24 @@ function PrintLeaveModal({ note, onClose }: { note: LeaveNote; onClose: () => vo
             ["Approved At", note.approvedAt ? new Date(note.approvedAt).toLocaleString("en-KE") : formattedTime],
           ].map(([label, value]) => (
             <div key={label as string} className="flex justify-between text-sm py-1">
-              <span className="font-medium text-surface-600">{label as string}</span>
+              <span className="font-medium text-on-surface-variant">{label as string}</span>
               <span>{value as string}</span>
             </div>
           ))}
         </Card>
-        <div className="border-t border-surface-200 mt-4 pt-4">
-          <div className="grid grid-cols-2 gap-8 max-w-sm mx-auto text-center text-xs text-surface-400">
+        <div className="border-t border-outline-variant mt-4 pt-4">
+          <div className="grid grid-cols-2 gap-8 max-w-sm mx-auto text-center text-xs text-on-surface-variant">
             <div>
-              <div className="border-t border-surface-300 mt-8 mb-1" />
+              <div className="border-t border-outline mt-8 mb-1" />
               <span>Parent/Guardian Signature</span>
             </div>
             <div>
-              <div className="border-t border-surface-300 mt-8 mb-1" />
+              <div className="border-t border-outline mt-8 mb-1" />
               <span>Teacher/Admin Signature</span>
             </div>
           </div>
-          <div className="text-center text-xs text-surface-400 mt-4">
-            <div className="border-t border-surface-300 w-48 mx-auto mt-6 mb-1" />
+          <div className="text-center text-xs text-on-surface-variant mt-4">
+            <div className="border-t border-outline w-48 mx-auto mt-6 mb-1" />
             <span>Witness / Head of Institution Signature</span>
           </div>
         </div>

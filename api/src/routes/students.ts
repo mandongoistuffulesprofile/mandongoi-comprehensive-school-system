@@ -65,8 +65,24 @@ router.get('/', requireRole('schoolAdmin', 'teacher', 'accountant'), async (req:
 router.post('/', requireRole('schoolAdmin'), validate(createStudentSchema), async (req: AuthRequest, res, next) => {
   try {
     const body = { ...req.body };
-    body.dateOfBirth = body.dateOfBirth ? new Date(body.dateOfBirth as string) : null;
-    body.enrollmentDate = body.enrollmentDate ? new Date(body.enrollmentDate as string) : null;
+    if (body.dateOfBirth) {
+      const dob = new Date(body.dateOfBirth as string);
+      if (isNaN(dob.getTime())) {
+        return res.status(400).json({ success: false, error: 'Invalid dateOfBirth format' });
+      }
+      body.dateOfBirth = dob;
+    } else {
+      body.dateOfBirth = null;
+    }
+    if (body.enrollmentDate) {
+      const ed = new Date(body.enrollmentDate as string);
+      if (isNaN(ed.getTime())) {
+        return res.status(400).json({ success: false, error: 'Invalid enrollmentDate format' });
+      }
+      body.enrollmentDate = ed;
+    } else {
+      body.enrollmentDate = null;
+    }
     const [student] = await db.insert(students).values(body).returning();
     notify({
       title: 'New Student Enrolled',
@@ -116,6 +132,10 @@ router.put('/:id', requireRole('schoolAdmin'), validate(updateStudentSchema), as
 
 router.delete('/:id', requireRole('schoolAdmin'), async (req: AuthRequest, res, next) => {
   try {
+    const [existing] = await db.select().from(students).where(eq(students.id, req.params.id)).limit(1);
+    if (!existing) {
+      return res.status(404).json({ success: false, error: 'Student not found' });
+    }
     await db.delete(students).where(eq(students.id, req.params.id));
     res.json({ success: true, data: null });
   } catch (err) {

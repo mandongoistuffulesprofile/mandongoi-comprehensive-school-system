@@ -132,9 +132,9 @@ export default function FoodLogs() {
 
       {!loading && logs.length > 0 && (
         <div className="grid grid-cols-4 gap-4 mb-6">
-          <div className="bg-gradient-to-br from-brand-50 to-brand-100 rounded-2xl p-4 border border-brand-200">
-            <p className="text-xs font-medium text-brand-600 uppercase tracking-wider">Entries</p>
-            <p className="text-2xl font-bold text-brand-900 mt-1">{filteredLogs.length}</p>
+          <div className="bg-gradient-to-br from-brand-50 to-brand-100 rounded-2xl p-4 border border-primary/20">
+            <p className="text-xs font-medium text-primary uppercase tracking-wider">Entries</p>
+            <p className="text-2xl font-bold text-primary mt-1">{filteredLogs.length}</p>
           </div>
           <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-2xl p-4 border border-emerald-200">
             <p className="text-xs font-medium text-emerald-600 uppercase tracking-wider">Est. Value</p>
@@ -151,21 +151,21 @@ export default function FoodLogs() {
         </div>
       )}
 
-      <div className="bg-white rounded-2xl shadow-sm border border-surface-200 overflow-hidden mb-6">
+      <div className="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant overflow-hidden mb-6">
         <div className="p-5">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-surface-900">Log Food Item</h3>
+            <h3 className="font-semibold text-on-surface">Log Food Item</h3>
             <button onClick={() => { setShowBulk(!showBulk); if (!showBulk) setSelectedStudent(null); }}
-              className={clsx("px-3 py-1.5 rounded-lg text-xs font-medium transition-colors", showBulk ? "bg-brand-600 text-white" : "bg-surface-100 text-surface-500 hover:bg-surface-200")}>
+              className={clsx("px-3 py-1.5 rounded-lg text-xs font-medium transition-colors", showBulk ? "bg-primary text-white" : "bg-surface-container text-on-surface-variant hover:bg-surface-200")}>
               {showBulk ? "Single Mode" : "Bulk Log"}
             </button>
           </div>
 
           <div className="grid grid-cols-[1fr_120px_100px_120px] gap-3 items-end mb-3">
             <div>
-              <label className="text-xs text-surface-400 font-medium mb-1 block">Type *</label>
+              <label className="text-xs text-on-surface-variant font-medium mb-1 block">Type *</label>
               <select value={logType} onChange={(e) => setLogType(e.target.value as any)}
-                className="w-full rounded-lg border border-surface-300 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+                className="w-full rounded-lg border border-outline px-3 py-2 text-sm bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
                 <option value="consumption">Consumption (student ate)</option>
                 <option value="contribution">Contribution (parent brought)</option>
                 <option value="purchase">Purchase (school bought)</option>
@@ -173,33 +173,33 @@ export default function FoodLogs() {
               </select>
             </div>
             <div className="relative">
-              <label className="text-xs text-surface-400 font-medium mb-1 block">Food Item *</label>
+              <label className="text-xs text-on-surface-variant font-medium mb-1 block">Food Item *</label>
               <input ref={itemRef} value={itemName} onChange={(e) => { setItemName(e.target.value); setShowItemDropdown(true); }}
                 onFocus={() => setShowItemDropdown(true)}
                 onBlur={() => setTimeout(() => setShowItemDropdown(false), 200)}
-                className="w-full rounded-lg border border-surface-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
+                className="w-full rounded-lg border border-outline px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 placeholder="e.g. Maize flour, Rice" />
               {showItemDropdown && itemSuggestions.length > 0 && (
-                <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-surface-200 rounded-xl shadow-xl z-50 max-h-48 overflow-y-auto">
+                <div className="absolute left-0 right-0 top-full mt-1 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xl z-50 max-h-48 overflow-y-auto">
                   {itemSuggestions.map((p) => (
                     <button key={p.id} type="button" onMouseDown={() => { setItemName(p.itemName); setUnit(p.unit); setShowItemDropdown(false); }}
-                      className="w-full text-left px-3 py-2.5 text-sm hover:bg-brand-50 transition-colors border-b border-surface-100 last:border-0">
-                      <span className="font-medium text-surface-800">{p.itemName}</span>
-                      <span className="text-surface-400 ml-2">KES {Number(p.unitPrice).toLocaleString()}/{p.unit}</span>
+                      className="w-full text-left px-3 py-2.5 text-sm hover:bg-primary-container transition-colors border-b border-surface-100 last:border-0">
+                      <span className="font-medium text-on-surface">{p.itemName}</span>
+                      <span className="text-on-surface-variant ml-2">KES {Number(p.unitPrice).toLocaleString()}/{p.unit}</span>
                     </button>
                   ))}
                 </div>
               )}
             </div>
             <div>
-              <label className="text-xs text-surface-400 font-medium mb-1 block">Quantity</label>
+              <label className="text-xs text-on-surface-variant font-medium mb-1 block">Quantity</label>
               <input type="number" step="0.5" value={quantity} onChange={(e) => setQuantity(Number(e.target.value))}
-                className="w-full rounded-lg border border-surface-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+                className="w-full rounded-lg border border-outline px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
             </div>
             <div>
-              <label className="text-xs text-surface-400 font-medium mb-1 block">Unit</label>
+              <label className="text-xs text-on-surface-variant font-medium mb-1 block">Unit</label>
               <select value={unit} onChange={(e) => setUnit(e.target.value)}
-                className="w-full rounded-lg border border-surface-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 bg-white">
+                className="w-full rounded-lg border border-outline px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-surface-container-lowest">
                 {UNIT_OPTIONS.map((u) => <option key={u} value={u}>{u}</option>)}
               </select>
             </div>
@@ -207,44 +207,44 @@ export default function FoodLogs() {
 
           <div className="grid grid-cols-[1fr_100px_100px] gap-3 items-end mb-3">
             <div>
-              <label className="text-xs text-surface-400 font-medium mb-1 block">Term</label>
+              <label className="text-xs text-on-surface-variant font-medium mb-1 block">Term</label>
               <input type="number" value={term} onChange={(e) => setTerm(Number(e.target.value))}
-                className="w-full rounded-lg border border-surface-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+                className="w-full rounded-lg border border-outline px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
             </div>
             <div>
-              <label className="text-xs text-surface-400 font-medium mb-1 block">Year</label>
+              <label className="text-xs text-on-surface-variant font-medium mb-1 block">Year</label>
               <input type="number" value={academicYear} onChange={(e) => setAcademicYear(Number(e.target.value))}
-                className="w-full rounded-lg border border-surface-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+                className="w-full rounded-lg border border-outline px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
             </div>
           </div>
 
           {!showBulk && (
             <div className="relative" ref={searchRef}>
-              <label className="text-xs text-surface-400 font-medium mb-1 block">Student *</label>
+              <label className="text-xs text-on-surface-variant font-medium mb-1 block">Student *</label>
               <input ref={searchRef} value={studentSearch} onFocus={() => setShowDropdown(true)} onChange={(e) => { setStudentSearch(e.target.value); setShowDropdown(true); }}
                 onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                className="w-full rounded-lg border border-surface-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
+                className="w-full rounded-lg border border-outline px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 placeholder="Type student name, grade, or boarding house..." />
               {showDropdown && (
-                <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-surface-200 rounded-xl shadow-xl z-50 max-h-56 overflow-y-auto">
+                <div className="absolute left-0 right-0 top-full mt-1 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xl z-50 max-h-56 overflow-y-auto">
                   {filteredDropdown.length === 0 ? (
-                    <p className="text-xs text-surface-400 text-center py-6">No boarding students found.</p>
+                    <p className="text-xs text-on-surface-variant text-center py-6">No boarding students found.</p>
                   ) : filteredDropdown.map((s) => (
                     <div key={s.id} onClick={() => selectStudent(s)}
-                      className="flex items-center gap-3 px-4 py-2.5 hover:bg-brand-50 cursor-pointer transition-colors">
-                      <div className="w-8 h-8 rounded-full bg-surface-100 text-surface-600 text-xs font-bold flex items-center justify-center">{s.firstName[0]}{s.lastName[0]}</div>
+                      className="flex items-center gap-3 px-4 py-2.5 hover:bg-primary-container cursor-pointer transition-colors">
+                      <div className="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant text-xs font-bold flex items-center justify-center">{s.firstName[0]}{s.lastName[0]}</div>
                       <div>
-                        <p className="text-sm font-medium text-surface-900">{s.firstName} {s.lastName}</p>
-                        <p className="text-xs text-surface-400">{s.grade} · {s.boardingHouse || "No house"}</p>
+                        <p className="text-sm font-medium text-on-surface">{s.firstName} {s.lastName}</p>
+                        <p className="text-xs text-on-surface-variant">{s.grade} · {s.boardingHouse || "No house"}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               )}
               {selectedStudent && (
-                <div className="mt-2 flex items-center gap-2 bg-brand-50 rounded-lg px-3 py-2 text-sm">
-                  <span className="font-medium text-brand-700">{selectedStudent.firstName} {selectedStudent.lastName}</span>
-                  <span className="text-xs text-brand-400">· {selectedStudent.grade} · {selectedStudent.boardingHouse}</span>
+                <div className="mt-2 flex items-center gap-2 bg-primary-container rounded-lg px-3 py-2 text-sm">
+                  <span className="font-medium text-on-primary-container">{selectedStudent.firstName} {selectedStudent.lastName}</span>
+                  <span className="text-xs text-primary">· {selectedStudent.grade} · {selectedStudent.boardingHouse}</span>
                   <button onClick={() => { setSelectedStudent(null); setStudentSearch(""); }} className="ml-auto text-xs text-red-400 hover:text-red-600">Remove</button>
                 </div>
               )}
@@ -253,9 +253,9 @@ export default function FoodLogs() {
 
           {showBulk && (
             <div>
-              <label className="text-xs text-surface-400 font-medium mb-1 block">Students</label>
+              <label className="text-xs text-on-surface-variant font-medium mb-1 block">Students</label>
               <button onClick={() => setShowBulk(true)}
-                className="w-full rounded-lg border border-surface-300 px-3 py-2.5 text-sm text-left text-surface-400 hover:text-surface-600 hover:border-surface-400 transition-colors">
+                className="w-full rounded-lg border border-outline px-3 py-2.5 text-sm text-left text-on-surface-variant hover:text-on-surface-variant hover:border-surface-400 transition-colors">
                 {bulkIds.size === 0 ? "Tap to select boarding students..." : `${bulkIds.size} student${bulkIds.size > 1 ? 's' : ''} selected`}
               </button>
               {bulkIds.size > 0 && (
@@ -264,9 +264,9 @@ export default function FoodLogs() {
                     const s = boardingStudents.find((st) => st.id === id);
                     if (!s) return null;
                     return (
-                      <span key={id} className="inline-flex items-center gap-1 bg-brand-50 text-brand-700 text-xs px-2 py-1 rounded-full">
+                      <span key={id} className="inline-flex items-center gap-1 bg-primary-container text-on-primary-container text-xs px-2 py-1 rounded-full">
                         {s.firstName} {s.lastName}
-                        <button onClick={() => toggleBulk(id)} className="text-brand-400 hover:text-red-500">×</button>
+                        <button onClick={() => toggleBulk(id)} className="text-primary hover:text-red-500">×</button>
                       </span>
                     );
                   })}
@@ -291,44 +291,44 @@ export default function FoodLogs() {
         <Modal title="Select Boarding Students" onClose={() => setShowBulk(false)} width="max-w-xl">
           <div className="space-y-3">
             <input value={studentSearch} onChange={(e) => setStudentSearch(e.target.value)} autoFocus
-              className="w-full rounded-xl border border-surface-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
+              className="w-full rounded-xl border border-outline px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
               placeholder="Search students..." />
             <div className="max-h-72 overflow-y-auto space-y-1">
               {filteredDropdown.length === 0 ? (
-                <p className="text-center text-sm text-surface-400 py-8">No students match.</p>
+                <p className="text-center text-sm text-on-surface-variant py-8">No students match.</p>
               ) : filteredDropdown.map((s) => (
                 <div key={s.id} onClick={() => toggleBulk(s.id)}
-                  className={clsx("flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-colors", bulkIds.has(s.id) ? "bg-brand-50 border border-brand-200" : "hover:bg-surface-50 border border-transparent")}>
-                  <div className={clsx("w-5 h-5 rounded border-2 flex items-center justify-center shrink-0", bulkIds.has(s.id) ? "bg-brand-600 border-brand-600" : "border-surface-300")}>
+                  className={clsx("flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-colors", bulkIds.has(s.id) ? "bg-primary-container border border-primary/20" : "hover:bg-surface-container-low border border-transparent")}>
+                  <div className={clsx("w-5 h-5 rounded border-2 flex items-center justify-center shrink-0", bulkIds.has(s.id) ? "bg-primary border-brand-600" : "border-outline")}>
                     {bulkIds.has(s.id) && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
                   </div>
-                  <div className="w-8 h-8 rounded-full bg-surface-100 text-surface-600 text-xs font-bold flex items-center justify-center">{s.firstName[0]}{s.lastName[0]}</div>
-                  <div className="flex-1 min-w-0"><p className="text-sm font-medium text-surface-900">{s.firstName} {s.lastName}</p><p className="text-xs text-surface-400">{s.grade} · {s.boardingHouse || "No house"}</p></div>
+                  <div className="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant text-xs font-bold flex items-center justify-center">{s.firstName[0]}{s.lastName[0]}</div>
+                  <div className="flex-1 min-w-0"><p className="text-sm font-medium text-on-surface">{s.firstName} {s.lastName}</p><p className="text-xs text-on-surface-variant">{s.grade} · {s.boardingHouse || "No house"}</p></div>
                 </div>
               ))}
             </div>
-            <div className="flex justify-end pt-2 border-t border-surface-200">
+            <div className="flex justify-end pt-2 border-t border-outline-variant">
               <Button onClick={() => setShowBulk(false)} disabled={bulkIds.size === 0}>Done ({bulkIds.size} selected)</Button>
             </div>
           </div>
         </Modal>
       )}
 
-      <div className="bg-white rounded-2xl shadow-sm border border-surface-200 overflow-hidden">
+      <div className="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant overflow-hidden">
         <div className="p-4 border-b border-surface-100 flex items-center gap-3">
-          <svg className="w-4 h-4 text-surface-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+          <svg className="w-4 h-4 text-on-surface-variant shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
           <input value={logSearch} onChange={(e) => setLogSearch(e.target.value)} placeholder="Search entries by student, item..."
             className="flex-1 text-sm outline-none" />
-          <span className="text-xs text-surface-400 shrink-0">{filteredLogs.length} entries</span>
+          <span className="text-xs text-on-surface-variant shrink-0">{filteredLogs.length} entries</span>
         </div>
         {loading ? (
           <div className="flex justify-center py-16"><Spinner className="w-6 h-6" /></div>
         ) : filteredLogs.length === 0 ? (
-          <div className="py-16 text-center text-sm text-surface-400">{logSearch ? "No matches." : "No food logged yet. Select a student above."}</div>
+          <div className="py-16 text-center text-sm text-on-surface-variant">{logSearch ? "No matches." : "No food logged yet. Select a student above."}</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead><tr className="bg-surface-50 text-left text-xs text-surface-500 uppercase tracking-wider">
+              <thead><tr className="bg-surface-container-low text-left text-xs text-on-surface-variant uppercase tracking-wider">
                 <th className="px-4 py-3 font-medium">Date</th><th className="px-4 py-3 font-medium">Student</th><th className="px-4 py-3 font-medium">Grade</th>
                 <th className="px-4 py-3 font-medium">Type</th><th className="px-4 py-3 font-medium">Item</th><th className="px-4 py-3 font-medium">Qty</th>
                 <th className="px-4 py-3 font-medium text-right">Value</th><th className="px-4 py-3 font-medium">Notes</th>
@@ -336,10 +336,10 @@ export default function FoodLogs() {
               </tr></thead>
               <tbody className="divide-y divide-surface-100">
                 {filteredLogs.map((r) => (
-                  <tr key={r.id} className="hover:bg-surface-50 transition-colors">
-                    <td className="px-4 py-3 text-surface-500 whitespace-nowrap">{new Date(r.loggedAt).toLocaleDateString("en-KE")}</td>
-                    <td className="px-4 py-3 font-medium text-surface-900 whitespace-nowrap">{r.studentName || "—"}</td>
-                    <td className="px-4 py-3 text-surface-500">{r.studentGrade || "—"}</td>
+                  <tr key={r.id} className="hover:bg-surface-container-low transition-colors">
+                    <td className="px-4 py-3 text-on-surface-variant whitespace-nowrap">{new Date(r.loggedAt).toLocaleDateString("en-KE")}</td>
+                    <td className="px-4 py-3 font-medium text-on-surface whitespace-nowrap">{r.studentName || "—"}</td>
+                    <td className="px-4 py-3 text-on-surface-variant">{r.studentGrade || "—"}</td>
                     <td className="px-4 py-3">
                       <span className={clsx(
                         "inline-block text-xs font-medium px-2 py-0.5 rounded-full",
@@ -349,10 +349,10 @@ export default function FoodLogs() {
                         r.type === "wastage" && "bg-red-50 text-red-700",
                       )}>{r.type}</span>
                     </td>
-                    <td className="px-4 py-3 text-surface-800">{r.itemName}</td>
-                    <td className="px-4 py-3 text-surface-600">{r.quantity} {r.unit}</td>
+                    <td className="px-4 py-3 text-on-surface">{r.itemName}</td>
+                    <td className="px-4 py-3 text-on-surface-variant">{r.quantity} {r.unit}</td>
                     <td className="px-4 py-3 text-right font-semibold text-emerald-600"><Money value={r.estimatedValue || "0"} /></td>
-                    <td className="px-4 py-3 text-surface-400 max-w-[140px] truncate">{r.notes || "—"}</td>
+                    <td className="px-4 py-3 text-on-surface-variant max-w-[140px] truncate">{r.notes || "—"}</td>
                     {isAdmin && <td className="px-4 py-3 text-right"><button onClick={() => setShowDelete(r.id)} className="text-xs text-red-400 hover:text-red-600 hover:bg-red-50 px-2 py-1 rounded-md">Delete</button></td>}
                   </tr>
                 ))}
@@ -364,8 +364,8 @@ export default function FoodLogs() {
 
       {showDelete && (
         <Modal title="Delete Entry" onClose={() => setShowDelete(null)}>
-          <p className="text-sm text-surface-600">Remove this food log entry?</p>
-          <div className="flex justify-end gap-2 mt-5 pt-3 border-t border-surface-200">
+          <p className="text-sm text-on-surface-variant">Remove this food log entry?</p>
+          <div className="flex justify-end gap-2 mt-5 pt-3 border-t border-outline-variant">
             <Button variant="ghost" onClick={() => setShowDelete(null)}>Cancel</Button>
             <button onClick={() => remove(showDelete)} className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-xl">Delete</button>
           </div>

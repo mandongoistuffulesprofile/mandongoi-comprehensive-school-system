@@ -5,7 +5,7 @@ import { eq, and, desc, sql } from 'drizzle-orm';
 import { requireRole } from '../middleware/rbac';
 import { AuthRequest } from '../middleware/auth';
 import { AppError } from '../middleware/errorHandler';
-import { postJournalEntry, trialBalance } from '../services/ledger';
+import { postJournalEntry, trialBalance, listJournalEntries, getJournalEntryById, updateJournalEntry } from '../services/ledger';
 
 const router = Router();
 
@@ -77,33 +77,24 @@ router.post('/journal', requireRole('schoolAdmin', 'accountant'), async (req: Au
 
 router.get('/journal', requireRole('schoolAdmin', 'accountant'), async (req: AuthRequest, res, next) => {
   try {
-    const data = await db
-      .select({
-        id: ledgerEntries.id,
-        entryDate: ledgerEntries.entryDate,
-        description: ledgerEntries.description,
-        sourceType: ledgerEntries.sourceType,
-        createdAt: ledgerEntries.createdAt,
-        createdByName: users.name,
-        lines: sql`(
-          SELECT json_agg(json_build_object(
-            'accountId', ll.account_id,
-            'accountName', la.name,
-            'accountCode', la.code,
-            'debit', ll.debit,
-            'credit', ll.credit
-          ))
-          FROM ${ledgerLines} ll
-          JOIN ${ledgerAccounts} la ON la.id = ll.account_id
-          WHERE ll.ledger_entry_id = ${ledgerEntries.id}
-        )`,
-      })
-      .from(ledgerEntries)
-      .leftJoin(users, eq(ledgerEntries.createdBy, users.id))
-      .orderBy(desc(ledgerEntries.createdAt))
-      .limit(50);
+    const result = await listJournalEntries({
+      page: Number(req.query.page) || 1,
+      limit: Number(req.query.limit) || 10,
+      search: (req.query.search as string) || "",
+      sourceType: req.query.sourceType as string | undefined,
+      dateFrom: req.query.dateFrom as string | undefined,
+      dateTo: req.query.dateTo as string | undefined,
+      minAmount: req.query.minAmount ? Number(req.query.minAmount) : undefined,
+    });
+    res.json({ success: true, data: result.data, pagination: result.pagination });
+  } catch (err) { next(err); }
+});
 
-    res.json({ success: true, data });
+router.get('/journal/:id', requireRole('schoolAdmin', 'accountant'), async (req: AuthRequest, res, next) => {
+  try {
+    const entry = await getJournalEntryById(req.params.id);
+    if (!entry) return res.status(404).json({ success: false, error: 'Journal entry not found' });
+    res.json({ success: true, data: entry });
   } catch (err) { next(err); }
 });
 
@@ -138,6 +129,29 @@ router.delete('/journal/:id', requireRole('schoolAdmin'), async (req: AuthReques
     await db.delete(ledgerEntries).where(eq(ledgerEntries.id, req.params.id));
 
     res.json({ success: true, data: null });
+  } catch (err) { next(err); }
+});
+
+router.put('/journal/:id', requireRole('schoolAdmin', 'accountant'), async (req: AuthRequest, res, next) => {
+  try {
+    const [entry] = await db.select().from(ledgerEntries).where(eq(ledgerEntries.id, req.params.id)).limit(1);
+    if (!entry) return res.status(404).json({ success: false, error: 'Journal entry not found' });
+    if (entry.sourceType !== 'manual') {
+      return res.status(400).json({ success: false, error: 'Only manual entries can be edited' });
+    }
+
+    const { entryDate, description, lines } = req.body;
+    if (!Array.isArray(lines) || lines.length === 0) {
+      return res.status(400).json({ success: false, error: 'Lines array is required' });
+    }
+
+    const updated = await updateJournalEntry(req.params.id, {
+      entryDate: entryDate || entry.entryDate,
+      description: description ?? entry.description ?? '',
+      lines: lines.map((l: any) => ({ accountId: l.accountId, debit: l.debit || 0, credit: l.credit || 0 })),
+    });
+
+    res.json({ success: true, data: updated });
   } catch (err) { next(err); }
 });
 

@@ -46,7 +46,7 @@ export default function PaymentsLog() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by transaction ID, phone, or reference..."
-            className="flex-1 min-w-[200px] rounded-lg border border-surface-300 px-3.5 py-2 text-sm"
+            className="flex-1 min-w-[200px] rounded-lg border border-outline px-3.5 py-2 text-sm"
           />
           <Dropdown
             value={typeFilter}
@@ -70,22 +70,22 @@ export default function PaymentsLog() {
             onChange={setStatusFilter}
             placeholder="All Statuses"
           />
-          <div className="text-sm font-semibold text-surface-700 ml-auto">
-            Total: <Money value={totalAmount} className="text-brand-600" />
+          <div className="text-sm font-semibold text-on-surface ml-auto">
+            Total: <Money value={totalAmount} className="text-primary" />
           </div>
         </div>
       </Card>
 
       {loading ? (
-        <div className="flex justify-center py-12"><div className="w-6 h-6 rounded-full border-2 border-surface-200 border-t-brand-600 animate-spin" /></div>
+        <div className="flex justify-center py-12"><div className="w-6 h-6 rounded-full border-2 border-outline-variant border-t-brand-600 animate-spin" /></div>
       ) : filtered.length === 0 ? (
-        <Card className="p-8 text-center text-surface-400">No payments found.</Card>
+        <Card className="p-8 text-center text-on-surface-variant">No payments found.</Card>
       ) : (
         <Card>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-surface-50 border-b border-surface-200 text-left text-xs uppercase tracking-wider text-surface-500">
+                <tr className="bg-surface-container-low border-b border-outline-variant text-left text-xs uppercase tracking-wider text-on-surface-variant">
                   <th className="py-3 px-4 font-medium">Type</th>
                   <th className="py-3 px-4 font-medium">Transaction ID</th>
                   <th className="py-3 px-4 font-medium">Amount</th>
@@ -97,7 +97,7 @@ export default function PaymentsLog() {
               </thead>
               <tbody>
                 {filtered.map((p) => (
-                  <tr key={p.id} className="border-b border-surface-100 hover:bg-surface-50">
+                  <tr key={p.id} className="border-b border-surface-100 hover:bg-surface-container-low">
                     <td className="py-3 px-4">
                       <span className={clsx(
                         "inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium",
@@ -106,12 +106,12 @@ export default function PaymentsLog() {
                         {p.type === "mpesa" ? "M-Pesa" : "Manual"}
                       </span>
                     </td>
-                    <td className="py-3 px-4 font-mono text-xs text-surface-600">{p.transactionId || "—"}</td>
-                    <td className="py-3 px-4 font-semibold text-surface-900"><Money value={p.amount} /></td>
-                    <td className="py-3 px-4 text-surface-600">{p.phoneNumber || "—"}</td>
-                    <td className="py-3 px-4 text-xs text-surface-500">{p.accountReference || "—"}</td>
+                    <td className="py-3 px-4 font-mono text-xs text-on-surface-variant">{p.transactionId || "—"}</td>
+                    <td className="py-3 px-4 font-semibold text-on-surface"><Money value={p.amount} /></td>
+                    <td className="py-3 px-4 text-on-surface-variant">{p.phoneNumber || "—"}</td>
+                    <td className="py-3 px-4 text-xs text-on-surface-variant">{p.accountReference || "—"}</td>
                     <td className="py-3 px-4"><EnumBadge value={p.matchStatus} /></td>
-                    <td className="py-3 px-4 text-xs text-surface-400">
+                    <td className="py-3 px-4 text-xs text-on-surface-variant">
                       {new Date(p.transactionDate).toLocaleDateString("en-KE", {
                         year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit",
                       })}

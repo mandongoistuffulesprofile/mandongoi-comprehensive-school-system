@@ -1,6 +1,6 @@
 import { db, type DbClient } from '../db';
-import { ledgerAccounts, ledgerEntries, ledgerLines, receipts } from '../models/schema';
-import { eq, sql } from 'drizzle-orm';
+import { ledgerAccounts, ledgerEntries, ledgerLines, receipts, users } from '../models/schema';
+import { eq, and, desc, sql } from 'drizzle-orm';
 import { AppError } from '../middleware/errorHandler';
 import { writeToDlq } from './deadLetterQueue';
 
@@ -44,7 +44,7 @@ export async function postJournalEntry(input: PostJournalInput, tx?: DbClient) {
   const existing = await client
     .select({ id: ledgerAccounts.id })
     .from(ledgerAccounts)
-    .where(sql`${ledgerAccounts.id} = ANY(ARRAY[${sql.join(accountIds.map((id) => sql`${id}`), sql`, `)}])`);
+    .where(sql`${ledgerAccounts.id} = ANY(ARRAY[${sql.join(accountIds.map((id) => sql`${id}::uuid`), sql`, `)}])`);
   const existingSet = new Set(existing.map((a) => a.id));
   for (const id of accountIds) {
     if (!existingSet.has(id)) {
@@ -66,6 +66,136 @@ export async function postJournalEntry(input: PostJournalInput, tx?: DbClient) {
   await client.insert(ledgerLines).values(
     input.lines.map((l) => ({
       ledgerEntryId: entry.id,
+      accountId: l.accountId,
+      debit: String(l.debit || 0),
+      credit: String(l.credit || 0),
+    })),
+  );
+
+  return entry;
+}
+
+export type JournalListFilter = {
+  page?: number;
+  limit?: number;
+  search?: string;
+  sourceType?: string;
+  dateFrom?: string;
+  dateTo?: string;
+  minAmount?: number;
+};
+
+export async function listJournalEntries(filter: JournalListFilter = {}) {
+  const { page = 1, limit = 10, search = "", sourceType, dateFrom, dateTo, minAmount } = filter;
+  const offset = (page - 1) * limit;
+
+  const conditions: any[] = [];
+
+  if (search) {
+    conditions.push(sql`${ledgerEntries.description} ILIKE ${`%${search}%`}`);
+  }
+  if (sourceType) {
+    conditions.push(eq(ledgerEntries.sourceType, sourceType as any));
+  }
+  if (dateFrom) {
+    conditions.push(sql`${ledgerEntries.entryDate} >= ${dateFrom}::date`);
+  }
+  if (dateTo) {
+    conditions.push(sql`${ledgerEntries.entryDate} <= ${dateTo}::date`);
+  }
+
+  const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
+
+  const [{ count }] = await db
+    .select({ count: sql<number>`count(*)` })
+    .from(ledgerEntries)
+    .where(whereClause);
+
+  const rows = await db
+    .select({
+      id: ledgerEntries.id,
+      entryDate: ledgerEntries.entryDate,
+      description: ledgerEntries.description,
+      sourceType: ledgerEntries.sourceType,
+      createdAt: ledgerEntries.createdAt,
+      createdByName: users.name,
+      sourceId: ledgerEntries.sourceId,
+    })
+    .from(ledgerEntries)
+    .leftJoin(users, eq(ledgerEntries.createdBy, users.id))
+    .where(whereClause)
+    .orderBy(desc(ledgerEntries.createdAt))
+    .limit(limit)
+    .offset(offset);
+
+  const total = Number(count) || 0;
+  const totalPages = Math.max(1, Math.ceil(total / limit));
+
+  return {
+    data: rows,
+    pagination: { page, limit, total, totalPages },
+  };
+}
+
+export async function getJournalEntryById(id: string) {
+  const [entry] = await db
+    .select({
+      id: ledgerEntries.id,
+      entryDate: ledgerEntries.entryDate,
+      description: ledgerEntries.description,
+      sourceType: ledgerEntries.sourceType,
+      sourceId: ledgerEntries.sourceId,
+      createdAt: ledgerEntries.createdAt,
+      createdByName: users.name,
+    })
+    .from(ledgerEntries)
+    .leftJoin(users, eq(ledgerEntries.createdBy, users.id))
+    .where(eq(ledgerEntries.id, id))
+    .limit(1);
+
+  if (!entry) return null;
+
+  const lines = await db
+    .select({
+      accountId: ledgerLines.accountId,
+      accountName: ledgerAccounts.name,
+      accountCode: ledgerAccounts.code,
+      accountType: ledgerAccounts.type,
+      debit: ledgerLines.debit,
+      credit: ledgerLines.credit,
+    })
+    .from(ledgerLines)
+    .leftJoin(ledgerAccounts, eq(ledgerLines.accountId, ledgerAccounts.id))
+    .where(eq(ledgerLines.ledgerEntryId, id))
+    .orderBy(ledgerLines.id);
+
+  const totalDebit = lines.reduce((s, l) => s + Number(l.debit || 0), 0);
+  const totalCredit = lines.reduce((s, l) => s + Number(l.credit || 0), 0);
+
+  return { ...entry, lines, totalDebit, totalCredit };
+}
+
+export async function updateJournalEntry(id: string, input: { entryDate: Date | string; description?: string; lines: JournalLine[] }) {
+  const totalDebit = input.lines.reduce((s, l) => s + (l.debit || 0), 0);
+  const totalCredit = input.lines.reduce((s, l) => s + (l.credit || 0), 0);
+  if (Math.abs(totalDebit - totalCredit) > 0.001) {
+    throw new AppError('Journal entry must be balanced (total debits must equal total credits)', 400);
+  }
+
+  const [entry] = await db
+    .update(ledgerEntries)
+    .set({
+      entryDate: typeof input.entryDate === 'string' ? new Date(input.entryDate) : input.entryDate,
+      description: input.description,
+    })
+    .where(eq(ledgerEntries.id, id))
+    .returning();
+  if (!entry) throw new AppError('Journal entry not found', 404);
+
+  await db.delete(ledgerLines).where(eq(ledgerLines.ledgerEntryId, id));
+  await db.insert(ledgerLines).values(
+    input.lines.map((l) => ({
+      ledgerEntryId: id,
       accountId: l.accountId,
       debit: String(l.debit || 0),
       credit: String(l.credit || 0),

@@ -15,8 +15,8 @@ import clsx from "clsx";
 
 const GRADE_LABELS = ["BE", "AE", "ME", "EE"];
 const GRADE_FULL = ["Below Expectations", "Approaching Expectations", "Meeting Expectations", "Exceeding Expectations"];
-const GRADE_COLORS = ["text-red-500", "text-amber-500", "text-emerald-500", "text-brand-600"];
-const GRADE_BG_CLASSES = ["bg-red-100 text-red-700", "bg-amber-100 text-amber-700", "bg-emerald-100 text-emerald-700", "bg-brand-100 text-brand-700"];
+const GRADE_COLORS = ["text-red-500", "text-amber-500", "text-emerald-500", "text-primary"];
+const GRADE_BG_CLASSES = ["bg-red-100 text-red-700", "bg-amber-100 text-amber-700", "bg-emerald-100 text-emerald-700", "bg-primary-container text-on-primary-container"];
 
 function scoreToGrade(score: number): { level: number; label: string; points: number } {
   if (score >= 80) return { level: 4, label: 'EE', points: 4 };
@@ -374,7 +374,7 @@ export default function ReportCards() {
           <FormField spec={{ name: "term", label: "Term", type: "number", required: true }} value={term} onChange={(v) => setTerm(v as number)} />
           <div className="flex gap-2">
             <FormField spec={{ name: "academicYear", label: "Year", type: "number", required: true }} value={year} onChange={(v) => setYear(v as number)} />
-            <button onClick={loadStudents} className="px-4 py-2.5 bg-brand-600 text-white rounded-lg text-sm font-medium hover:bg-brand-700 transition-colors self-end whitespace-nowrap">
+            <button onClick={loadStudents} className="px-4 py-2.5 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary transition-colors self-end whitespace-nowrap">
               {loading ? "..." : "Load"}
             </button>
           </div>
@@ -384,18 +384,18 @@ export default function ReportCards() {
       {loading && <div className="flex justify-center py-10"><Spinner className="w-6 h-6" /></div>}
 
       {loaded && students.length === 0 && (
-        <p className="text-center text-surface-500 py-10">No students found in {grade}.</p>
+        <p className="text-center text-on-surface-variant py-10">No students found in {grade}.</p>
       )}
 
       {loaded && students.length > 0 && (
         <>
           <div className="flex items-center justify-between flex-wrap gap-3 mb-4">
             <div className="flex items-center gap-3">
-              <span className="text-sm text-surface-600 font-medium">{students.length} students</span>
+              <span className="text-sm text-on-surface-variant font-medium">{students.length} students</span>
               <span className="w-px h-4 bg-surface-200" />
-              <span className="text-sm text-surface-500">Class avg: <span className="font-semibold text-surface-700">{classAvg.toFixed(1)}%</span></span>
+              <span className="text-sm text-on-surface-variant">Class avg: <span className="font-semibold text-on-surface">{classAvg.toFixed(1)}%</span></span>
               {selectedIds.size > 0 && (
-                <span className="text-xs text-brand-600 font-medium bg-brand-50 px-2.5 py-1 rounded-lg">{selectedIds.size} selected</span>
+                <span className="text-xs text-primary font-medium bg-primary-container px-2.5 py-1 rounded-lg">{selectedIds.size} selected</span>
               )}
             </div>
             <div className="flex items-center gap-3">
@@ -417,15 +417,15 @@ export default function ReportCards() {
           </div>
 
           <Card className="divide-y divide-surface-100 overflow-hidden">
-            <div className="flex items-center gap-3 px-4 py-2.5 bg-surface-50/70 border-b border-surface-200 text-xs font-medium text-surface-500">
+            <div className="flex items-center gap-3 px-4 py-2.5 bg-surface-container-low/70 border-b border-outline-variant text-xs font-medium text-on-surface-variant">
               <input
                 type="checkbox"
                 checked={selectedIds.size === students.length && students.length > 0}
                 onChange={toggleAll}
-                className="rounded border-surface-300 text-brand-600 focus:ring-brand-500 shrink-0"
+                className="rounded border-outline text-primary focus:ring-primary shrink-0"
               />
               <span className="w-48">Student</span>
-              <span className="text-surface-400">Subjects</span>
+              <span className="text-on-surface-variant">Subjects</span>
               <span className="ml-auto flex items-center gap-4">
                 <span className="w-14 text-center">Mean</span>
                 <span className="w-12 text-center">Grade</span>
@@ -437,19 +437,19 @@ export default function ReportCards() {
             {studentRows.map(({ student: s, avg, comp, subjects }) => (
               <div key={s.id} className={clsx(
                 "flex items-center gap-3 px-4 py-3 transition-colors text-sm",
-                selectedIds.has(s.id) ? "bg-brand-50/40" : "hover:bg-surface-50",
+                selectedIds.has(s.id) ? "bg-primary-container/40" : "hover:bg-surface-container-low",
               )}>
                 <input
                   type="checkbox"
                   checked={selectedIds.has(s.id)}
                   onChange={() => toggleSelect(s.id)}
-                  className="rounded border-surface-300 text-brand-600 focus:ring-brand-500 shrink-0"
+                  className="rounded border-outline text-primary focus:ring-primary shrink-0"
                 />
                 <div className="w-48 shrink-0">
-                  <button onClick={() => setChartStudent(s)} className="font-medium text-surface-900 hover:text-brand-600 transition-colors text-left">
+                  <button onClick={() => setChartStudent(s)} className="font-medium text-on-surface hover:text-primary transition-colors text-left">
                     {s.firstName} {s.lastName}
                   </button>
-                  <div className="text-[11px] text-surface-400">{s.nemisId || "\u2014"}</div>
+                  <div className="text-[11px] text-on-surface-variant">{s.nemisId || "\u2014"}</div>
                 </div>
                 <div className="flex items-center gap-1.5 flex-1 min-w-0 flex-wrap">
                   {learningAreas.map((la) => {
@@ -462,12 +462,12 @@ export default function ReportCards() {
                         className={clsx(
                           "group relative w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-bold transition-all",
                           level > 0
-                            ? ["bg-red-100 text-red-700", "bg-amber-100 text-amber-700", "bg-emerald-100 text-emerald-700", "bg-brand-100 text-brand-700"][level - 1]
-                            : "bg-surface-100 text-surface-300",
+                            ? ["bg-red-100 text-red-700", "bg-amber-100 text-amber-700", "bg-emerald-100 text-emerald-700", "bg-primary-container text-on-primary-container"][level - 1]
+                            : "bg-surface-container text-outline-variant",
                         )}
                       >
                         {level > 0 ? GRADE_LABELS[level - 1] : "\u2014"}
-                        <div className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-white border border-surface-200 flex items-center justify-center text-[7px] font-bold text-surface-500 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-surface-container-lowest border border-outline-variant flex items-center justify-center text-[7px] font-bold text-on-surface-variant shadow-sm opacity-0 group-hover:opacity-100 transition-opacity">
                           {r?.score ?? "?"}
                         </div>
                       </div>
@@ -486,18 +486,18 @@ export default function ReportCards() {
                   <input
                     value={teacherComments[s.id] || ""}
                     onChange={(e) => setTeacherComments({ ...teacherComments, [s.id]: e.target.value })}
-                    className="w-24 text-xs border-0 bg-transparent focus:bg-surface-50 rounded px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-brand-500/30 placeholder-surface-300"
+                    className="w-24 text-xs border-0 bg-transparent focus:bg-surface-container-low rounded px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-primary/30 placeholder-surface-300"
                     placeholder="Comment..."
                   />
                   <input
                     value={headComments[s.id] || ""}
                     onChange={(e) => setHeadComments({ ...headComments, [s.id]: e.target.value })}
-                    className="w-24 text-xs border-0 bg-transparent focus:bg-surface-50 rounded px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-brand-500/30 placeholder-surface-300"
+                    className="w-24 text-xs border-0 bg-transparent focus:bg-surface-container-low rounded px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-primary/30 placeholder-surface-300"
                     placeholder="Head..."
                   />
                   <button
                     onClick={() => printSingle(s)}
-                    className="w-16 text-center text-xs text-brand-600 hover:text-brand-800 font-medium hover:bg-brand-50 px-2 py-1 rounded transition-colors"
+                    className="w-16 text-center text-xs text-primary hover:text-primary font-medium hover:bg-primary-container px-2 py-1 rounded transition-colors"
                   >
                     Print
                   </button>
@@ -520,16 +520,16 @@ export default function ReportCards() {
               return (
                 <div className="space-y-4">
                   <div className="flex items-center gap-4 text-sm">
-                    <span className="text-surface-500">Mean: <strong className="text-surface-900">{avg.toFixed(1)}%</strong></span>
-                    <span className="text-surface-500">Grade: <strong className={GRADE_COLORS[comp - 1]}>{GRADE_LABELS[comp - 1]}</strong></span>
-                    <span className="text-surface-500">Subjects assessed: <strong className="text-surface-900">{valid.length}/{subjects.length}</strong></span>
+                    <span className="text-on-surface-variant">Mean: <strong className="text-on-surface">{avg.toFixed(1)}%</strong></span>
+                    <span className="text-on-surface-variant">Grade: <strong className={GRADE_COLORS[comp - 1]}>{GRADE_LABELS[comp - 1]}</strong></span>
+                    <span className="text-on-surface-variant">Subjects assessed: <strong className="text-on-surface">{valid.length}/{subjects.length}</strong></span>
                   </div>
                   <div className="flex items-end h-52 gap-4">
                     {valid.map((subj) => {
                       const grad = barGradients[subj.grade!.label] || '#6b7280';
                       return (
                         <div key={subj.name} className="flex-1 flex flex-col items-center justify-end h-full group relative">
-                          <div className="mb-1 text-xs font-semibold text-surface-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <div className="mb-1 text-xs font-semibold text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">
                             {subj.avgPercent.toFixed(1)}%
                           </div>
                           <div
@@ -545,14 +545,14 @@ export default function ReportCards() {
                           <div className="mt-2 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white shadow-sm" style={{ background: grad }}>
                             {subj.grade!.label}
                           </div>
-                          <div className="text-[10px] text-surface-500 mt-1.5 text-center leading-tight font-medium">{subj.short}</div>
+                          <div className="text-[10px] text-on-surface-variant mt-1.5 text-center leading-tight font-medium">{subj.short}</div>
                         </div>
                       );
                     })}
                   </div>
                   <div className="flex justify-center gap-4 pt-2 border-t border-surface-100">
                     {[['EE', 'Exceeding'], ['ME', 'Meeting'], ['AE', 'Approaching'], ['BE', 'Below']].map(([code, label]) => (
-                      <div key={code} className="flex items-center gap-1.5 text-xs text-surface-500">
+                      <div key={code} className="flex items-center gap-1.5 text-xs text-on-surface-variant">
                         <div className="w-2.5 h-2.5 rounded-sm" style={{ background: barGradients[code] }} />
                         {code} \u2014 {label}
                       </div>

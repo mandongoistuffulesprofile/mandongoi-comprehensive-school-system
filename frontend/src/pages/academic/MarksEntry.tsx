@@ -198,14 +198,14 @@ export default function MarksEntry() {
     <div className="animate-fade-in max-w-5xl">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h1 className="text-xl font-bold text-surface-900">Marks Entry</h1>
-          <p className="text-sm text-surface-500 mt-0.5">Record and manage student assessment scores.</p>
+          <h1 className="text-xl font-bold text-on-surface">Marks Entry</h1>
+          <p className="text-sm text-on-surface-variant mt-0.5">Record and manage student assessment scores.</p>
         </div>
       </div>
 
-      <Card className={clsx("p-4 mb-4 transition-all duration-300", !grade && "border-brand-200/60 bg-brand-50/20")}>
+      <Card className={clsx("p-4 mb-4 transition-all duration-300", !grade && "border-primary/20/60 bg-primary-container/20")}>
         {!grade && (
-          <p className="text-xs text-brand-600 font-medium mb-3 flex items-center gap-1.5">
+          <p className="text-xs text-primary font-medium mb-3 flex items-center gap-1.5">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
             </svg>
@@ -257,10 +257,10 @@ export default function MarksEntry() {
                     value={academicYear}
                     onChange={(e) => setAcademicYear(Number(e.target.value))}
                     className={clsx(
-                      "w-[88px] px-4 py-2.5 text-sm rounded-2xl border-2 bg-white transition-all duration-150",
-                      "shadow-sm hover:shadow-lg focus:outline-none focus:ring-[3px] focus:ring-brand-500/25 focus:border-brand-400",
+                      "w-[88px] px-4 py-2.5 text-sm rounded-2xl border-2 bg-surface-container-lowest transition-all duration-150",
+                      "shadow-sm hover:shadow-lg focus:outline-none focus:ring-[3px] focus:ring-primary/25 focus:border-primary",
                       "active:scale-[0.97]",
-                      "border-surface-200 text-surface-700 hover:border-surface-300",
+                      "border-outline-variant text-on-surface hover:border-outline",
                     )}
                   />
                 </div>
@@ -271,15 +271,15 @@ export default function MarksEntry() {
           <div className="flex items-center gap-3">
             {selectedSubject && grade && marks.length > 0 && (
               <>
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-surface-50 rounded-xl text-xs shadow-sm">
-                  <span className="text-surface-500 font-semibold">{marks.length}</span>
-                  <span className="text-surface-400">students</span>
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-surface-container-low rounded-xl text-xs shadow-sm">
+                  <span className="text-on-surface-variant font-semibold">{marks.length}</span>
+                  <span className="text-on-surface-variant">students</span>
                   <span className="w-px h-3 bg-surface-200" />
-                  <span className="text-brand-600 font-semibold">{filledCount}</span>
-                  <span className="text-surface-400">scored</span>
+                  <span className="text-primary font-semibold">{filledCount}</span>
+                  <span className="text-on-surface-variant">scored</span>
                   <span className="w-px h-3 bg-surface-200" />
                   <span className="text-emerald-600 font-semibold">{savedCount}</span>
-                  <span className="text-surface-400">saved</span>
+                  <span className="text-on-surface-variant">saved</span>
                 </div>
                 {missingCount > 0 && (
                   <button
@@ -289,7 +289,7 @@ export default function MarksEntry() {
                       "shadow-sm active:scale-[0.97]",
                       showMissingOnly
                         ? "bg-amber-100 text-amber-700 ring-1 ring-amber-300"
-                        : "bg-white border-2 border-dashed border-surface-300 text-surface-400 hover:border-amber-300 hover:text-amber-600 hover:bg-amber-50/30",
+                        : "bg-surface-container-lowest border-2 border-dashed border-outline text-on-surface-variant hover:border-amber-300 hover:text-amber-600 hover:bg-amber-50/30",
                     )}
                   >
                     {missingCount} missing{showMissingOnly ? " \u25C0" : ""}
@@ -314,15 +314,15 @@ export default function MarksEntry() {
       {selectedSubject && grade && loaded && (
         <Card className="overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.06)]">
           {students.length === 0 ? (
-            <div className="p-10 text-center text-sm text-surface-400">No students found in this grade.</div>
+            <div className="p-10 text-center text-sm text-on-surface-variant">No students found in this grade.</div>
           ) : (
             <>
-              <div className="flex items-center justify-between px-4 py-2.5 bg-surface-50/70 border-b border-surface-200 text-xs text-surface-500">
+              <div className="flex items-center justify-between px-4 py-2.5 bg-surface-container-low/70 border-b border-outline-variant text-xs text-on-surface-variant">
                 <span className="flex items-center gap-1.5">
                   <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                   </svg>
-                  Enter scores &middot; Press <kbd className="px-1.5 py-0.5 bg-surface-100 rounded-md text-[10px] font-mono shadow-inner">Enter</kbd> for next student
+                  Enter scores &middot; Press <kbd className="px-1.5 py-0.5 bg-surface-container rounded-md text-[10px] font-mono shadow-inner">Enter</kbd> for next student
                 </span>
                 <span className="flex items-center gap-1">
                   <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -331,20 +331,20 @@ export default function MarksEntry() {
                   Auto-saves on entry
                 </span>
               </div>
-              <div className="px-4 py-2 border-b border-surface-200 flex items-center gap-3">
+              <div className="px-4 py-2 border-b border-outline-variant flex items-center gap-3">
                 <div className="relative flex-1 max-w-xs">
-                  <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                   <input
                     value={studentSearch}
                     onChange={(e) => { setStudentSearch(e.target.value); setFocusedIdx(null); }}
                     placeholder="Search students by name..."
-                    className="w-full rounded-lg border border-surface-200 pl-9 pr-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 bg-white"
+                    className="w-full rounded-lg border border-outline-variant pl-9 pr-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-surface-container-lowest"
                   />
                 </div>
                 {studentSearch && (
-                  <span className="text-[11px] text-surface-400 whitespace-nowrap">
+                  <span className="text-[11px] text-on-surface-variant whitespace-nowrap">
                     {displayMarks.length} of {marks.length} students
                   </span>
                 )}
@@ -352,7 +352,7 @@ export default function MarksEntry() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="text-left text-[11px] font-semibold uppercase tracking-wider text-surface-500 bg-surface-50/30">
+                    <tr className="text-left text-[11px] font-semibold uppercase tracking-wider text-on-surface-variant bg-surface-container-low/30">
                       <th className="px-4 py-3 w-8">#</th>
                       <th className="px-4 py-3">Student</th>
                       <th className="px-4 py-3 w-28">Score (%)</th>
@@ -363,15 +363,15 @@ export default function MarksEntry() {
                   </thead>
                   <tbody>
                     {displayMarks.length === 0 ? (
-                      <tr><td colSpan={6} className="px-4 py-10 text-center text-sm text-surface-400">No students match "{studentSearch}".</td></tr>
+                      <tr><td colSpan={6} className="px-4 py-10 text-center text-sm text-on-surface-variant">No students match "{studentSearch}".</td></tr>
                     ) : displayMarks.map((m, i) => (
                       <tr key={m.studentId} className={clsx(
                         "border-b border-surface-100 transition-colors duration-100",
-                        focusedIdx === i ? "bg-brand-50/40" : "hover:bg-surface-50/60",
+                        focusedIdx === i ? "bg-primary-container/40" : "hover:bg-surface-container-low/60",
                         m.score === "" && "bg-amber-50/20",
                       )}>
-                        <td className="px-4 py-2.5 text-surface-400 text-[11px] font-medium">{i + 1}</td>
-                        <td className="px-4 py-2.5 font-medium text-surface-900 text-sm whitespace-nowrap">{m.studentName}</td>
+                        <td className="px-4 py-2.5 text-on-surface-variant text-[11px] font-medium">{i + 1}</td>
+                        <td className="px-4 py-2.5 font-medium text-on-surface text-sm whitespace-nowrap">{m.studentName}</td>
                         <td className="px-4 py-2.5">
                           <input
                             ref={(el) => { inputRefs.current[i] = el; }}
@@ -385,10 +385,10 @@ export default function MarksEntry() {
                             className={clsx(
                               "w-full rounded-2xl border-2 px-3.5 py-2 text-sm transition-all duration-150",
                               "shadow-sm hover:shadow-lg active:scale-[0.97]",
-                              "focus:outline-none focus:ring-[3px] focus:ring-brand-500/25",
+                              "focus:outline-none focus:ring-[3px] focus:ring-primary/25",
                               m.score !== ""
-                                ? "border-brand-300 bg-brand-50/60 focus:border-brand-500"
-                                : "border-surface-200 bg-white hover:border-surface-300 focus:border-brand-400",
+                                ? "border-primary/30 bg-primary-container/60 focus:border-primary"
+                                : "border-outline-variant bg-surface-container-lowest hover:border-outline focus:border-primary",
                             )}
                             placeholder="0-100"
                           />
@@ -404,7 +404,7 @@ export default function MarksEntry() {
                                   "shadow-sm active:scale-90",
                                   m.performanceLevel === l
                                     ? l >= 3 ? "bg-emerald-100 text-emerald-700 shadow-sm ring-1 ring-emerald-300" : l === 2 ? "bg-amber-100 text-amber-700 shadow-sm ring-1 ring-amber-300" : "bg-red-100 text-red-700 shadow-sm ring-1 ring-red-300"
-                                    : "bg-surface-100 text-surface-400 hover:bg-surface-200 hover:text-surface-500 hover:shadow-sm",
+                                    : "bg-surface-container text-on-surface-variant hover:bg-surface-200 hover:text-on-surface-variant hover:shadow-sm",
                                 )}
                               >
                                 {l}
@@ -420,8 +420,8 @@ export default function MarksEntry() {
                             className={clsx(
                               "w-full rounded-2xl border-2 px-3.5 py-2 text-sm transition-all duration-150",
                               "shadow-sm hover:shadow-lg active:scale-[0.97]",
-                              "focus:outline-none focus:ring-[3px] focus:ring-brand-500/25 focus:border-brand-400",
-                              "border-surface-200 bg-white hover:border-surface-300",
+                              "focus:outline-none focus:ring-[3px] focus:ring-primary/25 focus:border-primary",
+                              "border-outline-variant bg-surface-container-lowest hover:border-outline",
                             )}
                             placeholder="Auto-set from level"
                           />
@@ -449,8 +449,8 @@ export default function MarksEntry() {
       )}
 
       {!selectedSubject && grade && loaded && (
-        <div className="flex flex-col items-center justify-center py-20 text-sm text-surface-400 gap-3">
-          <svg className="w-10 h-10 text-surface-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <div className="flex flex-col items-center justify-center py-20 text-sm text-on-surface-variant gap-3">
+          <svg className="w-10 h-10 text-outline-variant" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
           </svg>
           <span>Select a subject to begin entering marks.</span>
@@ -458,7 +458,7 @@ export default function MarksEntry() {
       )}
 
       {!loaded && grade && (
-        <div className="flex items-center justify-center py-20 text-sm text-surface-400">
+        <div className="flex items-center justify-center py-20 text-sm text-on-surface-variant">
           <svg className="w-6 h-6 animate-spin mr-3" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />

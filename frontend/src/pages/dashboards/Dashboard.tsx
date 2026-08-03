@@ -18,9 +18,9 @@ function StatCard({ label, value, hint, icon, color, trend }: {
     <Card className="p-3">
       <div className="flex items-start justify-between">
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-medium text-surface-500 truncate">{label}</p>
+          <p className="text-xs font-medium text-on-surface-variant truncate">{label}</p>
           <p className={clsx("text-xl font-bold mt-0.5", color)}>{value}</p>
-          {hint && <p className="text-[10px] text-surface-400 mt-0.5">{hint}</p>}
+          {hint && <p className="text-[10px] text-on-surface-variant mt-0.5">{hint}</p>}
           {trend && (
             <p className={clsx("text-[10px] mt-0.5 flex items-center gap-1", trend.up ? "text-emerald-600" : "text-red-500")}>
               <span>{trend.up ? "↑" : "↓"}</span> {trend.text}
@@ -44,7 +44,7 @@ function QuickLinks() {
     { to: "/attendance", label: "Attendance", desc: "Mark & view", icon: "M9 12.75 11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0Z", bg: "bg-cyan-50", border: "border-cyan-200", text: "text-cyan-700", iconBg: "bg-cyan-100", hover: "hover:bg-cyan-100 hover:border-cyan-300 hover:shadow-sm" },
     { to: "/staff/session-assignments", label: "Session Assignments", desc: "Morning, Evening, Weekend", icon: "M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5", bg: "bg-indigo-50", border: "border-indigo-200", text: "text-indigo-700", iconBg: "bg-indigo-100", hover: "hover:bg-indigo-100 hover:border-indigo-300 hover:shadow-sm" },
     { to: "/staff", label: "Staff", desc: "Staff records", icon: "M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0Z", bg: "bg-rose-50", border: "border-rose-200", text: "text-rose-700", iconBg: "bg-rose-100", hover: "hover:bg-rose-100 hover:border-rose-300 hover:shadow-sm" },
-    { to: "/settings", label: "Settings", desc: "School config", icon: "M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281Z M15 12a3 3 0 11-6 0 3 3 0 016 0Z", bg: "bg-surface-100", border: "border-surface-200", text: "text-surface-700", iconBg: "bg-surface-200", hover: "hover:bg-surface-200 hover:border-surface-300 hover:shadow-sm" },
+    { to: "/settings", label: "Settings", desc: "School config", icon: "M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281Z M15 12a3 3 0 11-6 0 3 3 0 016 0Z", bg: "bg-surface-container", border: "border-outline-variant", text: "text-on-surface", iconBg: "bg-surface-200", hover: "hover:bg-surface-200 hover:border-outline hover:shadow-sm" },
   ];
 
   return (
@@ -58,7 +58,7 @@ function QuickLinks() {
           </div>
           <div className="min-w-0">
             <p className={clsx("text-xs font-semibold leading-tight", link.text)}>{link.label}</p>
-            <p className="text-[10px] text-surface-400 leading-tight">{link.desc}</p>
+            <p className="text-[10px] text-on-surface-variant leading-tight">{link.desc}</p>
           </div>
         </Link>
       ))}
@@ -128,23 +128,23 @@ function AdminDashboard() {
     <div className="animate-fade-in space-y-2">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-lg font-bold text-surface-900">
+          <h1 className="text-lg font-bold text-on-surface">
             {settings?.schoolName || "School"} Dashboard
           </h1>
-          <p className="text-xs text-surface-500">
+          <p className="text-xs text-on-surface-variant">
             {settings?.currentTerm} • {settings?.currentAcademicYear}
             {settings?.termStartDate && ` • ${new Date(settings.termStartDate).toLocaleDateString("en-KE", { day: "numeric", month: "short" })}`}
             {settings?.termEndDate && ` — ${new Date(settings.termEndDate).toLocaleDateString("en-KE", { day: "numeric", month: "short" })}`}
           </p>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="text-[10px] text-surface-400 font-medium mr-0.5">Students:</span>
+          <span className="text-[10px] text-on-surface-variant font-medium mr-0.5">Students:</span>
           {grades.map((g) => {
             const count = activeStudents.filter((s) => s.grade === g).length;
             return (
-              <span key={g} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-brand-50 text-brand-700">
+              <span key={g} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-primary-container text-on-primary-container">
                 {g.replace("Grade ", "G")}
-                <span className="w-4 h-4 rounded-full bg-brand-200 flex items-center justify-center text-[9px] font-bold text-brand-800">{count}</span>
+                <span className="w-4 h-4 rounded-full bg-primary-fixed-dim flex items-center justify-center text-[9px] font-bold text-primary">{count}</span>
               </span>
             );
           })}
@@ -155,7 +155,7 @@ function AdminDashboard() {
         <StatCard
           label="Students (Active)"
           value={activeStudents.length}
-          color="text-brand-600"
+          color="text-primary"
           icon={<svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>}
         />
         <StatCard
@@ -185,7 +185,7 @@ function AdminDashboard() {
         <div className="flex items-center gap-3 mb-2">
           <div className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
-            <span className="text-xs font-semibold text-surface-900">Needs Attention</span>
+            <span className="text-xs font-semibold text-on-surface">Needs Attention</span>
           </div>
           <div className="flex flex-wrap gap-x-3 gap-y-0.5 text-[11px]">
             {overdueInvoices.length > 0 && (
@@ -200,11 +200,11 @@ function AdminDashboard() {
             {overdueInvoices.length === 0 && unpaidInvoices.length === 0 && (
               <span className="text-emerald-600">✅ All fees up to date</span>
             )}
-            <span className="text-surface-400">{sentCampaigns} SMS sent</span>
+            <span className="text-on-surface-variant">{sentCampaigns} SMS sent</span>
           </div>
-          <div className="ml-auto flex items-center gap-2 text-[11px] text-surface-400">
-            <span>Term: <strong className="text-surface-600">{settings?.currentTerm || "—"}</strong></span>
-            <span>Year: <strong className="text-surface-600">{settings?.currentAcademicYear || "—"}</strong></span>
+          <div className="ml-auto flex items-center gap-2 text-[11px] text-on-surface-variant">
+            <span>Term: <strong className="text-on-surface-variant">{settings?.currentTerm || "—"}</strong></span>
+            <span>Year: <strong className="text-on-surface-variant">{settings?.currentAcademicYear || "—"}</strong></span>
           </div>
         </div>
         <QuickLinks />
@@ -234,15 +234,15 @@ function AccountantDashboard() {
 
   return (
     <div className="animate-fade-in space-y-2">
-      <h1 className="text-lg font-bold text-surface-900">Fee Overview</h1>
+      <h1 className="text-lg font-bold text-on-surface">Fee Overview</h1>
       <div className="grid grid-cols-3 gap-2">
         <StatCard label="Collected" value={<Money value={totalCollected} />} hint={`${paid.length} paid`} color="text-emerald-600" icon={<svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>} />
         <StatCard label="Outstanding" value={<Money value={totalOutstanding} />} hint={`${unpaid.length} unpaid`} color="text-amber-600" icon={<svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>} />
         <StatCard label="Overdue" value={<Money value={totalOverdue} />} hint={`${overdue.length} overdue`} color="text-red-600" icon={<svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01" /></svg>} />
       </div>
       <div className="flex gap-2">
-        <Link to="/fees/invoices" className="px-3 py-1.5 rounded text-xs font-medium bg-brand-50 text-brand-600 hover:bg-brand-100">View Invoices</Link>
-        <Link to="/fees/structures" className="px-3 py-1.5 rounded text-xs font-medium bg-brand-50 text-brand-600 hover:bg-brand-100">Set Term Fees</Link>
+        <Link to="/fees/invoices" className="px-3 py-1.5 rounded text-xs font-medium bg-primary-container text-primary hover:bg-primary-container">View Invoices</Link>
+        <Link to="/fees/structures" className="px-3 py-1.5 rounded text-xs font-medium bg-primary-container text-primary hover:bg-primary-container">Set Term Fees</Link>
       </div>
     </div>
   );
@@ -252,8 +252,8 @@ function TeacherDashboard() {
   return (
     <div className="animate-fade-in space-y-2">
       <div>
-        <h1 className="text-lg font-bold text-surface-900">Teacher Dashboard</h1>
-        <p className="text-xs text-surface-500">Mark attendance, enter assessments, and manage report cards.</p>
+        <h1 className="text-lg font-bold text-on-surface">Teacher Dashboard</h1>
+        <p className="text-xs text-on-surface-variant">Mark attendance, enter assessments, and manage report cards.</p>
       </div>
       <QuickLinks />
     </div>

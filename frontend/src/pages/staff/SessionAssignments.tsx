@@ -106,10 +106,10 @@ export default function SessionAssignments() {
       />
 
       {showForm && (
-        <Card className="p-5 mb-6 border-brand-200">
+        <Card className="p-5 mb-6 border-primary/20">
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 items-end">
             <div>
-              <label className="block text-xs font-medium text-surface-500 mb-1.5">Teacher *</label>
+              <label className="block text-xs font-medium text-on-surface-variant mb-1.5">Teacher *</label>
               <Dropdown
                 value={newStaffId}
                 options={staffList.map((s) => ({ value: s.id, label: s.name }))}
@@ -118,11 +118,11 @@ export default function SessionAssignments() {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-surface-500 mb-1.5">Session *</label>
+              <label className="block text-xs font-medium text-on-surface-variant mb-1.5">Session *</label>
               <Dropdown value={newSessionType} options={SESSION_OPTIONS} onChange={setNewSessionType} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-surface-500 mb-1.5">Day *</label>
+              <label className="block text-xs font-medium text-on-surface-variant mb-1.5">Day *</label>
               <Dropdown
                 value={String(newDayOfWeek)}
                 options={DAYS.map((d, i) => ({ value: String(i), label: d }))}
@@ -142,22 +142,22 @@ export default function SessionAssignments() {
       {loading ? (
         <div className="flex justify-center py-10"><Spinner className="w-6 h-6" /></div>
       ) : assignments.length === 0 ? (
-        <Card className="p-10 text-center text-sm text-surface-400">No session assignments yet. Click "+ Assign Session" to add one.</Card>
+        <Card className="p-10 text-center text-sm text-on-surface-variant">No session assignments yet. Click "+ Assign Session" to add one.</Card>
       ) : (
         <div className="space-y-2">
           {assignments.map((a) => (
-            <div key={a.id} className="flex items-center justify-between bg-white rounded-xl border border-surface-200 px-5 py-4 hover:border-surface-300 transition-colors">
+            <div key={a.id} className="flex items-center justify-between bg-surface-container-lowest rounded-xl border border-outline-variant px-5 py-4 hover:border-outline transition-colors">
               <div className="flex items-center gap-4">
-                <div className="w-9 h-9 rounded-full bg-surface-100 flex items-center justify-center text-sm font-bold text-surface-600">
+                <div className="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-sm font-bold text-on-surface-variant">
                   {a.staffName?.charAt(0) || "?"}
                 </div>
                 <div>
-                  <p className="font-semibold text-surface-900">{a.staffName}</p>
-                  <p className="text-sm text-surface-500">{DAYS[a.dayOfWeek]}</p>
+                  <p className="font-semibold text-on-surface">{a.staffName}</p>
+                  <p className="text-sm text-on-surface-variant">{DAYS[a.dayOfWeek]}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <span className={clsx("text-xs font-semibold px-2.5 py-1 rounded-full", SESSION_COLORS[a.sessionType] || "bg-surface-100 text-surface-600")}>
+                <span className={clsx("text-xs font-semibold px-2.5 py-1 rounded-full", SESSION_COLORS[a.sessionType] || "bg-surface-container text-on-surface-variant")}>
                   {a.sessionType}
                 </span>
                 {isAdmin && (
@@ -171,8 +171,8 @@ export default function SessionAssignments() {
         </div>
       )}
 
-      <div className="mt-6 bg-surface-50 rounded-xl border border-surface-200 p-4 text-sm text-surface-600">
-        <p className="font-medium text-surface-700 mb-1">How this works</p>
+      <div className="mt-6 bg-surface-container-low rounded-xl border border-outline-variant p-4 text-sm text-on-surface-variant">
+        <p className="font-medium text-on-surface mb-1">How this works</p>
         <p>Assign teachers to session types on specific days. When ready, click <strong>"Generate for Payroll"</strong> to create extra duty payment records for the current month. These payments then appear in the <strong>Payroll Run Detail</strong> page under Extra Duty / Per Diem.</p>
       </div>
     </div>

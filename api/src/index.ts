@@ -61,6 +61,7 @@ import { evaluateAndSend } from './services/sms-scheduler';
 import { evaluatePaymentReminders } from './services/payment-reminder';
 import { evaluateOverdueInvoices } from './services/overdue-checker';
 import { evaluateLowAttendance } from './services/attendance-checker';
+import { runFoodConsumption } from './services/food-consumption-scheduler';
 import notificationsRoutes from './routes/notifications';
 import auditLogsRoutes from './routes/audit-logs';
 import uploadRoutes from './routes/uploads';
@@ -68,6 +69,7 @@ import classTeachersRoutes from './routes/class-teachers';
 import sessionAssignmentsRoutes from './routes/session-assignments';
 import foodLogsRoutes from './routes/food-logs';
 import foodPresetsRoutes from './routes/food-presets';
+import mealTemplatesRoutes from './routes/meal-templates';
 import teacherPreferencesRoutes from './routes/teacher-preferences';
 import exitNotificationsRoutes from './routes/exit-notifications';
 import adminMetricsRoutes from './routes/admin-metrics';
@@ -80,6 +82,7 @@ app.use(cors({
   origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : true,
   credentials: true,
 }));
+app.use('/api/invoices/mpesa/webhook', express.raw({ type: 'application/json' }));
 app.use(express.json({ limit: '1mb' }));
 
 const apiLimiter = rateLimit({
@@ -154,6 +157,7 @@ app.use('/api/session-assignments', authMiddleware, sessionAssignmentsRoutes);
 app.use('/api/food-logs', authMiddleware, foodLogsRoutes);
 app.use('/api/notifications', authMiddleware, notificationsRoutes);
 app.use('/api/food-presets', authMiddleware, foodPresetsRoutes);
+app.use('/api/meal-templates', authMiddleware, mealTemplatesRoutes);
 app.use('/api/teacher-preferences', authMiddleware, teacherPreferencesRoutes);
 app.use('/api/exit-notifications', authMiddleware, exitNotificationsRoutes);
 app.use('/api/admin', authMiddleware, adminMetricsRoutes);
@@ -212,4 +216,10 @@ app.listen(PORT, () => {
     evaluateLowAttendance().catch((err) => logger.error("Low attendance check error", { error: err }));
   }, 6 * 60 * 60 * 1000);
   logger.info("Low attendance checker started (6-hour interval)");
+
+  runFoodConsumption().catch((err) => logger.error("Initial food consumption error", { error: err }));
+  setInterval(() => {
+    runFoodConsumption().catch((err) => logger.error("Food consumption error", { error: err }));
+  }, 30 * 60 * 1000);
+  logger.info("Food consumption scheduler started (30-minute interval)");
 });

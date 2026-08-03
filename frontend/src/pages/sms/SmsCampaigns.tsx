@@ -59,7 +59,7 @@ export default function SmsCampaigns() {
         rows={campaigns}
         loading={loading}
         actions={isAdmin ? (c) => c.status === "draft" ? (
-          <button className="px-2.5 py-1 text-xs font-medium text-brand-600 hover:bg-brand-50 rounded-md transition-colors" onClick={() => send(c.id)}>Send</button>
+          <button className="px-2.5 py-1 text-xs font-medium text-primary hover:bg-primary-container rounded-md transition-colors" onClick={() => send(c.id)}>Send</button>
         ) : null : undefined}
       />
     </div>
@@ -165,11 +165,11 @@ function CreateCampaignFullPage({ onDone, onCancel }: { onDone: () => void; onCa
 
   return (
     <div className="max-w-3xl mx-auto animate-fade-in">
-      <div className="flex items-center gap-2 text-sm text-surface-500 mb-4">
-        <button onClick={onCancel} className="hover:text-brand-600 transition-colors">Send Messages</button>
+      <div className="flex items-center gap-2 text-sm text-on-surface-variant mb-4">
+        <button onClick={onCancel} className="hover:text-primary transition-colors">Send Messages</button>
         <span>/</span>
-        <span className="text-surface-900 font-medium">New Message</span>
-        <span className="ml-auto text-xs text-surface-400">
+        <span className="text-on-surface font-medium">New Message</span>
+        <span className="ml-auto text-xs text-on-surface-variant">
           Step {step === "message" ? "1" : step === "target" ? "2" : "3"} of 3
         </span>
       </div>
@@ -190,20 +190,20 @@ function CreateCampaignFullPage({ onDone, onCancel }: { onDone: () => void; onCa
             ]}} value={templateId} onChange={(v) => setTemplateId(v as string)} />
             <FormField spec={{ name: "message", label: "Message", type: "textarea", required: true, placeholder: "Dear {guardianName},\nYour child {studentName}..." }} value={message} onChange={(v) => setMessage(v as string)} />
             {message && (
-              <details className="text-xs text-surface-400">
-                <summary className="cursor-pointer hover:text-surface-600">Available variables</summary>
-                <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 text-surface-500">
-                  <span><code className="text-brand-600">{"{guardianName}"}</code> Parent name</span>
-                  <span><code className="text-brand-600">{"{studentName}"}</code> Child name</span>
-                  <span><code className="text-brand-600">{"{balance}"}</code> Fee balance</span>
-                  <span><code className="text-brand-600">{"{totalAmount}"}</code> Total fee</span>
-                  <span><code className="text-brand-600">{"{amountPaid}"}</code> Amount paid</span>
-                  <span><code className="text-brand-600">{"{dueDate}"}</code> Due date</span>
-                  <span><code className="text-brand-600">{"{currentTerm}"}</code> Current term</span>
-                  <span><code className="text-brand-600">{"{academicYear}"}</code> Academic year</span>
-                  <span><code className="text-brand-600">{"{termStartDate}"}</code> Term start date</span>
-                  <span><code className="text-brand-600">{"{termEndDate}"}</code> Term end date</span>
-                  <span><code className="text-brand-600">{"{schoolName}"}</code> School name</span>
+              <details className="text-xs text-on-surface-variant">
+                <summary className="cursor-pointer hover:text-on-surface-variant">Available variables</summary>
+                <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 text-on-surface-variant">
+                  <span><code className="text-primary">{"{guardianName}"}</code> Parent name</span>
+                  <span><code className="text-primary">{"{studentName}"}</code> Child name</span>
+                  <span><code className="text-primary">{"{balance}"}</code> Fee balance</span>
+                  <span><code className="text-primary">{"{totalAmount}"}</code> Total fee</span>
+                  <span><code className="text-primary">{"{amountPaid}"}</code> Amount paid</span>
+                  <span><code className="text-primary">{"{dueDate}"}</code> Due date</span>
+                  <span><code className="text-primary">{"{currentTerm}"}</code> Current term</span>
+                  <span><code className="text-primary">{"{academicYear}"}</code> Academic year</span>
+                  <span><code className="text-primary">{"{termStartDate}"}</code> Term start date</span>
+                  <span><code className="text-primary">{"{termEndDate}"}</code> Term end date</span>
+                  <span><code className="text-primary">{"{schoolName}"}</code> School name</span>
                 </div>
               </details>
             )}
@@ -218,7 +218,7 @@ function CreateCampaignFullPage({ onDone, onCancel }: { onDone: () => void; onCa
       {step === "target" && (
         <div className="mt-6 space-y-5">
           <Card className="p-6 space-y-4">
-            <h3 className="font-semibold text-surface-900">Who should receive this message?</h3>
+            <h3 className="font-semibold text-on-surface">Who should receive this message?</h3>
 
             {[
               { value: "all" as TargetOption, label: "All Parents", desc: "Send to every guardian who hasn't opted out" },
@@ -227,12 +227,12 @@ function CreateCampaignFullPage({ onDone, onCancel }: { onDone: () => void; onCa
             ].map((opt) => (
               <label key={opt.value} className={clsx(
                 "flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-all duration-150 hover:scale-[1.01] hover:shadow-sm",
-                target === opt.value ? "border-brand-500 bg-brand-50" : "border-surface-200 hover:border-surface-300"
+                target === opt.value ? "border-brand-500 bg-primary-container" : "border-outline-variant hover:border-outline"
               )}>
                 <input type="radio" name="target" checked={target === opt.value} onChange={() => setTarget(opt.value)} className="accent-brand-600" />
                 <div>
-                  <p className="font-medium text-sm text-surface-900">{opt.label}</p>
-                  <p className="text-xs text-surface-500">{opt.desc}</p>
+                  <p className="font-medium text-sm text-on-surface">{opt.label}</p>
+                  <p className="text-xs text-on-surface-variant">{opt.desc}</p>
                 </div>
               </label>
             ))}
@@ -253,23 +253,23 @@ function CreateCampaignFullPage({ onDone, onCancel }: { onDone: () => void; onCa
               </div>
             )}
 
-            <div className="bg-surface-50 rounded-xl p-4">
-              <p className="text-sm font-medium text-surface-700">
+            <div className="bg-surface-container-low rounded-xl p-4">
+              <p className="text-sm font-medium text-on-surface">
                 {loadingRecipients ? "Counting recipients..." : `${recipientCount} recipients selected`}
               </p>
               {recipients.length > 0 && (
-                <div className="mt-2 max-h-32 overflow-y-auto text-xs text-surface-500 space-y-1">
+                <div className="mt-2 max-h-32 overflow-y-auto text-xs text-on-surface-variant space-y-1">
                   {recipients.slice(0, 10).map((r) => (
                     <p key={r.id}>{r.name} → {r.studentName} ({r.phone})</p>
                   ))}
-                  {recipients.length > 10 && <p className="text-surface-400">...and {recipients.length - 10} more</p>}
+                  {recipients.length > 10 && <p className="text-on-surface-variant">...and {recipients.length - 10} more</p>}
                 </div>
               )}
             </div>
 
-            <div className="bg-brand-50 rounded-xl p-4 text-sm text-brand-800">
+            <div className="bg-primary-container rounded-xl p-4 text-sm text-primary">
               <p className="font-medium">Message preview:</p>
-              <p className="mt-1 text-brand-600">
+              <p className="mt-1 text-primary">
                 {recipients[0]
                   ? previewMessage(recipients[0].name, recipients[0].studentName).slice(0, 120)
                   : message.slice(0, 120)}

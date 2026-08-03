@@ -32,7 +32,7 @@ function verifyMpesaSignature(req: Request, res: Response, next: NextFunction) {
     return res.status(401).json({ success: false, error: 'Missing M-Pesa signature header' });
   }
 
-  const raw = JSON.stringify(req.body);
+  const raw = req.body;
   const expected = crypto
     .createHmac('sha256', config.mpesa.passkey)
     .update(raw)
@@ -49,7 +49,8 @@ function verifyMpesaSignature(req: Request, res: Response, next: NextFunction) {
 export const webhookRouter = Router();
 webhookRouter.post('/', verifyMpesaSignature, async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const parsed = parseSafaricomPayload(req.body);
+    const body = JSON.parse(req.body.toString());
+    const parsed = parseSafaricomPayload(body);
     if (!parsed) {
       return res.status(400).json({ success: false, error: 'Unrecognised M-Pesa payload format' });
     }

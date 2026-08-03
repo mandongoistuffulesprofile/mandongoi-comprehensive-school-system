@@ -102,6 +102,10 @@ router.post('/', requireRole('schoolAdmin', 'teacher'), async (req: AuthRequest,
       return res.status(400).json({ success: false, error: 'itemName, term, and academicYear are required' });
     }
 
+    if (logType === 'contribution' && !studentId) {
+      return res.status(400).json({ success: false, error: 'studentId is required for contribution logs' });
+    }
+
     let estimatedValue = '0';
     let finalItemName = itemName;
     let finalUnit = unit || 'kg';

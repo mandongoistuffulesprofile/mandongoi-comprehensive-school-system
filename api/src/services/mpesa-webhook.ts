@@ -18,7 +18,7 @@ export function parseSafaricomPayload(body: any): {
       amount: Number(body.TransAmount),
       phoneNumber: String(body.MSISDN || ''),
       accountReference: body.BillRefNumber || '',
-      transactionDate: body.TransTime
+      transactionDate: body.TransTime && body.TransTime.length === 14
         ? `${body.TransTime.slice(0, 4)}-${body.TransTime.slice(4, 6)}-${body.TransTime.slice(6, 8)}T${body.TransTime.slice(8, 10)}:${body.TransTime.slice(10, 12)}:${body.TransTime.slice(12, 14)}+03:00`
         : new Date().toISOString(),
     };

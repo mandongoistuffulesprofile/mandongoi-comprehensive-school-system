@@ -61,8 +61,8 @@ export default function ParentLinks() {
             {links.map((link) => (
               <div key={link.id} className="flex items-center justify-between px-5 py-3">
                 <div>
-                  <p className="text-sm font-medium text-surface-900">{link.userName ?? link.userId}</p>
-                  <p className="text-xs text-surface-500">Student: {link.studentName ?? link.studentId}</p>
+                  <p className="text-sm font-medium text-on-surface">{link.userName ?? link.userId}</p>
+                  <p className="text-xs text-on-surface-variant">Student: {link.studentName ?? link.studentId}</p>
                 </div>
                 <Button variant="danger" size="sm" onClick={() => remove(link.id)}>Remove</Button>
               </div>
@@ -76,7 +76,7 @@ export default function ParentLinks() {
           <div className="space-y-5">
             <FormField spec={{ name: "userId", label: "Parent User ID", required: true, placeholder: "User UUID" }} value={userId} onChange={(v) => setUserId(v as string)} />
             <FormField spec={{ name: "studentId", label: "Student ID", required: true, placeholder: "Student UUID" }} value={studentId} onChange={(v) => setStudentId(v as string)} />
-            <div className="flex justify-end gap-2 pt-2 border-t border-surface-200">
+            <div className="flex justify-end gap-2 pt-2 border-t border-outline-variant">
               <Button variant="ghost" onClick={() => setShowCreate(false)}>Cancel</Button>
               <Button onClick={create} disabled={!userId || !studentId}>Create Link</Button>
             </div>

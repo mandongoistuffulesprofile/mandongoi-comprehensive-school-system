@@ -43,15 +43,15 @@ export default function AutomatedRules() {
       />
 
       {loading ? (
-        <div className="flex justify-center py-10"><div className="w-6 h-6 rounded-full border-2 border-surface-200 border-t-brand-600 animate-spin" /></div>
+        <div className="flex justify-center py-10"><div className="w-6 h-6 rounded-full border-2 border-outline-variant border-t-brand-600 animate-spin" /></div>
       ) : (
         <div className="space-y-2">
-          {rules.length === 0 && <p className="text-surface-500 text-sm text-center py-10">No rules configured yet.</p>}
+          {rules.length === 0 && <p className="text-on-surface-variant text-sm text-center py-10">No rules configured yet.</p>}
           {rules.map((r) => (
             <Card key={r.id} className="px-5 py-4 flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-surface-900">{r.name}</p>
-                <p className="text-xs text-surface-500 mt-0.5">
+                <p className="text-sm font-medium text-on-surface">{r.name}</p>
+                <p className="text-xs text-on-surface-variant mt-0.5">
                   <EnumBadge value={r.triggerType} /> · template: {templateName(r.templateId)}
                 </p>
               </div>
@@ -101,7 +101,7 @@ function CreateRuleModal({ templates, onClose, onDone }: { templates: SmsTemplat
           { value: "custom", label: "Custom" },
         ]}} value={triggerType} onChange={(v) => setTriggerType(v as string)} />
         <FormField spec={{ name: "templateId", label: "Template", type: "select", required: true, options: templates.map((t) => ({ value: t.id, label: t.name })) }} value={templateId} onChange={(v) => setTemplateId(v as string)} />
-        <div className="flex justify-end gap-2 pt-2 border-t border-surface-200">
+        <div className="flex justify-end gap-2 pt-2 border-t border-outline-variant">
           <Button variant="ghost" onClick={onClose}>Cancel</Button>
           <Button onClick={submit} disabled={!name || !templateId}>Create</Button>
         </div>

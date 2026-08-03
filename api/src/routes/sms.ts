@@ -39,7 +39,7 @@ router.post('/', requireRole('schoolAdmin'), async (req: AuthRequest, res, next)
 
 router.patch('/:id/send', requireRole('schoolAdmin'), async (req: AuthRequest, res, next) => {
   try {
-    const [campaign] = await db.update(smsCampaigns).set({ status: 'sending', sentBy: req.user!.id, sentAt: new Date() }).where(eq(smsCampaigns.id, req.params.id)).returning();
+    const [campaign] = await db.update(smsCampaigns).set({ status: 'sending', sentBy: req.user!.id }).where(eq(smsCampaigns.id, req.params.id)).returning();
     if (!campaign) return res.status(404).json({ success: false, error: 'Not found' });
     res.json({ success: true, data: campaign });
   } catch (err) {

@@ -27,8 +27,8 @@ export default function SmsLogs() {
             className={clsx(
               "px-3.5 py-1.5 rounded-lg text-xs font-medium border transition-colors",
               status === s
-                ? "bg-brand-600 text-white border-brand-600"
-                : "border-surface-300 text-surface-500 hover:bg-surface-50 hover:text-surface-700",
+                ? "bg-primary text-white border-brand-600"
+                : "border-outline text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface",
             )}
           >
             {s === "" ? "All" : s[0].toUpperCase() + s.slice(1)}
@@ -40,7 +40,7 @@ export default function SmsLogs() {
         columns={[
           { header: "Recipient", cell: (l) => <span className="font-mono">{l.phoneNumber}</span> },
           { header: "Type", cell: (l) => l.recipientType },
-          { header: "Message", cell: (l) => <span className="truncate max-w-xs inline-block text-surface-500">{l.message}</span> },
+          { header: "Message", cell: (l) => <span className="truncate max-w-xs inline-block text-on-surface-variant">{l.message}</span> },
           { header: "Status", cell: (l) => <EnumBadge value={l.status} /> },
           { header: "Cost", cell: (l) => (l.cost ? <Money value={l.cost} /> : "—") },
         ]}

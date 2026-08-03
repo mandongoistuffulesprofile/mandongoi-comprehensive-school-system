@@ -107,16 +107,16 @@ export default function ClassTeachers() {
       />
 
       {editing !== null && (
-        <div className="bg-white rounded-xl border border-brand-200 p-6 mb-6 space-y-5 shadow-sm">
+        <div className="bg-surface-container-lowest rounded-xl border border-primary/20 p-6 mb-6 space-y-5 shadow-sm">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-surface-900">{editing && editing !== "new" ? "Edit" : "Assign"} Class Teacher</h3>
-            <button onClick={() => setEditing(null)} className="w-8 h-8 flex items-center justify-center rounded-lg text-surface-400 hover:text-surface-600 hover:bg-surface-100 transition-colors">
+            <h3 className="text-lg font-semibold text-on-surface">{editing && editing !== "new" ? "Edit" : "Assign"} Class Teacher</h3>
+            <button onClick={() => setEditing(null)} className="w-8 h-8 flex items-center justify-center rounded-lg text-on-surface-variant hover:text-on-surface-variant hover:bg-surface-container transition-colors">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-surface-500 mb-1.5">Teacher *</label>
+              <label className="block text-xs font-medium text-on-surface-variant mb-1.5">Teacher *</label>
               <Dropdown
                 value={selectedStaff}
                 options={staffList.map((s) => ({ value: s.id, label: s.name }))}
@@ -125,7 +125,7 @@ export default function ClassTeachers() {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-surface-500 mb-1.5">Grade *</label>
+              <label className="block text-xs font-medium text-on-surface-variant mb-1.5">Grade *</label>
               <Dropdown
                 value={selectedGrade}
                 options={allGrades.map((g) => ({ value: g, label: g }))}
@@ -134,7 +134,7 @@ export default function ClassTeachers() {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-surface-500 mb-1.5">Class</label>
+              <label className="block text-xs font-medium text-on-surface-variant mb-1.5">Class</label>
               <Dropdown
                 value={selectedClass}
                 options={[
@@ -146,20 +146,20 @@ export default function ClassTeachers() {
               />
             </div>
           </div>
-          <div className="border-t border-surface-200 pt-4">
-            <label className="block text-sm font-medium text-surface-700 mb-2">Signature Image <span className="text-surface-400 font-normal">(for report cards)</span></label>
+          <div className="border-t border-outline-variant pt-4">
+            <label className="block text-sm font-medium text-on-surface mb-2">Signature Image <span className="text-on-surface-variant font-normal">(for report cards)</span></label>
             <div className="flex items-end gap-3">
-              <input ref={fileRef} type="file" accept="image/*" className="block w-full text-sm text-surface-500 file:mr-3 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 transition-colors" />
+              <input ref={fileRef} type="file" accept="image/*" className="block w-full text-sm text-on-surface-variant file:mr-3 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-primary-container file:text-on-primary-container hover:file:bg-primary-container transition-colors" />
               <Button size="sm" onClick={uploadSig}>Upload</Button>
             </div>
             {sigPreview && (
               <div className="mt-3 flex items-center gap-3">
-                <img src={sigPreview} alt="Signature" className="h-12 rounded-lg border border-surface-200 bg-white p-1" />
+                <img src={sigPreview} alt="Signature" className="h-12 rounded-lg border border-outline-variant bg-surface-container-lowest p-1" />
                 <button onClick={() => setSigPreview(null)} className="text-xs text-red-500 hover:text-red-700 font-medium">Remove</button>
               </div>
             )}
           </div>
-          <div className="flex justify-end gap-2 pt-4 border-t border-surface-200">
+          <div className="flex justify-end gap-2 pt-4 border-t border-outline-variant">
             <Button variant="ghost" onClick={() => setEditing(null)}>Cancel</Button>
             <Button onClick={save} disabled={saving || !selectedStaff || !selectedGrade}>
               {saving ? "Saving..." : editing && editing !== "new" ? "Update Assignment" : "Assign Teacher"}
@@ -171,26 +171,26 @@ export default function ClassTeachers() {
       {loading ? (
         <div className="flex justify-center py-10"><Spinner className="w-6 h-6" /></div>
       ) : teachers.length === 0 ? (
-        <Card className="p-10 text-center text-sm text-surface-400">No class teachers assigned yet.</Card>
+        <Card className="p-10 text-center text-sm text-on-surface-variant">No class teachers assigned yet.</Card>
       ) : (
         <div className="space-y-2">
           {teachers.map((ct) => (
-            <div key={ct.id} className="flex items-center justify-between bg-white rounded-xl border border-surface-200 px-5 py-4 hover:border-surface-300 transition-colors">
+            <div key={ct.id} className="flex items-center justify-between bg-surface-container-lowest rounded-xl border border-outline-variant px-5 py-4 hover:border-outline transition-colors">
               <div className="flex items-center gap-4">
-                <div className="flex items-center justify-center w-16 h-14 rounded-lg bg-surface-50 border border-surface-200">
+                <div className="flex items-center justify-center w-16 h-14 rounded-lg bg-surface-container-low border border-outline-variant">
                   {ct.signatureUrl ? (
                     <img src={ct.signatureUrl} alt="sig" className="h-8 object-contain" />
                   ) : (
-                    <span className="text-[11px] font-medium text-surface-300">No sig</span>
+                    <span className="text-[11px] font-medium text-outline-variant">No sig</span>
                   )}
                 </div>
                 <div>
-                  <p className="font-semibold text-surface-900">{ct.staffName}</p>
-                  <p className="text-sm text-surface-500">{ct.grade}{ct.class ? ` · Class ${ct.class}` : ""}</p>
+                  <p className="font-semibold text-on-surface">{ct.staffName}</p>
+                  <p className="text-sm text-on-surface-variant">{ct.grade}{ct.class ? ` · Class ${ct.class}` : ""}</p>
                 </div>
               </div>
               <div className="flex gap-1.5">
-                <button onClick={() => openEdit(ct)} className="px-3 py-1.5 text-xs font-medium text-brand-600 hover:bg-brand-50 rounded-lg transition-colors">Edit</button>
+                <button onClick={() => openEdit(ct)} className="px-3 py-1.5 text-xs font-medium text-primary hover:bg-primary-container rounded-lg transition-colors">Edit</button>
                 <button onClick={() => remove(ct.id)} className="px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors">Remove</button>
               </div>
             </div>

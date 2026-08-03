@@ -108,14 +108,14 @@ export default function FoodPresets() {
                 </span>
               );
             }},
-            { header: "Reorder", cell: (r) => <span className="text-surface-400 text-xs font-mono">{r.reorderLevel || "0"} {r.unit}</span> },
-            { header: "Status", cell: (r) => r.isActive ? <span className="text-emerald-600 text-xs font-medium">Active</span> : <span className="text-surface-400 text-xs">Inactive</span> },
+            { header: "Reorder", cell: (r) => <span className="text-on-surface-variant text-xs font-mono">{r.reorderLevel || "0"} {r.unit}</span> },
+            { header: "Status", cell: (r) => r.isActive ? <span className="text-emerald-600 text-xs font-medium">Active</span> : <span className="text-on-surface-variant text-xs">Inactive</span> },
           ]}
           rows={rows}
           loading={loading}
           actions={isAdmin ? (row) => (
             <div className="flex gap-1">
-              <button onClick={() => openEdit(row)} className="px-2.5 py-1 text-xs font-medium text-brand-600 hover:bg-brand-50 rounded-lg">Edit</button>
+              <button onClick={() => openEdit(row)} className="px-2.5 py-1 text-xs font-medium text-primary hover:bg-primary-container rounded-lg">Edit</button>
               <button onClick={() => remove(row.id)} className="px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-50 rounded-lg">Delete</button>
             </div>
           ) : undefined}
@@ -134,7 +134,7 @@ export default function FoodPresets() {
               <FormField spec={{ name: "stockQuantity", label: "Current Stock", type: "number", step: "0.01", helpText: "How many units are in stock now" }} value={stockQuantity} onChange={(v) => setStockQuantity(v as string)} />
               <FormField spec={{ name: "reorderLevel", label: "Reorder At", type: "number", step: "0.01", helpText: "Alert when stock drops to this level" }} value={reorderLevel} onChange={(v) => setReorderLevel(v as string)} />
             </div>
-            <div className="flex justify-end gap-2 pt-2 border-t border-surface-200">
+            <div className="flex justify-end gap-2 pt-2 border-t border-outline-variant">
               <Button variant="ghost" onClick={() => { setEditing(null); setIsCreating(false); }}>Cancel</Button>
               <Button onClick={save} disabled={saving}>{saving ? "Saving..." : "Save"}</Button>
             </div>

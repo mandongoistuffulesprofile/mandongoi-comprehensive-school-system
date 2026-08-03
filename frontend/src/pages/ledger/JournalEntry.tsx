@@ -12,7 +12,7 @@ type ViewMode = "choose" | "supplies" | "donation" | "repair" | "advanced";
 type PaidFrom = "cash" | "mpesa" | "bank";
 
 const SOURCE_LABELS: Record<string, { label: string; color: string }> = {
-  manual: { label: "Manual", color: "bg-surface-100 text-surface-600" },
+  manual: { label: "Manual", color: "bg-surface-container text-on-surface-variant" },
   feePayment: { label: "Fee Payment", color: "bg-emerald-100 text-emerald-700" },
   payroll: { label: "Payroll", color: "bg-blue-100 text-blue-700" },
   expense: { label: "Expense", color: "bg-amber-100 text-amber-700" },
@@ -306,39 +306,39 @@ export default function JournalEntry() {
         </div>
 
         <div className="mt-8 text-center">
-          <button onClick={() => setMode("advanced")} className="inline-flex items-center gap-2 text-sm text-surface-400 hover:text-surface-700 bg-surface-50 hover:bg-surface-100 px-4 py-2.5 rounded-xl border border-surface-200 hover:border-surface-300 transition-all">
+          <button onClick={() => setMode("advanced")} className="inline-flex items-center gap-2 text-sm text-on-surface-variant hover:text-on-surface bg-surface-container-low hover:bg-surface-container px-4 py-2.5 rounded-xl border border-outline-variant hover:border-outline transition-all">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
             Advanced Entry
-            <span className="text-surface-400 font-normal">— for corrections & custom transactions</span>
+            <span className="text-on-surface-variant font-normal">— for corrections & custom transactions</span>
           </button>
         </div>
 
         <div className="mt-10">
-          <h3 className="text-sm font-semibold text-surface-700 mb-3">Recent Transactions</h3>
+          <h3 className="text-sm font-semibold text-on-surface mb-3">Recent Transactions</h3>
           {recentLoading ? (
             <div className="flex justify-center py-8"><Spinner className="w-5 h-5" /></div>
           ) : recent.length === 0 ? (
-            <p className="text-sm text-surface-400 text-center py-6">No transactions recorded yet.</p>
+            <p className="text-sm text-on-surface-variant text-center py-6">No transactions recorded yet.</p>
           ) : (
             <div className="space-y-2">
               {recent.slice(0, 8).map((entry) => {
                 const total = entry.lines.reduce((s, l) => s + Math.max(Number(l.debit), Number(l.credit)), 0);
-                const src = SOURCE_LABELS[entry.sourceType] || { label: entry.sourceType, color: "bg-surface-100 text-surface-600" };
+                const src = SOURCE_LABELS[entry.sourceType] || { label: entry.sourceType, color: "bg-surface-container text-on-surface-variant" };
                 return (
-                  <div key={entry.id} className="flex items-center justify-between bg-white rounded-lg border border-surface-200 px-4 py-3 text-sm hover:border-surface-300 transition-colors">
+                  <div key={entry.id} className="flex items-center justify-between bg-surface-container-lowest rounded-lg border border-outline-variant px-4 py-3 text-sm hover:border-outline transition-colors">
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <p className="font-medium text-surface-900 truncate">{entry.description || entry.sourceType}</p>
+                        <p className="font-medium text-on-surface truncate">{entry.description || entry.sourceType}</p>
                         <span className={clsx("text-[10px] font-medium px-1.5 py-0.5 rounded shrink-0", src.color)}>{src.label}</span>
                       </div>
-                      <p className="text-xs text-surface-400 mt-0.5">
+                      <p className="text-xs text-on-surface-variant mt-0.5">
                         {new Date(entry.entryDate).toLocaleDateString("en-KE")}
                         {entry.createdByName && <> · by {entry.createdByName}</>}
                       </p>
                     </div>
                     <div className="flex items-center gap-3 shrink-0 ml-4">
                       <div className="text-right">
-                        <p className="font-semibold text-surface-900">KES {total.toLocaleString("en-KE", { minimumFractionDigits: 2 })}</p>
+                        <p className="font-semibold text-on-surface">KES {total.toLocaleString("en-KE", { minimumFractionDigits: 2 })}</p>
                       </div>
                       {isAdmin && (
                         <button
@@ -367,7 +367,7 @@ export default function JournalEntry() {
         <PageHeader title="Advanced Entry" description="Manually set which accounts are debited and credited. Use this for corrections or anything that doesn't fit the templates." />
 
         <Card className="p-6 max-w-3xl">
-          <button onClick={goBack} className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-600 hover:text-brand-700 bg-brand-50 hover:bg-brand-100 px-3 py-1.5 rounded-lg transition-colors mb-5">
+          <button onClick={goBack} className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-on-primary-container bg-primary-container hover:bg-primary-container px-3 py-1.5 rounded-lg transition-colors mb-5">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             Back to templates
           </button>
@@ -375,26 +375,26 @@ export default function JournalEntry() {
           <div className="space-y-5">
             <div className="grid grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-surface-700 mb-1.5">Date</label>
-                <input type="date" value={entryDate} onChange={(e) => setEntryDate(e.target.value)} className="w-full rounded-lg border border-surface-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+                <label className="block text-sm font-medium text-on-surface mb-1.5">Date</label>
+                <input type="date" value={entryDate} onChange={(e) => setEntryDate(e.target.value)} className="w-full rounded-lg border border-outline px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
               </div>
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-surface-700 mb-1.5">Description</label>
-                <input value={advDescription} onChange={(e) => setAdvDescription(e.target.value)} placeholder="e.g. Correcting fee overpayment" className="w-full rounded-lg border border-surface-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+                <label className="block text-sm font-medium text-on-surface mb-1.5">Description</label>
+                <input value={advDescription} onChange={(e) => setAdvDescription(e.target.value)} placeholder="e.g. Correcting fee overpayment" className="w-full rounded-lg border border-outline px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
               </div>
             </div>
 
             <div>
-              <div className="hidden sm:grid grid-cols-[1fr_140px_140px_32px] gap-3 text-xs font-medium text-surface-500 uppercase tracking-wider mb-2 px-1">
+              <div className="hidden sm:grid grid-cols-[1fr_140px_140px_32px] gap-3 text-xs font-medium text-on-surface-variant uppercase tracking-wider mb-2 px-1">
                 <span>Account</span>
-                <span className="text-right">Money Out <span className="block text-[10px] font-normal normal-case text-surface-400">leaves this account</span></span>
-                <span className="text-right">Money In <span className="block text-[10px] font-normal normal-case text-surface-400">goes to this account</span></span>
+                <span className="text-right">Money Out <span className="block text-[10px] font-normal normal-case text-on-surface-variant">leaves this account</span></span>
+                <span className="text-right">Money In <span className="block text-[10px] font-normal normal-case text-on-surface-variant">goes to this account</span></span>
                 <span />
               </div>
               <div className="space-y-3">
                 {advLines.map((line, i) => (
                   <div key={i} className={clsx("pb-3", i < advLines.length - 1 && "border-b border-surface-100")}>
-                    <div className="sm:hidden text-xs font-medium text-surface-500 mb-2">Line {i + 1}</div>
+                    <div className="sm:hidden text-xs font-medium text-on-surface-variant mb-2">Line {i + 1}</div>
                     <div className="grid grid-cols-1 sm:grid-cols-[1fr_140px_140px_32px] gap-2 sm:gap-3 items-start sm:items-center">
                       <Dropdown
                         value={line.accountId}
@@ -404,32 +404,32 @@ export default function JournalEntry() {
                         size="sm"
                       />
                       <div>
-                        <label className="sm:hidden text-xs text-surface-500 mb-1 block">Money Out (leaves this account)</label>
+                        <label className="sm:hidden text-xs text-on-surface-variant mb-1 block">Money Out (leaves this account)</label>
                         <div className="relative">
-                          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-surface-400 font-mono">KES</span>
+                          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-on-surface-variant font-mono">KES</span>
                           <input type="number" placeholder="0.00" value={line.debit === "0" ? "" : line.debit}
                             onChange={(e) => updateAdvLine(i, { debit: e.target.value || "0", credit: "0" })}
-                            className="w-full rounded-lg border border-surface-300 pl-10 pr-3 py-2.5 text-sm text-right font-mono focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+                            className="w-full rounded-lg border border-outline pl-10 pr-3 py-2.5 text-sm text-right font-mono focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
                         </div>
                       </div>
                       <div>
-                        <label className="sm:hidden text-xs text-surface-500 mb-1 block">Money In (goes to this account)</label>
+                        <label className="sm:hidden text-xs text-on-surface-variant mb-1 block">Money In (goes to this account)</label>
                         <div className="flex items-center gap-2">
                           <div className="relative flex-1">
-                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-surface-400 font-mono">KES</span>
+                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-on-surface-variant font-mono">KES</span>
                             <input type="number" placeholder="0.00" value={line.credit === "0" ? "" : line.credit}
                               onChange={(e) => updateAdvLine(i, { credit: e.target.value || "0", debit: "0" })}
-                              className="w-full rounded-lg border border-surface-300 pl-10 pr-3 py-2.5 text-sm text-right font-mono focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+                              className="w-full rounded-lg border border-outline pl-10 pr-3 py-2.5 text-sm text-right font-mono focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
                           </div>
                           {advLines.length > 2 && (
-                            <button onClick={() => removeAdvLine(i)} className="sm:hidden w-8 h-8 flex items-center justify-center rounded-lg text-surface-400 hover:text-red-500 hover:bg-red-50 transition-colors shrink-0">
+                            <button onClick={() => removeAdvLine(i)} className="sm:hidden w-8 h-8 flex items-center justify-center rounded-lg text-on-surface-variant hover:text-red-500 hover:bg-red-50 transition-colors shrink-0">
                               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                             </button>
                           )}
                         </div>
                       </div>
                       {advLines.length > 2 && (
-                        <button onClick={() => removeAdvLine(i)} className="hidden sm:flex w-8 h-8 items-center justify-center rounded-lg text-surface-400 hover:text-red-500 hover:bg-red-50 transition-colors">
+                        <button onClick={() => removeAdvLine(i)} className="hidden sm:flex w-8 h-8 items-center justify-center rounded-lg text-on-surface-variant hover:text-red-500 hover:bg-red-50 transition-colors">
                           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                         </button>
                       )}
@@ -437,17 +437,17 @@ export default function JournalEntry() {
                   </div>
                 ))}
               </div>
-              <button onClick={addAdvLine} className="mt-3 text-sm font-medium text-brand-600 hover:text-brand-700 transition-colors flex items-center gap-1.5">
+              <button onClick={addAdvLine} className="mt-3 text-sm font-medium text-primary hover:text-on-primary-container transition-colors flex items-center gap-1.5">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
                 Add account line
               </button>
             </div>
 
-            <div className={clsx("flex items-center justify-between pt-4 border-t", advBalanced ? "border-emerald-200" : advUnbalanced ? "border-red-200" : "border-surface-200")}>
-              <div className={clsx("text-sm font-medium", advBalanced ? "text-emerald-600" : advUnbalanced ? "text-red-600" : "text-surface-500")}>
+            <div className={clsx("flex items-center justify-between pt-4 border-t", advBalanced ? "border-emerald-200" : advUnbalanced ? "border-red-200" : "border-outline-variant")}>
+              <div className={clsx("text-sm font-medium", advBalanced ? "text-emerald-600" : advUnbalanced ? "text-red-600" : "text-on-surface-variant")}>
                 Total Money Out: <Money value={advTotalDebit} />
               </div>
-              <div className={clsx("text-sm font-medium", advBalanced ? "text-emerald-600" : advUnbalanced ? "text-red-600" : "text-surface-500")}>
+              <div className={clsx("text-sm font-medium", advBalanced ? "text-emerald-600" : advUnbalanced ? "text-red-600" : "text-on-surface-variant")}>
                 Total Money In: <Money value={advTotalCredit} />
               </div>
             </div>
@@ -467,41 +467,41 @@ export default function JournalEntry() {
 
       <Card className="p-6 max-w-2xl">
         <div className="flex items-center justify-between mb-5">
-          <button onClick={goBack} className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-600 hover:text-brand-700 bg-brand-50 hover:bg-brand-100 px-3 py-1.5 rounded-lg transition-colors">
+          <button onClick={goBack} className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-on-primary-container bg-primary-container hover:bg-primary-container px-3 py-1.5 rounded-lg transition-colors">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             Back
           </button>
-          <span className="text-xs text-surface-400">{meta.title}</span>
+          <span className="text-xs text-on-surface-variant">{meta.title}</span>
         </div>
 
         <div className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-surface-700 mb-1.5">Date</label>
-            <input type="date" value={entryDate} onChange={(e) => setEntryDate(e.target.value)} className="w-full rounded-lg border border-surface-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+            <label className="block text-sm font-medium text-on-surface mb-1.5">Date</label>
+            <input type="date" value={entryDate} onChange={(e) => setEntryDate(e.target.value)} className="w-full rounded-lg border border-outline px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
           </div>
 
           {mode === "supplies" && (
             <>
               <div>
-                <label className="block text-sm font-medium text-surface-700 mb-1.5">Supplier <span className="text-surface-400 font-normal">(optional)</span></label>
-                <input value={supplier} onChange={(e) => setSupplier(e.target.value)} placeholder="e.g. Kifaru Stationers" className="w-full rounded-lg border border-surface-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+                <label className="block text-sm font-medium text-on-surface mb-1.5">Supplier <span className="text-on-surface-variant font-normal">(optional)</span></label>
+                <input value={supplier} onChange={(e) => setSupplier(e.target.value)} placeholder="e.g. Kifaru Stationers" className="w-full rounded-lg border border-outline px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-surface-700 mb-1.5">What was bought?</label>
-                <input value={itemDescription} onChange={(e) => setItemDescription(e.target.value)} placeholder="e.g. Exercise books, pens, chalk" className="w-full rounded-lg border border-surface-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+                <label className="block text-sm font-medium text-on-surface mb-1.5">What was bought?</label>
+                <input value={itemDescription} onChange={(e) => setItemDescription(e.target.value)} placeholder="e.g. Exercise books, pens, chalk" className="w-full rounded-lg border border-outline px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-surface-700 mb-1.5">Amount (KES) *</label>
-                  <input type="number" min={1} value={suppliesAmount || ""} onChange={(e) => setSuppliesAmount(Number(e.target.value))} placeholder="0.00" className="w-full rounded-lg border border-surface-300 px-3 py-2 text-sm font-mono text-right focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+                  <label className="block text-sm font-medium text-on-surface mb-1.5">Amount (KES) *</label>
+                  <input type="number" min={1} value={suppliesAmount || ""} onChange={(e) => setSuppliesAmount(Number(e.target.value))} placeholder="0.00" className="w-full rounded-lg border border-outline px-3 py-2 text-sm font-mono text-right focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-surface-700 mb-1.5">Paid from *</label>
+                  <label className="block text-sm font-medium text-on-surface mb-1.5">Paid from *</label>
                   <Dropdown value={suppliesPaidFrom} options={PAID_FROM_OPTIONS} onChange={(v) => setSuppliesPaidFrom(v as PaidFrom)} size="sm" />
                 </div>
               </div>
-              <div className="bg-surface-50 rounded-lg p-3 text-xs text-surface-500 space-y-1">
-                <p className="font-medium text-surface-600">This will record:</p>
+              <div className="bg-surface-container-low rounded-lg p-3 text-xs text-on-surface-variant space-y-1">
+                <p className="font-medium text-on-surface-variant">This will record:</p>
                 <p>Money Out: {PAID_FROM_OPTIONS.find((o) => o.value === suppliesPaidFrom)?.label} → Supplies Expense</p>
               </div>
               <Button onClick={() => submitTemplate("supplies")} disabled={!suppliesAmount || suppliesAmount <= 0} className="w-full">
@@ -513,21 +513,21 @@ export default function JournalEntry() {
           {mode === "donation" && (
             <>
               <div>
-                <label className="block text-sm font-medium text-surface-700 mb-1.5">Donor name <span className="text-surface-400 font-normal">(optional, leave blank for Anonymous)</span></label>
-                <input value={donorName} onChange={(e) => setDonorName(e.target.value)} placeholder="e.g. John Kariuki Foundation" className="w-full rounded-lg border border-surface-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+                <label className="block text-sm font-medium text-on-surface mb-1.5">Donor name <span className="text-on-surface-variant font-normal">(optional, leave blank for Anonymous)</span></label>
+                <input value={donorName} onChange={(e) => setDonorName(e.target.value)} placeholder="e.g. John Kariuki Foundation" className="w-full rounded-lg border border-outline px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-surface-700 mb-1.5">Amount (KES) *</label>
-                  <input type="number" min={1} value={donationAmount || ""} onChange={(e) => setDonationAmount(Number(e.target.value))} placeholder="0.00" className="w-full rounded-lg border border-surface-300 px-3 py-2 text-sm font-mono text-right focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+                  <label className="block text-sm font-medium text-on-surface mb-1.5">Amount (KES) *</label>
+                  <input type="number" min={1} value={donationAmount || ""} onChange={(e) => setDonationAmount(Number(e.target.value))} placeholder="0.00" className="w-full rounded-lg border border-outline px-3 py-2 text-sm font-mono text-right focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-surface-700 mb-1.5">Received into *</label>
+                  <label className="block text-sm font-medium text-on-surface mb-1.5">Received into *</label>
                   <Dropdown value={donationReceivedInto} options={PAID_FROM_OPTIONS} onChange={(v) => setDonationReceivedInto(v as PaidFrom)} size="sm" />
                 </div>
               </div>
-              <div className="bg-surface-50 rounded-lg p-3 text-xs text-surface-500 space-y-1">
-                <p className="font-medium text-surface-600">This will record:</p>
+              <div className="bg-surface-container-low rounded-lg p-3 text-xs text-on-surface-variant space-y-1">
+                <p className="font-medium text-on-surface-variant">This will record:</p>
                 <p>Money Out: Donation Income → {PAID_FROM_OPTIONS.find((o) => o.value === donationReceivedInto)?.label}</p>
               </div>
               <Button onClick={() => submitTemplate("donation")} disabled={!donationAmount || donationAmount <= 0} className="w-full">
@@ -539,25 +539,25 @@ export default function JournalEntry() {
           {mode === "repair" && (
             <>
               <div>
-                <label className="block text-sm font-medium text-surface-700 mb-1.5">Contractor or vendor <span className="text-surface-400 font-normal">(optional)</span></label>
-                <input value={contractor} onChange={(e) => setContractor(e.target.value)} placeholder="e.g. Paul's Plumbing" className="w-full rounded-lg border border-surface-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+                <label className="block text-sm font-medium text-on-surface mb-1.5">Contractor or vendor <span className="text-on-surface-variant font-normal">(optional)</span></label>
+                <input value={contractor} onChange={(e) => setContractor(e.target.value)} placeholder="e.g. Paul's Plumbing" className="w-full rounded-lg border border-outline px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-surface-700 mb-1.5">What was repaired?</label>
-                <input value={repairDescription} onChange={(e) => setRepairDescription(e.target.value)} placeholder="e.g. Leaking roof in Grade 4 classroom" className="w-full rounded-lg border border-surface-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+                <label className="block text-sm font-medium text-on-surface mb-1.5">What was repaired?</label>
+                <input value={repairDescription} onChange={(e) => setRepairDescription(e.target.value)} placeholder="e.g. Leaking roof in Grade 4 classroom" className="w-full rounded-lg border border-outline px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-surface-700 mb-1.5">Amount (KES) *</label>
-                  <input type="number" min={1} value={repairAmount || ""} onChange={(e) => setRepairAmount(Number(e.target.value))} placeholder="0.00" className="w-full rounded-lg border border-surface-300 px-3 py-2 text-sm font-mono text-right focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+                  <label className="block text-sm font-medium text-on-surface mb-1.5">Amount (KES) *</label>
+                  <input type="number" min={1} value={repairAmount || ""} onChange={(e) => setRepairAmount(Number(e.target.value))} placeholder="0.00" className="w-full rounded-lg border border-outline px-3 py-2 text-sm font-mono text-right focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-surface-700 mb-1.5">Paid from *</label>
+                  <label className="block text-sm font-medium text-on-surface mb-1.5">Paid from *</label>
                   <Dropdown value={repairPaidFrom} options={PAID_FROM_OPTIONS} onChange={(v) => setRepairPaidFrom(v as PaidFrom)} size="sm" />
                 </div>
               </div>
-              <div className="bg-surface-50 rounded-lg p-3 text-xs text-surface-500 space-y-1">
-                <p className="font-medium text-surface-600">This will record:</p>
+              <div className="bg-surface-container-low rounded-lg p-3 text-xs text-on-surface-variant space-y-1">
+                <p className="font-medium text-on-surface-variant">This will record:</p>
                 <p>Money Out: {PAID_FROM_OPTIONS.find((o) => o.value === repairPaidFrom)?.label} → Maintenance Expense</p>
               </div>
               <Button onClick={() => submitTemplate("repair")} disabled={!repairAmount || repairAmount <= 0} className="w-full">
@@ -575,17 +575,17 @@ function TemplateCard({ icon, title, desc, badge, badgeColor, onClick }: {
   icon: string; title: string; desc: string; badge: string; badgeColor: string; onClick: () => void;
 }) {
   return (
-    <button onClick={onClick} className="w-full text-left bg-white rounded-xl border border-surface-200 p-5 hover:border-brand-300 hover:shadow-sm transition-all group">
+    <button onClick={onClick} className="w-full text-left bg-surface-container-lowest rounded-xl border border-outline-variant p-5 hover:border-primary/30 hover:shadow-sm transition-all group">
       <div className="flex items-start gap-4">
         <span className="text-2xl mt-0.5">{icon}</span>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <h3 className="font-semibold text-surface-900 group-hover:text-brand-700 transition-colors">{title}</h3>
+            <h3 className="font-semibold text-on-surface group-hover:text-on-primary-container transition-colors">{title}</h3>
             <span className={clsx("text-[10px] font-semibold px-1.5 py-0.5 rounded uppercase tracking-wider", badgeColor)}>{badge}</span>
           </div>
-          <p className="text-sm text-surface-500 mt-0.5">{desc}</p>
+          <p className="text-sm text-on-surface-variant mt-0.5">{desc}</p>
         </div>
-        <svg className="w-5 h-5 text-surface-300 group-hover:text-brand-400 transition-colors shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+        <svg className="w-5 h-5 text-outline-variant group-hover:text-primary transition-colors shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
       </div>
     </button>
   );

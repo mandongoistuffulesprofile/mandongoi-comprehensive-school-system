@@ -21,6 +21,8 @@ import Reconciliation from "./pages/fees/Reconciliation";
 import PaymentsLog from "./pages/fees/PaymentsLog";
 import FoodLogs from "./pages/fees/FoodLogs";
 import FoodPresets from "./pages/fees/FoodPresets";
+import MealTimetable from "./pages/fees/MealTimetable";
+import FoodDashboard from "./pages/fees/FoodDashboard";
 import StaffList from "./pages/staff/StaffList";
 import CreateStaff from "./pages/staff/CreateStaff";
 import StaffAttendancePage from "./pages/staff/StaffAttendance";
@@ -79,6 +81,8 @@ export default function App() {
             <Route path="fees/payments" element={<RequireRole roles={["schoolAdmin", "accountant"]}><PaymentsLog /></RequireRole>} />
             <Route path="fees/food-logs" element={<RequireRole roles={["schoolAdmin", "teacher"]}><FoodLogs /></RequireRole>} />
             <Route path="fees/food-presets" element={<RequireRole roles={["schoolAdmin"]}><FoodPresets /></RequireRole>} />
+            <Route path="fees/meal-timetable" element={<RequireRole roles={["schoolAdmin", "teacher"]}><MealTimetable /></RequireRole>} />
+            <Route path="fees/food-dashboard" element={<RequireRole roles={["schoolAdmin", "teacher"]}><FoodDashboard /></RequireRole>} />
 
             <Route path="staff" element={<RequireRole roles={["schoolAdmin", "accountant"]}><StaffList /></RequireRole>} />
             <Route path="staff/new" element={<RequireRole roles={["schoolAdmin"]}><CreateStaff /></RequireRole>} />

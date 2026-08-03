@@ -10,6 +10,10 @@ const router = Router();
 router.post('/', requireRole('schoolAdmin', 'teacher'), async (req: AuthRequest, res, next) => {
   try {
     const { studentId, date, status } = req.body;
+    const existing = await db.select().from(attendanceStudent).where(and(eq(attendanceStudent.studentId, studentId), eq(attendanceStudent.date, date ? new Date(date as string) : new Date()))).limit(1);
+    if (existing.length > 0) {
+      return res.status(409).json({ success: false, error: 'Attendance already recorded for this student on this date' });
+    }
     const [record] = await db.insert(attendanceStudent).values({
       studentId,
       date: date ? new Date(date as string) : new Date(),

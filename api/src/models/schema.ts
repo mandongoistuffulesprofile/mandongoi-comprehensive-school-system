@@ -141,6 +141,20 @@ export const foodPresets = pgTable('food_presets', {
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 });
 
+export const mealTemplates = pgTable('meal_templates', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  dayOfWeek: text('day_of_week', { enum: ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] }).notNull(),
+  mealType: text('meal_type', { enum: ['breakfast', 'lunch', 'supper'] }).notNull(),
+  presetId: uuid('preset_id').references(() => foodPresets.id).notNull(),
+  fixedQuantity: numeric('fixed_quantity', { precision: 8, scale: 2 }).notNull(),
+  isActive: boolean('is_active').default(true),
+  term: smallint('term').notNull(),
+  academicYear: smallint('academic_year').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  mealUnique: unique('uq_meal_template').on(table.dayOfWeek, table.mealType, table.presetId, table.term, table.academicYear),
+}));
+
 export const foodLogs = pgTable('food_logs', {
   id: uuid('id').primaryKey().defaultRandom(),
   studentId: uuid('student_id').references(() => students.id, { onDelete: 'cascade' }),

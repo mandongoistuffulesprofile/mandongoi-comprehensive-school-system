@@ -49,44 +49,48 @@ router.post('/', requireRole('schoolAdmin', 'teacher'), async (req: AuthRequest,
   try {
     const { studentId, reason, leaveDate, expectedReturnDate } = req.body;
     const leave = new Date(leaveDate as string);
-    const [note] = await db.insert(leaveNotes).values({
-      studentId,
-      reason,
-      leaveDate: leave,
-      expectedReturnDate: new Date(expectedReturnDate as string),
-      notedBy: req.user!.id,
-    }).returning();
+    const note = await db.transaction(async (tx) => {
+      const [n] = await tx.insert(leaveNotes).values({
+        studentId,
+        reason,
+        leaveDate: leave,
+        expectedReturnDate: new Date(expectedReturnDate as string),
+        notedBy: req.user!.id,
+      }).returning();
 
-    const [existing] = await db
-      .select({ id: attendanceStudent.id })
-      .from(attendanceStudent)
-      .where(and(eq(attendanceStudent.studentId, studentId), eq(attendanceStudent.date, leave)))
-      .limit(1);
-    if (!existing) {
-      await db.insert(attendanceStudent)
-        .values({ studentId, date: leave, status: 'absent', markedBy: req.user!.id });
-    }
+      const [existing] = await tx
+        .select({ id: attendanceStudent.id })
+        .from(attendanceStudent)
+        .where(and(eq(attendanceStudent.studentId, studentId), eq(attendanceStudent.date, leave)))
+        .limit(1);
+      if (!existing) {
+        await tx.insert(attendanceStudent)
+          .values({ studentId, date: leave, status: 'absent', markedBy: req.user!.id });
+      }
 
-    const [studentName] = await db
-      .select({ fullName: sql<string>`concat(${students.firstName}, ' ', ${students.lastName})` })
-      .from(students)
-      .where(eq(students.id, studentId))
-      .limit(1);
+      const [studentName] = await tx
+        .select({ fullName: sql<string>`concat(${students.firstName}, ' ', ${students.lastName})` })
+        .from(students)
+        .where(eq(students.id, studentId))
+        .limit(1);
 
-    await notify({
-      title: 'Student Leave',
-      message: `${studentName?.fullName || 'A student'} has been sent on leave from ${leave.toISOString().slice(0, 10)} — ${reason}`,
-      type: 'info',
-      roles: ['schoolAdmin', 'teacher'],
-    });
+      await notify({
+        title: 'Student Leave',
+        message: `${studentName?.fullName || 'A student'} has been sent on leave from ${leave.toISOString().slice(0, 10)} — ${reason}`,
+        type: 'info',
+        roles: ['schoolAdmin', 'teacher'],
+      });
 
-    await logAudit({
-      action: 'create',
-      category: 'leave_note',
-      entityType: 'leave_note',
-      entityId: note.id,
-      description: `Leave note created for student — marked absent on ${leave.toISOString().slice(0, 10)}`,
-      req,
+      await logAudit({
+        action: 'create',
+        category: 'leave_note',
+        entityType: 'leave_note',
+        entityId: n.id,
+        description: `Leave note created for student — marked absent on ${leave.toISOString().slice(0, 10)}`,
+        req,
+      });
+
+      return n;
     });
 
     res.status(201).json({ success: true, data: note });
@@ -114,6 +118,18 @@ router.patch('/:id', requireRole('schoolAdmin'), async (req: AuthRequest, res, n
       .where(eq(leaveNotes.id, req.params.id))
       .returning();
     if (!note) return res.status(404).json({ success: false, error: 'Not found' });
+
+    if (data.status === 'rejected') {
+      const leaveStart = new Date(note.leaveDate);
+      const leaveEnd = new Date(note.expectedReturnDate);
+      await db.delete(attendanceStudent)
+        .where(and(
+          eq(attendanceStudent.studentId, note.studentId),
+          sql`${attendanceStudent.date} >= ${leaveStart}`,
+          sql`${attendanceStudent.date} <= ${leaveEnd}`,
+          eq(attendanceStudent.status, 'excused'),
+        ));
+    }
 
     if (data.status === 'approved') {
       const leaveStart = new Date(note.leaveDate);

@@ -65,18 +65,20 @@ router.post('/', requireRole('schoolAdmin'), async (req: AuthRequest, res, next)
     }).returning();
 
     if (subjects && subjects.length > 0) {
-      await db.insert(curriculumSubjects).values(
-        subjects.map((s: any, i: number) => ({
-          curriculumConfigId: config.id,
-          name: s.name,
-          learningAreaId: s.learningAreaId || null,
-          weeklyLessons: s.weeklyLessons,
-          allowsDoubleLesson: s.allowsDoubleLesson || false,
-          isChoiceGroup: s.isChoiceGroup || false,
-          requiresRoomType: s.requiresRoomType || null,
-          sortOrder: i,
-        }))
-      );
+      await db.transaction(async (tx) => {
+        await tx.insert(curriculumSubjects).values(
+          subjects.map((s: any, i: number) => ({
+            curriculumConfigId: config.id,
+            name: s.name,
+            learningAreaId: s.learningAreaId || null,
+            weeklyLessons: s.weeklyLessons,
+            allowsDoubleLesson: s.allowsDoubleLesson || false,
+            isChoiceGroup: s.isChoiceGroup || false,
+            requiresRoomType: s.requiresRoomType || null,
+            sortOrder: i,
+          }))
+        );
+      });
     }
 
     res.status(201).json({ success: true, data: config });

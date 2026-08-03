@@ -29,7 +29,7 @@ export default function StaffList() {
         { header: "Teacher Type", cell: (s) => <EnumBadge value={s.teacherType === "bom" ? "BOM" : "TSC"} /> },
         { header: "Role", cell: (s) => <EnumBadge value={s.role} /> },
         { header: "Base Rate", cell: (s) => <Money value={s.baseRate} /> },
-        { header: "Extra Rate", cell: (s) => (s.extraSessionRate ? <Money value={s.extraSessionRate} /> : <span className="text-surface-400">default</span>) },
+        { header: "Extra Rate", cell: (s) => (s.extraSessionRate ? <Money value={s.extraSessionRate} /> : <span className="text-on-surface-variant">default</span>) },
         { header: "Status", cell: (s) => <EnumBadge value={s.isActive ? "active" : "inactive"} /> },
       ]}
       fetchList={() => staffApi.list()}

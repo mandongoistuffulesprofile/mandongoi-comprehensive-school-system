@@ -185,19 +185,19 @@ export default function StudentResults() {
       {loading && <div className="flex justify-center py-10"><Spinner className="w-6 h-6" /></div>}
 
       {loaded && results.length === 0 && (
-        <p className="text-center text-surface-500 py-10">No results found for {grade} Term {term}.</p>
+        <p className="text-center text-on-surface-variant py-10">No results found for {grade} Term {term}.</p>
       )}
 
       {loaded && results.length > 0 && (
         <Card className="p-5" ref={tableRef}>
           <div className="flex items-center justify-between mb-3">
-            <p className="text-sm font-semibold text-surface-700">{results.length} students · Sorted by rank</p>
-            <span className="text-[10px] text-surface-400">EE ≥80% · ME ≥60% · AE ≥40% · BE {"<"}40%</span>
+            <p className="text-sm font-semibold text-on-surface">{results.length} students · Sorted by rank</p>
+            <span className="text-[10px] text-on-surface-variant">EE ≥80% · ME ≥60% · AE ≥40% · BE {"<"}40%</span>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-surface-50 border-b border-surface-200 text-left text-xs uppercase tracking-wider text-surface-500">
+                <tr className="bg-surface-container-low border-b border-outline-variant text-left text-xs uppercase tracking-wider text-on-surface-variant">
                   <th className="py-3 px-2 font-medium w-8">#</th>
                   <th className="py-3 px-3 font-medium">Student</th>
                   {filteredSubjects.map((la) => (
@@ -210,9 +210,9 @@ export default function StudentResults() {
               </thead>
               <tbody>
                 {results.map((r, i) => (
-                  <tr key={r.student.id} className="border-b border-surface-100 hover:bg-surface-50">
-                    <td className="py-2 px-2 text-center text-surface-400">{i + 1}</td>
-                    <td className="py-2 px-3 font-medium text-surface-900 whitespace-nowrap">
+                  <tr key={r.student.id} className="border-b border-surface-100 hover:bg-surface-container-low">
+                    <td className="py-2 px-2 text-center text-on-surface-variant">{i + 1}</td>
+                    <td className="py-2 px-3 font-medium text-on-surface whitespace-nowrap">
                       {r.student.firstName} {r.student.lastName}
                     </td>
                     {filteredSubjects.map((la) => {
@@ -224,7 +224,7 @@ export default function StudentResults() {
                             <span className={clsx("font-medium", val >= 80 ? "text-emerald-600" : val >= 60 ? "text-blue-600" : val >= 40 ? "text-amber-600" : "text-red-500")}>
                               {subj!.score}
                             </span>
-                          ) : <span className="text-surface-300">-</span>}
+                          ) : <span className="text-outline-variant">-</span>}
                         </td>
                       );
                     })}
@@ -238,7 +238,7 @@ export default function StudentResults() {
                     <td className={clsx("py-2 px-2 text-center font-bold", r.grade === "EE" ? "text-emerald-600" : r.grade === "ME" ? "text-blue-600" : r.grade === "AE" ? "text-amber-600" : "text-red-500")}>
                       {r.grade || "-"}
                     </td>
-                    <td className="py-2 px-2 text-center text-surface-600">{r.meanPoints > 0 ? r.meanPoints.toFixed(1) : "-"}</td>
+                    <td className="py-2 px-2 text-center text-on-surface-variant">{r.meanPoints > 0 ? r.meanPoints.toFixed(1) : "-"}</td>
                   </tr>
                 ))}
               </tbody>

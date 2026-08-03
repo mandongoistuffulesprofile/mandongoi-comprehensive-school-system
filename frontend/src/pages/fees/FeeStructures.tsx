@@ -95,16 +95,16 @@ export default function FeeStructures() {
         title="Fee Structures"
         description="Set term fees by grade and student type — tuition, activity, admin levies, boarding, and food programme."
         actions={isAdmin && (
-          <Button onClick={openCreate} className="bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white shadow-lg shadow-brand-200 rounded-xl px-5 py-2.5">
+          <Button onClick={openCreate} className="bg-gradient-to-r from-primary to-primary hover:from-primary hover:to-primary text-white shadow-lg shadow-primary/20 rounded-xl px-5 py-2.5">
             + New Fee Structure
           </Button>
         )}
       />
 
-      <div className="bg-white rounded-2xl shadow-sm border border-surface-200 overflow-hidden">
+      <div className="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant overflow-hidden">
         <DataTable
           columns={[
-            { header: "Grade", cell: (f) => <span className="font-semibold text-surface-900">{f.grade}</span> },
+            { header: "Grade", cell: (f) => <span className="font-semibold text-on-surface">{f.grade}</span> },
             { header: "Type", cell: (f) => <EnumBadge value={f.studentType} /> },
             { header: "Status", cell: (f) => <span className={`inline-flex items-center text-xs font-medium px-2 py-0.5 rounded-full ${f.status === 'active' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>{f.status === 'active' ? 'Active' : 'Draft'}</span> },
             { header: "Term", cell: (f) => `Term ${f.term}` },
@@ -118,12 +118,12 @@ export default function FeeStructures() {
                 {Number(f.foodAmount) > 0 && <span className="inline-flex items-center gap-1 bg-rose-50 text-rose-700 text-xs px-2 py-0.5 rounded-full">Food <Money value={f.foodAmount} /></span>}
               </div>
             )},
-            { header: "Total", cell: (f) => <Money value={f.totalAmount} className="font-bold text-brand-600" /> },
+            { header: "Total", cell: (f) => <Money value={f.totalAmount} className="font-bold text-primary" /> },
           ]}
           rows={rows} loading={loading}
           actions={isAdmin ? (row) => (
             <div className="flex gap-1">
-              <button onClick={() => openEdit(row)} className="px-2.5 py-1 text-xs font-medium text-brand-600 hover:bg-brand-50 rounded-lg transition-colors">Edit</button>
+              <button onClick={() => openEdit(row)} className="px-2.5 py-1 text-xs font-medium text-primary hover:bg-primary-container rounded-lg transition-colors">Edit</button>
               <button onClick={() => setDeleteTarget(row)} className="px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors">Delete</button>
             </div>
           ) : undefined}
@@ -139,23 +139,23 @@ export default function FeeStructures() {
               <FormField spec={{ name: "term", label: "Term", type: "number", required: true }} value={term} onChange={(v) => setTerm(v as number)} />
               <FormField spec={{ name: "academicYear", label: "Year", type: "number", required: true }} value={academicYear} onChange={(v) => setAcademicYear(v as number)} />
             </div>
-            <div className="border-t border-surface-200 pt-5">
-              <h3 className="text-sm font-semibold text-surface-900 mb-4">Fee Categories</h3>
+            <div className="border-t border-outline-variant pt-5">
+              <h3 className="text-sm font-semibold text-on-surface mb-4">Fee Categories</h3>
               <div className="grid gap-3">
                 {FEE_CATEGORIES.map((cat) => {
                   const isBoardingOnly = cat.key === "boardingAmount" || cat.key === "foodAmount";
                   if (isBoardingOnly && studentType === "day") return null;
                   return (
-                    <div key={cat.key} className="flex items-center gap-3 p-3 rounded-xl bg-surface-50 hover:bg-surface-100 transition-colors group">
+                    <div key={cat.key} className="flex items-center gap-3 p-3 rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors group">
                       <span className="text-lg flex-shrink-0">{cat.icon}</span>
                       <div className="flex-1 min-w-0">
-                        <label className="text-sm font-semibold text-surface-900">{cat.label}</label>
-                        <p className="text-xs text-surface-400">{cat.desc}</p>
+                        <label className="text-sm font-semibold text-on-surface">{cat.label}</label>
+                        <p className="text-xs text-on-surface-variant">{cat.desc}</p>
                       </div>
                       <div className="flex-shrink-0 w-40">
                         <div className="relative">
-                          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-surface-400 font-medium">KES</span>
-                          <input type="number" step="0.01" value={amounts[cat.key]} onChange={(e) => updateAmount(cat.key, e.target.value)} className="w-full rounded-lg border border-surface-300 pl-10 pr-3 py-2 text-sm text-right font-medium focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 bg-white" placeholder="0.00" />
+                          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-on-surface-variant font-medium">KES</span>
+                          <input type="number" step="0.01" value={amounts[cat.key]} onChange={(e) => updateAmount(cat.key, e.target.value)} className="w-full rounded-lg border border-outline pl-10 pr-3 py-2 text-sm text-right font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-surface-container-lowest" placeholder="0.00" />
                         </div>
                       </div>
                     </div>
@@ -163,7 +163,7 @@ export default function FeeStructures() {
                 })}
               </div>
             </div>
-            <div className="flex items-center justify-between bg-gradient-to-r from-brand-600 to-brand-500 rounded-xl px-5 py-4 shadow-inner">
+            <div className="flex items-center justify-between bg-gradient-to-r from-primary to-primary rounded-xl px-5 py-4 shadow-inner">
               <div>
                 <span className="text-sm text-white/80 font-medium">Total Fee Per Student</span>
                 <p className="text-xs text-white/60 mt-0.5">{studentType === "boarding" ? "Includes boarding & food" : studentType === "day" ? "Day scholar rate" : "Applies to both"}</p>
@@ -172,7 +172,7 @@ export default function FeeStructures() {
             </div>
             <div className="flex justify-end gap-3 pt-2">
               <Button variant="ghost" onClick={() => { setEditing(null); setIsCreating(false); }} className="px-5">Cancel</Button>
-              <Button onClick={handleSaveClick} className="px-6 bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-lg shadow-brand-200 rounded-xl">Review & Confirm</Button>
+              <Button onClick={handleSaveClick} className="px-6 bg-gradient-to-r from-primary to-primary text-white shadow-lg shadow-primary/20 rounded-xl">Review & Confirm</Button>
             </div>
           </div>
         </Modal>
@@ -181,35 +181,35 @@ export default function FeeStructures() {
       {showConfirm && (
         <Modal title="Confirm Fee Structure" onClose={() => setShowConfirm(false)} width="max-w-4xl">
           <div className="space-y-5">
-            <div className="rounded-2xl bg-surface-50 p-5 space-y-4">
+            <div className="rounded-2xl bg-surface-container-low p-5 space-y-4">
               <div className="grid grid-cols-4 gap-4 text-sm">
-                <div><p className="text-xs text-surface-400 font-medium uppercase tracking-wider">Grade</p><p className="font-bold text-surface-900 text-lg">{grade}</p></div>
-                <div><p className="text-xs text-surface-400 font-medium uppercase tracking-wider">Type</p><p className="font-semibold text-surface-900">{studentType === "boarding" ? "Boarding" : studentType === "day" ? "Day Scholar" : "Both"}</p></div>
-                <div><p className="text-xs text-surface-400 font-medium uppercase tracking-wider">Term</p><p className="font-semibold text-surface-900">Term {term}</p></div>
-                <div><p className="text-xs text-surface-400 font-medium uppercase tracking-wider">Year</p><p className="font-semibold text-surface-900">{academicYear}</p></div>
+                <div><p className="text-xs text-on-surface-variant font-medium uppercase tracking-wider">Grade</p><p className="font-bold text-on-surface text-lg">{grade}</p></div>
+                <div><p className="text-xs text-on-surface-variant font-medium uppercase tracking-wider">Type</p><p className="font-semibold text-on-surface">{studentType === "boarding" ? "Boarding" : studentType === "day" ? "Day Scholar" : "Both"}</p></div>
+                <div><p className="text-xs text-on-surface-variant font-medium uppercase tracking-wider">Term</p><p className="font-semibold text-on-surface">Term {term}</p></div>
+                <div><p className="text-xs text-on-surface-variant font-medium uppercase tracking-wider">Year</p><p className="font-semibold text-on-surface">{academicYear}</p></div>
               </div>
-              <div className="border-t border-surface-200 pt-4">
-                <p className="text-xs text-surface-400 font-medium uppercase tracking-wider mb-3">Fee Breakdown</p>
+              <div className="border-t border-outline-variant pt-4">
+                <p className="text-xs text-on-surface-variant font-medium uppercase tracking-wider mb-3">Fee Breakdown</p>
                 <div className="space-y-2">
                   {FEE_CATEGORIES.map((cat) => {
                     const val = Number(amounts[cat.key]) || 0;
                     if (val === 0) return null;
                     return (
                       <div key={cat.key} className="flex items-center justify-between py-1.5">
-                        <div className="flex items-center gap-2"><span className="text-base">{cat.icon}</span><span className="text-sm text-surface-700">{cat.label}</span></div>
-                        <span className="font-semibold text-surface-900">KES {val.toLocaleString("en-KE", { minimumFractionDigits: 2 })}</span>
+                        <div className="flex items-center gap-2"><span className="text-base">{cat.icon}</span><span className="text-sm text-on-surface">{cat.label}</span></div>
+                        <span className="font-semibold text-on-surface">KES {val.toLocaleString("en-KE", { minimumFractionDigits: 2 })}</span>
                       </div>
                     );
                   })}
                 </div>
-                <div className="flex items-center justify-between border-t-2 border-surface-300 mt-3 pt-3">
-                  <span className="font-bold text-surface-900">Total</span>
-                  <span className="text-xl font-bold text-brand-600">KES {totalAmount.toLocaleString("en-KE", { minimumFractionDigits: 2 })}</span>
+                <div className="flex items-center justify-between border-t-2 border-outline mt-3 pt-3">
+                  <span className="font-bold text-on-surface">Total</span>
+                  <span className="text-xl font-bold text-primary">KES {totalAmount.toLocaleString("en-KE", { minimumFractionDigits: 2 })}</span>
                 </div>
               </div>
-              <div className="bg-white rounded-xl p-4 border border-surface-200">
-                <p className="text-xs text-surface-400 font-medium uppercase tracking-wider mb-1">Effect</p>
-                <p className="text-sm text-surface-700">
+              <div className="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant">
+                <p className="text-xs text-on-surface-variant font-medium uppercase tracking-wider mb-1">Effect</p>
+                <p className="text-sm text-on-surface">
                   {studentType === "boarding" ? "Applies to active Boarding students. Bring-Your-Own food students have food amount deducted." :
                    studentType === "day" ? "Applies to active Day Scholar students (boarding and food fees excluded)." :
                    "Applies to all active students regardless of type."}
@@ -219,13 +219,13 @@ export default function FeeStructures() {
             <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-sm text-amber-800">
               <span className="font-medium">Choose how to save:</span> Draft keeps it hidden from invoice generation until published.
             </div>
-            <div className="flex flex-wrap justify-between gap-3 pt-2 border-t border-surface-200">
+            <div className="flex flex-wrap justify-between gap-3 pt-2 border-t border-outline-variant">
               <Button variant="ghost" onClick={() => setShowConfirm(false)} className="px-5">← Back to Edit</Button>
               <div className="flex gap-3">
                 <button onClick={() => saveWithStatus("draft")} disabled={saving} className="px-5 py-2 text-sm font-medium text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-xl transition-colors">
                   {saving ? "Saving..." : "💾 Save as Draft"}
                 </button>
-                <button onClick={() => saveWithStatus("active")} disabled={saving} className="px-6 py-2 text-sm font-medium text-white bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 rounded-xl shadow-lg shadow-brand-200 transition-colors">
+                <button onClick={() => saveWithStatus("active")} disabled={saving} className="px-6 py-2 text-sm font-medium text-white bg-gradient-to-r from-primary to-primary hover:from-primary hover:to-primary rounded-xl shadow-lg shadow-primary/20 transition-colors">
                   {saving ? "Saving..." : "✅ Publish & Activate"}
                 </button>
               </div>
@@ -242,7 +242,7 @@ export default function FeeStructures() {
               <p>This will permanently delete the fee structure for <strong>{deleteTarget.grade}</strong> — {deleteTarget.studentType === "boarding" ? "Boarding" : deleteTarget.studentType === "day" ? "Day Scholar" : "Both"} (Term {deleteTarget.term}, {deleteTarget.academicYear}).</p>
               <p className="mt-2 text-xs text-red-500">Existing invoices generated from this structure will not be affected.</p>
             </div>
-            <div className="flex justify-end gap-3 pt-2 border-t border-surface-200">
+            <div className="flex justify-end gap-3 pt-2 border-t border-outline-variant">
               <Button variant="ghost" onClick={() => setDeleteTarget(null)}>Cancel</Button>
               <button onClick={confirmDelete} disabled={saving} className="px-5 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-xl transition-colors">
                 {saving ? "Deleting..." : "🗑 Delete"}

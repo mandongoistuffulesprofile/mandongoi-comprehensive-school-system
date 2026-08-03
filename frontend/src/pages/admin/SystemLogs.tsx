@@ -40,11 +40,11 @@ const CATEGORY_COLORS: Record<string, string> = {
   payment: "bg-emerald-100 text-emerald-700",
   student: "bg-amber-100 text-amber-700",
   user: "bg-cyan-100 text-cyan-700",
-  setting: "bg-surface-100 text-surface-700",
+  setting: "bg-surface-container text-on-surface",
   attendance: "bg-orange-100 text-orange-700",
   report_card: "bg-pink-100 text-pink-700",
   fee_structure: "bg-indigo-100 text-indigo-700",
-  other: "bg-surface-100 text-surface-500",
+  other: "bg-surface-container text-on-surface-variant",
 };
 
 export default function SystemLogs() {
@@ -87,13 +87,13 @@ export default function SystemLogs() {
             placeholder="All Categories"
             size="sm"
           />
-          <span className="text-xs text-surface-400">{total} total entries</span>
+          <span className="text-xs text-on-surface-variant">{total} total entries</span>
         </div>
         {totalPages > 1 && (
           <div className="flex items-center gap-1 text-xs">
-            <button disabled={page <= 1} onClick={() => setPage(page - 1)} className="px-2 py-1 rounded hover:bg-surface-100 disabled:opacity-30">&larr;</button>
-            <span className="px-2 text-surface-500">{page} / {totalPages}</span>
-            <button disabled={page >= totalPages} onClick={() => setPage(page + 1)} className="px-2 py-1 rounded hover:bg-surface-100 disabled:opacity-30">&rarr;</button>
+            <button disabled={page <= 1} onClick={() => setPage(page - 1)} className="px-2 py-1 rounded hover:bg-surface-container disabled:opacity-30">&larr;</button>
+            <span className="px-2 text-on-surface-variant">{page} / {totalPages}</span>
+            <button disabled={page >= totalPages} onClick={() => setPage(page + 1)} className="px-2 py-1 rounded hover:bg-surface-container disabled:opacity-30">&rarr;</button>
           </div>
         )}
       </div>
@@ -107,9 +107,9 @@ export default function SystemLogs() {
               className={clsx(
                 "px-3 py-1.5 rounded-xl text-xs font-medium transition-all",
                 category === s.category
-                  ? "ring-2 ring-brand-500/30 shadow-sm"
+                  ? "ring-2 ring-primary/30 shadow-sm"
                   : "",
-                CATEGORY_COLORS[s.category] || "bg-surface-100 text-surface-600",
+                CATEGORY_COLORS[s.category] || "bg-surface-container text-on-surface-variant",
               )}
             >
               {CATEGORY_LABELS[s.category] || s.category} <span className="opacity-60">{s.count}</span>
@@ -121,21 +121,21 @@ export default function SystemLogs() {
       {loading ? (
         <div className="flex justify-center py-10"><Spinner className="w-6 h-6" /></div>
       ) : logs.length === 0 ? (
-        <Card className="p-10 text-center text-sm text-surface-400">No audit logs found.</Card>
+        <Card className="p-10 text-center text-sm text-on-surface-variant">No audit logs found.</Card>
       ) : (
         <Card className="overflow-hidden divide-y divide-surface-100">
           {logs.map((log) => (
-            <div key={log.id} className="flex items-start gap-3 px-4 py-3 text-sm hover:bg-surface-50 transition-colors">
+            <div key={log.id} className="flex items-start gap-3 px-4 py-3 text-sm hover:bg-surface-container-low transition-colors">
               <div className={clsx("mt-0.5 w-2 h-2 rounded-full shrink-0", CATEGORY_COLORS[log.category]?.split(" ")[0] || "bg-surface-300")} />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className={clsx("px-1.5 py-0.5 rounded text-[10px] font-semibold", CATEGORY_COLORS[log.category] || "bg-surface-100 text-surface-600")}>
+                  <span className={clsx("px-1.5 py-0.5 rounded text-[10px] font-semibold", CATEGORY_COLORS[log.category] || "bg-surface-container text-on-surface-variant")}>
                     {CATEGORY_LABELS[log.category] || log.category}
                   </span>
-                  <span className="font-medium text-surface-900 capitalize">{log.action}</span>
-                  <span className="text-surface-500">{log.description}</span>
+                  <span className="font-medium text-on-surface capitalize">{log.action}</span>
+                  <span className="text-on-surface-variant">{log.description}</span>
                 </div>
-                <div className="flex items-center gap-3 mt-1 text-[11px] text-surface-400">
+                <div className="flex items-center gap-3 mt-1 text-[11px] text-on-surface-variant">
                   {log.performedByName && <span>{log.performedByName}</span>}
                   <span>{new Date(log.createdAt).toLocaleString("en-KE")}</span>
                 </div>

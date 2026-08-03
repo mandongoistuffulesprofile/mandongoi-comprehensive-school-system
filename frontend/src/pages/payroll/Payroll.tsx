@@ -62,28 +62,28 @@ export function PayrollRuns() {
           <p className="text-xs font-medium text-emerald-600 uppercase tracking-wider">Paid</p>
           <p className="text-2xl font-bold text-emerald-900 mt-1">{paidCount}</p>
         </div>
-        <div className="bg-gradient-to-br from-surface-50 to-surface-100 rounded-xl p-4 border border-surface-200">
-          <p className="text-xs font-medium text-surface-600 uppercase tracking-wider">Total Runs</p>
-          <p className="text-2xl font-bold text-surface-900 mt-1">{runs.length}</p>
+        <div className="bg-gradient-to-br from-surface-50 to-surface-100 rounded-xl p-4 border border-outline-variant">
+          <p className="text-xs font-medium text-on-surface-variant uppercase tracking-wider">Total Runs</p>
+          <p className="text-2xl font-bold text-on-surface mt-1">{runs.length}</p>
         </div>
       </div>
 
       <Card>
         <div className="px-5 py-3 border-b border-surface-100 flex items-center gap-3">
-          <div className="flex items-center gap-1.5 text-xs text-surface-500">
+          <div className="flex items-center gap-1.5 text-xs text-on-surface-variant">
             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-500" /> Draft
             </span>
-            <span className="text-surface-300">→</span>
+            <span className="text-outline-variant">→</span>
             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-500" /> Approved
             </span>
-            <span className="text-surface-300">→</span>
+            <span className="text-outline-variant">→</span>
             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> Paid
             </span>
           </div>
-          <span className="text-xs text-surface-400 ml-auto">Click a run to view details</span>
+          <span className="text-xs text-on-surface-variant ml-auto">Click a run to view details</span>
         </div>
         <DataTable
           columns={[
@@ -174,10 +174,10 @@ function EntryTable({
 
   return (
     <Card className="p-5 mb-6">
-      <h3 className="font-semibold text-surface-900 flex items-center gap-2 mb-4">
+      <h3 className="font-semibold text-on-surface flex items-center gap-2 mb-4">
         <span className="text-lg">{icon}</span>
         {title}
-        <span className="text-sm font-normal text-surface-400 ml-1">({entries.length} staff)</span>
+        <span className="text-sm font-normal text-on-surface-variant ml-1">({entries.length} staff)</span>
       </h3>
       <DataTable
         columns={[
@@ -188,7 +188,7 @@ function EntryTable({
               return (
                 <div>
                   <span className="font-medium">{s?.name ?? e.staffId}</span>
-                  <span className="ml-2 text-xs text-surface-400">{displayRole(s)}</span>
+                  <span className="ml-2 text-xs text-on-surface-variant">{displayRole(s)}</span>
                 </div>
               );
             },
@@ -200,7 +200,7 @@ function EntryTable({
               return (
                 <div className="text-right">
                   <div><Money value={e.baseRate} /></div>
-                  <div className="text-xs text-surface-400">{displayEmployment(s)}</div>
+                  <div className="text-xs text-on-surface-variant">{displayEmployment(s)}</div>
                 </div>
               );
             },
@@ -221,13 +221,13 @@ function EntryTable({
             : undefined
         }
       />
-      <div className="flex justify-end gap-8 mt-3 pt-3 border-t border-surface-200 text-sm">
+      <div className="flex justify-end gap-8 mt-3 pt-3 border-t border-outline-variant text-sm">
         <div className="text-right">
-          <span className="text-surface-400">Gross Total</span>
+          <span className="text-on-surface-variant">Gross Total</span>
           <div className="font-semibold"><Money value={totalGross} /></div>
         </div>
         <div className="text-right">
-          <span className="text-surface-400">Net Total</span>
+          <span className="text-on-surface-variant">Net Total</span>
           <div className="font-semibold text-emerald-600"><Money value={totalNet} /></div>
         </div>
       </div>
@@ -332,20 +332,20 @@ export function PayrollRunDetail() {
     }
   }
   if (loading) return <Spinner />;
-  if (!run) return <p className="text-surface-500">Payroll run not found.</p>;
+  if (!run) return <p className="text-on-surface-variant">Payroll run not found.</p>;
 
   const monthName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][run.month - 1] || run.month;
 
   return (
     <div>
-      <Link to="/payroll" className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-600 hover:text-brand-700 bg-brand-50 hover:bg-brand-100 px-3 py-1.5 rounded-lg transition-colors mb-4">
+      <Link to="/payroll" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-on-primary-container bg-primary-container hover:bg-primary-container px-3 py-1.5 rounded-lg transition-colors mb-4">
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
         Back to all runs
       </Link>
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-surface-900">{monthName} {run.year}</h1>
-          <p className="text-sm text-surface-500 mt-0.5">Payroll run · Created as draft</p>
+          <h1 className="text-2xl font-bold text-on-surface">{monthName} {run.year}</h1>
+          <p className="text-sm text-on-surface-variant mt-0.5">Payroll run · Created as draft</p>
         </div>
         <EnumBadge value={run.status} />
       </div>
@@ -366,11 +366,11 @@ export function PayrollRunDetail() {
       <Card className="p-5 mb-6 border-l-4 border-l-amber-400">
         <div className="flex items-center justify-between mb-3">
           <div>
-            <h3 className="font-semibold text-surface-900 flex items-center gap-2">
+            <h3 className="font-semibold text-on-surface flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-amber-500" />
               Extra Duty / Per Diem — Morning · Evening · Weekend
             </h3>
-            <p className="text-xs text-surface-400 mt-0.5">
+            <p className="text-xs text-on-surface-variant mt-0.5">
               TSC teachers and eligible staff — special classes, morning/evening/weekend sessions, and admin-assigned tasks
             </p>
           </div>
@@ -380,19 +380,19 @@ export function PayrollRunDetail() {
         </div>
 
         {tscStaff.length > 0 && (
-          <div className="mb-3 text-xs text-surface-500 bg-amber-50 rounded-lg px-3 py-2">
+          <div className="mb-3 text-xs text-on-surface-variant bg-amber-50 rounded-lg px-3 py-2">
             <span className="font-medium">TSC Teachers on this run:</span>{" "}
             {tscStaff.map((s) => s.name).join(", ")} — these staff receive extra duty / per diem only
           </div>
         )}
 
         {extraDuty.length === 0 ? (
-          <p className="text-sm text-surface-400 py-2">No extra duty sessions found for this period.</p>
+          <p className="text-sm text-on-surface-variant py-2">No extra duty sessions found for this period.</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-surface-50 border-b border-surface-200 text-left text-xs uppercase tracking-wider text-surface-500">
+                <tr className="bg-surface-container-low border-b border-outline-variant text-left text-xs uppercase tracking-wider text-on-surface-variant">
                   <th className="py-2 px-3 font-medium">Staff</th>
                   <th className="py-2 px-3 font-medium">Category</th>
                   <th className="py-2 px-3 font-medium">Type</th>
@@ -405,9 +405,9 @@ export function PayrollRunDetail() {
                 {extraDuty.map((d) => {
                   const s = staffMap.get(d.staffId);
                   return (
-                    <tr key={d.staffId + "-" + d.sessionType} className="border-b border-surface-100 hover:bg-surface-50">
-                      <td className="py-2 px-3 font-medium text-surface-900">{d.staffName}</td>
-                      <td className="py-2 px-3 text-xs text-surface-500">{displayRole(s)}</td>
+                    <tr key={d.staffId + "-" + d.sessionType} className="border-b border-surface-100 hover:bg-surface-container-low">
+                      <td className="py-2 px-3 font-medium text-on-surface">{d.staffName}</td>
+                      <td className="py-2 px-3 text-xs text-on-surface-variant">{displayRole(s)}</td>
                       <td className="py-2 px-3">
                         <span className={clsx(
                           "inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium",
@@ -425,7 +425,7 @@ export function PayrollRunDetail() {
                 })}
               </tbody>
               <tfoot>
-                <tr className="bg-surface-50 font-semibold">
+                <tr className="bg-surface-container-low font-semibold">
                   <td colSpan={5} className="py-2 px-3 text-right">Total Extra Duty / Per Diem</td>
                   <td className="py-2 px-3 text-right"><Money value={totalExtraDuty} /></td>
                 </tr>
@@ -457,49 +457,49 @@ export function PayrollRunDetail() {
 
       {/* Overall Reconciliation */}
       {(grouped.bomTeachers.length > 0 || grouped.supportStaff.length > 0 || extraDuty.length > 0) && (
-        <Card className="p-5 mb-6 bg-gradient-to-br from-surface-50 to-white border-2 border-surface-200">
-          <h3 className="font-semibold text-surface-900 mb-4 flex items-center gap-2">
+        <Card className="p-5 mb-6 bg-gradient-to-br from-surface-50 to-white border-2 border-outline-variant">
+          <h3 className="font-semibold text-on-surface mb-4 flex items-center gap-2">
             <span>📊</span>
             Payroll Reconciliation
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="space-y-2">
-              <h4 className="text-xs uppercase tracking-wider text-surface-400 font-medium">Salary Breakdown</h4>
+              <h4 className="text-xs uppercase tracking-wider text-on-surface-variant font-medium">Salary Breakdown</h4>
               {grouped.bomTeachers.length > 0 && (
                 <div className="flex justify-between text-sm">
-                  <span className="text-surface-500">BOM Teachers</span>
+                  <span className="text-on-surface-variant">BOM Teachers</span>
                   <span className="font-medium"><Money value={grouped.bomTeachers.reduce((s, e) => s + Number(e.netPay), 0)} /></span>
                 </div>
               )}
               {grouped.supportStaff.length > 0 && (
                 <div className="flex justify-between text-sm">
-                  <span className="text-surface-500">Support Staff</span>
+                  <span className="text-on-surface-variant">Support Staff</span>
                   <span className="font-medium"><Money value={grouped.supportStaff.reduce((s, e) => s + Number(e.netPay), 0)} /></span>
                 </div>
               )}
             </div>
             <div className="space-y-2">
-              <h4 className="text-xs uppercase tracking-wider text-surface-400 font-medium">Extra Duty</h4>
+              <h4 className="text-xs uppercase tracking-wider text-on-surface-variant font-medium">Extra Duty</h4>
               <div className="flex justify-between text-sm">
-                <span className="text-surface-500">Morning / Evening / Weekend</span>
+                <span className="text-on-surface-variant">Morning / Evening / Weekend</span>
                 <span className="font-medium text-amber-600"><Money value={totalExtraDuty} /></span>
               </div>
             </div>
-            <div className="space-y-2 border-l border-surface-200 pl-6">
-              <h4 className="text-xs uppercase tracking-wider text-surface-400 font-medium">Grand Total</h4>
+            <div className="space-y-2 border-l border-outline-variant pl-6">
+              <h4 className="text-xs uppercase tracking-wider text-on-surface-variant font-medium">Grand Total</h4>
               <div className="flex justify-between text-sm">
-                <span className="text-surface-500">Gross Pay</span>
+                <span className="text-on-surface-variant">Gross Pay</span>
                 <span className="font-semibold"><Money value={totalGrossAll} /></span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-surface-500">Net Pay (Salary)</span>
+                <span className="text-on-surface-variant">Net Pay (Salary)</span>
                 <span className="font-semibold text-emerald-600"><Money value={totalNetAll} /></span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-surface-500">Extra Duty</span>
+                <span className="text-on-surface-variant">Extra Duty</span>
                 <span className="font-semibold text-amber-600"><Money value={totalExtraDuty} /></span>
               </div>
-              <div className="border-t border-surface-300 pt-1 flex justify-between text-sm font-bold">
+              <div className="border-t border-outline pt-1 flex justify-between text-sm font-bold">
                 <span>Total Payout</span>
                 <span className="text-lg"><Money value={totalNetAll + totalExtraDuty} /></span>
               </div>

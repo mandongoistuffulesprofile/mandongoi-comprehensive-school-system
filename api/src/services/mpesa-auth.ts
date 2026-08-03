@@ -39,10 +39,13 @@ export class MpesaAuthService {
       throw new AppError(`Failed to obtain M-Pesa access token: ${body}`, 502);
     }
 
-    const json = (await res.json()) as { access_token: string; expires_in: string };
+    const json = (await res.json()) as { access_token: string; expires_in: string | number };
 
     this.accessToken = json.access_token;
-    this.tokenExpiry = Date.now() + (Number(json.expires_in) - 60) * 1000;
+    const expiresIn = Number(json.expires_in);
+    this.tokenExpiry = Number.isFinite(expiresIn) && expiresIn > 0
+      ? Date.now() + (expiresIn - 60) * 1000
+      : Date.now() + 3600 * 1000;
 
     return this.accessToken;
   }

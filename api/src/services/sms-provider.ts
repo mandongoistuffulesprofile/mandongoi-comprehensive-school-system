@@ -144,7 +144,7 @@ class AdvantaProvider implements SmsProvider {
         return {
           success: true,
           providerMessageId: json.messageId || json.MessageId || String(json.id || ''),
-          cost: json.cost ?? json.balance ?? undefined,
+          cost: json.cost !== undefined ? json.cost : (json.balance !== undefined ? json.balance : undefined),
         };
       }
 
@@ -211,7 +211,7 @@ class AdvantaProvider implements SmsProvider {
           return responseMessages.map((r: any) => ({
             success: r.status === 'success' || r.status === 'ok' || r.ResponseCode === '000',
             providerMessageId: r.messageId || r.MessageId || '',
-            cost: r.cost ?? undefined,
+              cost: r.cost !== undefined ? r.cost : undefined,
             errorMessage: r.error || r.message || r.ResponseDescription,
           }));
         }
@@ -220,7 +220,7 @@ class AdvantaProvider implements SmsProvider {
           return mobiles.map(() => ({
             success: true,
             providerMessageId: json.messageId || json.MessageId || '',
-            cost: json.cost ?? undefined,
+              cost: json.cost !== undefined ? json.cost : undefined,
           }));
         }
 

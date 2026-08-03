@@ -20,7 +20,7 @@ export default function SchoolSettings() {
   }, []);
 
   if (loading) return <Spinner className="w-8 h-8 mx-auto mt-20" />;
-  if (!settings) return <p className="text-center text-surface-500 mt-20">No settings found</p>;
+  if (!settings) return <p className="text-center text-on-surface-variant mt-20">No settings found</p>;
 
   const update = (key: keyof SchoolSettings, value: any) => {
     setSettings({ ...settings, [key]: value });
@@ -69,7 +69,7 @@ export default function SchoolSettings() {
 
       <div className="space-y-6 mt-6">
         <Card className="p-6 space-y-5">
-          <h3 className="font-semibold text-surface-900 text-lg">School Information</h3>
+          <h3 className="font-semibold text-on-surface text-lg">School Information</h3>
           <FormField spec={{ name: "schoolName", label: "School Name", required: true }} value={settings.schoolName} onChange={(v) => update("schoolName", v as string)} />
           <FormField spec={{ name: "schoolMotto", label: "School Motto", type: "text" }} value={settings.schoolMotto} onChange={(v) => update("schoolMotto", v as string)} />
           <FormField spec={{ name: "schoolAddress", label: "Address", type: "text" }} value={settings.schoolAddress} onChange={(v) => update("schoolAddress", v as string)} />
@@ -80,7 +80,7 @@ export default function SchoolSettings() {
         </Card>
 
         <Card className="p-6 space-y-5">
-          <h3 className="font-semibold text-surface-900 text-lg">Current Term</h3>
+          <h3 className="font-semibold text-on-surface text-lg">Current Term</h3>
           <div className="grid grid-cols-2 gap-4">
             <FormField spec={{ name: "currentTerm", label: "Term", required: true, options: [
               { value: "Term 1", label: "Term 1" },
@@ -97,7 +97,7 @@ export default function SchoolSettings() {
         </Card>
 
         <Card className="p-6 space-y-5">
-          <h3 className="font-semibold text-surface-900 text-lg">Other Settings</h3>
+          <h3 className="font-semibold text-on-surface text-lg">Other Settings</h3>
           <div className="grid grid-cols-2 gap-4">
             <FormField spec={{ name: "currency", label: "Currency", options: [
               { value: "KES", label: "KES (Kenya Shilling)" },
@@ -110,14 +110,14 @@ export default function SchoolSettings() {
         </Card>
 
         <Card className="p-6 space-y-5">
-          <h3 className="font-semibold text-surface-900 text-lg">Payroll Settings</h3>
-          <p className="text-xs text-surface-500">Configure salary payment day. The system will send in-app reminders before pay day.</p>
+          <h3 className="font-semibold text-on-surface text-lg">Payroll Settings</h3>
+          <p className="text-xs text-on-surface-variant">Configure salary payment day. The system will send in-app reminders before pay day.</p>
           <FormField spec={{ name: "payDay", label: "Pay Day (day of month 1-31)", type: "number", min: 1, max: 31 }} value={settings.payDay} onChange={(v) => update("payDay", Number(v))} />
         </Card>
 
         <Card className="p-6 space-y-5">
-          <h3 className="font-semibold text-surface-900 text-lg">Extra Duty Session Rates</h3>
-          <p className="text-xs text-surface-500">These are the default rates for morning, evening, and weekend sessions paid to teachers (both BOM and TSC). Individual teachers can override these.</p>
+          <h3 className="font-semibold text-on-surface text-lg">Extra Duty Session Rates</h3>
+          <p className="text-xs text-on-surface-variant">These are the default rates for morning, evening, and weekend sessions paid to teachers (both BOM and TSC). Individual teachers can override these.</p>
           <div className="grid grid-cols-3 gap-4">
             <FormField spec={{ name: "morningSessionRate", label: "Morning Session (KES)", type: "number" }} value={settings.morningSessionRate} onChange={(v) => update("morningSessionRate", v as string)} />
             <FormField spec={{ name: "eveningSessionRate", label: "Evening Session (KES)", type: "number" }} value={settings.eveningSessionRate} onChange={(v) => update("eveningSessionRate", v as string)} />
@@ -126,14 +126,14 @@ export default function SchoolSettings() {
         </Card>
 
         <Card className="p-6 space-y-5">
-          <h3 className="font-semibold text-surface-900 text-lg">Digital Signatures</h3>
-          <p className="text-xs text-surface-500">Upload scanned signature images. These will appear on printed report cards. Class teacher signatures are managed per-grade from the <strong>Staff &gt; Class Teachers</strong> page.</p>
+          <h3 className="font-semibold text-on-surface text-lg">Digital Signatures</h3>
+          <p className="text-xs text-on-surface-variant">Upload scanned signature images. These will appear on printed report cards. Class teacher signatures are managed per-grade from the <strong>Staff &gt; Class Teachers</strong> page.</p>
 
-          <div className="border-t border-surface-200 pt-4">
-            <label className="block text-sm font-medium text-surface-700 mb-2">Head Teacher Signature</label>
+          <div className="border-t border-outline-variant pt-4">
+            <label className="block text-sm font-medium text-on-surface mb-2">Head Teacher Signature</label>
             <div className="flex items-end gap-3">
               <div className="flex-1">
-                <input ref={sigUploadRef} type="file" accept="image/png,image/jpeg,image/gif,image/webp" className="block w-full text-sm text-surface-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-medium file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100" />
+                <input ref={sigUploadRef} type="file" accept="image/png,image/jpeg,image/gif,image/webp" className="block w-full text-sm text-on-surface-variant file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-medium file:bg-primary-container file:text-on-primary-container hover:file:bg-primary-container" />
               </div>
               <Button size="sm" onClick={() => uploadSignature("head")} disabled={uploadingSig === "head"}>
                 {uploadingSig === "head" ? "Uploading..." : "Upload"}
@@ -141,15 +141,15 @@ export default function SchoolSettings() {
             </div>
             {settings.headTeacherSignature && (
               <div className="mt-3 flex items-center gap-3">
-                <img src={settings.headTeacherSignature} alt="Head teacher sig" className="h-12 rounded-lg border border-surface-200 bg-white p-1" />
+                <img src={settings.headTeacherSignature} alt="Head teacher sig" className="h-12 rounded-lg border border-outline-variant bg-surface-container-lowest p-1" />
                 <button onClick={() => update("headTeacherSignature", "")} className="text-xs text-red-500 hover:text-red-700">Remove</button>
               </div>
             )}
             {settings.headTeacherSignature && (
               <div className="mt-2">
-                <label className="block text-xs text-surface-400 mb-1">Or paste image URL:</label>
+                <label className="block text-xs text-on-surface-variant mb-1">Or paste image URL:</label>
                 <input value={settings.headTeacherSignature} onChange={(e) => update("headTeacherSignature", e.target.value)}
-                  className="w-full rounded-lg border border-surface-300 px-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+                  className="w-full rounded-lg border border-outline px-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
               </div>
             )}
           </div>

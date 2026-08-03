@@ -44,7 +44,10 @@ router.post('/register', validateRegister, requireRole('schoolAdmin'), async (re
   try {
     const { name, email, phone, password, role } = req.body;
 
-    const userEmail = email || `${phone.replace(/[^0-9]/g, '').slice(-9)}@school.edu`;
+    const userEmail = email || (phone ? `${phone.replace(/[^0-9]/g, '').slice(-9)}@school.edu` : undefined);
+    if (!userEmail) {
+      return res.status(400).json({ success: false, error: 'Email or phone is required' });
+    }
 
     const existing = await db.select().from(users).where(eq(users.email, userEmail)).limit(1);
     if (existing.length > 0) {

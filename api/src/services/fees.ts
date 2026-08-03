@@ -286,7 +286,7 @@ async function matchInvoice(accountReference: string, phoneNumber?: string) {
     if (matched) return matched;
   }
 
-  const nameGradeMatch = ref.match(/^([A-Za-z]+)\.([A-Za-z]+)-(Grade\s?\d+)$/i) || ref.match(/^([A-Za-z]+)([A-Z][a-z]+)-(Grade\s?\d+)$/);
+  const nameGradeMatch = ref.match(/^([A-Za-z]+)\.([A-Za-z]+)-(Grade\s?\d+)$/i) || ref.match(/^([A-Za-z]+)\s+([A-Za-z]+)-(Grade\s?\d+)$/i) || ref.match(/^([A-Z][a-z]+)([A-Z][a-z]+)-(Grade\s?\d+)$/);
   const nameOnlyMatch = !nameGradeMatch ? ref.match(/^([A-Za-z]+)\.([A-Za-z]+)$/i) || ref.match(/^([A-Za-z]+)([A-Z][a-z]+)$/) : null;
   const nameMatch = nameGradeMatch || nameOnlyMatch;
 

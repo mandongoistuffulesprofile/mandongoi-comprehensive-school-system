@@ -82,28 +82,6 @@ export async function generateRunEntries({ runId }: { runId: string }) {
   });
 }
 
-async function recalcNet(entryId: string) {
-  const [entry] = await db
-    .select()
-    .from(payrollEntries)
-    .where(eq(payrollEntries.id, entryId))
-    .limit(1);
-  if (!entry) return;
-
-  const [row] = await db
-    .select({ sum: sql`COALESCE(SUM(${payrollAdjustments.amount}), 0)` })
-    .from(payrollAdjustments)
-    .where(eq(payrollAdjustments.payrollEntryId, entryId));
-
-  const totalAdjustments = Number(row?.sum ?? 0);
-  const net = Number(entry.grossPay) + totalAdjustments;
-
-  await db
-    .update(payrollEntries)
-      .set({ netPay: String(net) })
-    .where(eq(payrollEntries.id, entryId));
-}
-
 export async function applyAdjustment({
   entryId,
   reason,
@@ -117,13 +95,34 @@ export async function applyAdjustment({
     throw new AppError('Adjustment requires a reason and amount', 400);
   }
 
-  const [adj] = await db
-    .insert(payrollAdjustments)
-    .values({ payrollEntryId: entryId, reason, amount: String(amount) })
-    .returning();
+  return db.transaction(async (tx) => {
+    const [adj] = await tx
+      .insert(payrollAdjustments)
+      .values({ payrollEntryId: entryId, reason, amount: String(amount) })
+      .returning();
 
-  await recalcNet(entryId);
-  return adj;
+    const [entry] = await tx
+      .select()
+      .from(payrollEntries)
+      .where(eq(payrollEntries.id, entryId))
+      .limit(1);
+    if (!entry) return adj;
+
+    const [row] = await tx
+      .select({ sum: sql`COALESCE(SUM(${payrollAdjustments.amount}), 0)` })
+      .from(payrollAdjustments)
+      .where(eq(payrollAdjustments.payrollEntryId, entryId));
+
+    const totalAdjustments = Number(row?.sum ?? 0);
+    const net = Number(entry.grossPay) + totalAdjustments;
+
+    await tx
+      .update(payrollEntries)
+      .set({ netPay: String(net) })
+      .where(eq(payrollEntries.id, entryId));
+
+    return adj;
+  });
 }
 
 export async function calculateExtraDutyPayments(month: number, year: number) {

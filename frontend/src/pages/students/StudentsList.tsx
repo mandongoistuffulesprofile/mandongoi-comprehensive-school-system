@@ -119,14 +119,14 @@ export default function StudentsList() {
 
       <div className="flex flex-wrap items-center gap-3 mb-4">
         <div className="relative flex-1 max-w-md">
-          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by name..."
-            className="w-full rounded-lg border border-surface-300 pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
+            className="w-full rounded-lg border border-outline pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
           />
         </div>
          <Dropdown
@@ -143,7 +143,7 @@ export default function StudentsList() {
       <DataTable
         columns={[
           { header: "Name", cell: (s) => <span className="font-medium">{s.firstName} {s.lastName}</span>, sortable: true, sortKey: "firstName" },
-          { header: "Level", cell: (s) => <span className="text-xs uppercase tracking-wider text-surface-500">{s.level?.replace("_", " ") || "—"}</span>, sortable: true, sortKey: "level" },
+          { header: "Level", cell: (s) => <span className="text-xs uppercase tracking-wider text-on-surface-variant">{s.level?.replace("_", " ") || "—"}</span>, sortable: true, sortKey: "level" },
           { header: "Grade", cell: (s) => s.grade, sortable: true, sortKey: "grade" },
           { header: "Status", cell: (s) => <EnumBadge value={s.status} /> },
         ]}
@@ -156,7 +156,7 @@ export default function StudentsList() {
           isAdmin
             ? (row) => (
                 <div className="flex gap-1">
-                  <button className="px-2.5 py-1 text-xs font-medium text-brand-600 hover:bg-brand-50 rounded-md transition-colors" onClick={() => openEdit(row)}>Edit</button>
+                  <button className="px-2.5 py-1 text-xs font-medium text-primary hover:bg-primary-container rounded-md transition-colors" onClick={() => openEdit(row)}>Edit</button>
                   <button className="px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-50 rounded-md transition-colors" onClick={() => setDeleting(row)}>Delete</button>
                 </div>
               )
@@ -180,7 +180,7 @@ export default function StudentsList() {
               <FormField spec={{ name: "grade", label: "Grade", type: "select", required: true, options: gradeOptions }} value={form.grade} onChange={(v) => setForm({ ...form, grade: v })} />
             </div>
             <FormField spec={{ name: "enrollmentDate", label: "Enrollment Date", type: "date", max: new Date().toISOString().slice(0, 10) }} value={form.enrollmentDate} onChange={(v) => setForm({ ...form, enrollmentDate: v })} />
-            <div className="flex justify-end gap-2 pt-2 border-t border-surface-200">
+            <div className="flex justify-end gap-2 pt-2 border-t border-outline-variant">
               <Button variant="ghost" onClick={() => { setEditing(null); }}>Cancel</Button>
               <Button onClick={handleSave} disabled={saving}>{saving ? "Saving..." : "Update"}</Button>
             </div>
@@ -190,10 +190,10 @@ export default function StudentsList() {
 
       {deleting && (
         <div className="fixed inset-0 bg-surface-900/50 backdrop-blur-sm flex items-start justify-center pt-16 z-50 animate-fade-in" onClick={() => setDeleting(null)}>
-          <div className="bg-white w-full max-w-sm rounded-xl shadow-xl border border-surface-200 animate-slide-up" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-surface-container-lowest w-full max-w-sm rounded-xl shadow-xl border border-outline-variant animate-slide-up" onClick={(e) => e.stopPropagation()}>
             <div className="p-6">
-              <h3 className="text-lg font-semibold text-surface-900 mb-2">Delete Student</h3>
-              <p className="text-sm text-surface-600 mb-6">This action cannot be undone. Are you sure?</p>
+              <h3 className="text-lg font-semibold text-on-surface mb-2">Delete Student</h3>
+              <p className="text-sm text-on-surface-variant mb-6">This action cannot be undone. Are you sure?</p>
               <div className="flex justify-end gap-2">
                 <Button variant="ghost" onClick={() => setDeleting(null)}>Cancel</Button>
                 <Button variant="danger" onClick={handleDelete}>Delete</Button>

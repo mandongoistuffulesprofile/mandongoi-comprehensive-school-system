@@ -71,11 +71,11 @@ export default function CreateStaff() {
           )}
 
           <label className="flex items-center gap-3 cursor-pointer">
-            <input type="checkbox" checked={isActive} onChange={(e) => setIsActive(e.target.checked)} className="rounded border-surface-300 text-brand-600 focus:ring-brand-500/20 focus:ring-2" />
-            <span className="text-sm font-medium text-surface-700">Active</span>
+            <input type="checkbox" checked={isActive} onChange={(e) => setIsActive(e.target.checked)} className="rounded border-outline text-primary focus:ring-primary/20 focus:ring-2" />
+            <span className="text-sm font-medium text-on-surface">Active</span>
           </label>
 
-          <div className="flex justify-end gap-2 pt-4 border-t border-surface-200">
+          <div className="flex justify-end gap-2 pt-4 border-t border-outline-variant">
             <Button variant="ghost" onClick={() => navigate("/staff")}>Cancel</Button>
             <Button onClick={save} disabled={saving}>{saving ? "Saving..." : "Save Staff"}</Button>
           </div>

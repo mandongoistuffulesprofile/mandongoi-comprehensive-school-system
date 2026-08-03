@@ -43,7 +43,7 @@ export default function StaffAttendancePage() {
 
       <Card className="p-5 flex flex-wrap items-end gap-3 mb-6">
         <div>
-          <label className="block text-xs font-medium text-surface-500 mb-1">Staff Member</label>
+          <label className="block text-xs font-medium text-on-surface-variant mb-1">Staff Member</label>
           <Dropdown
             value={selected}
             options={staff.map((s) => ({ value: s.id, label: s.name }))}
@@ -53,11 +53,11 @@ export default function StaffAttendancePage() {
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-surface-500 mb-1">Date</label>
-          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="rounded-lg border border-surface-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+          <label className="block text-xs font-medium text-on-surface-variant mb-1">Date</label>
+          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="rounded-lg border border-outline px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-surface-500 mb-1">Status</label>
+          <label className="block text-xs font-medium text-on-surface-variant mb-1">Status</label>
           <Dropdown
             value={status}
             options={[
@@ -71,24 +71,24 @@ export default function StaffAttendancePage() {
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-surface-500 mb-1">Sessions</label>
-          <input type="number" value={sessions} onChange={(e) => setSessions(Number(e.target.value))} className="rounded-lg border border-surface-300 px-3 py-2 text-sm w-24 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500" />
+          <label className="block text-xs font-medium text-on-surface-variant mb-1">Sessions</label>
+          <input type="number" value={sessions} onChange={(e) => setSessions(Number(e.target.value))} className="rounded-lg border border-outline px-3 py-2 text-sm w-24 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
         </div>
         <Button onClick={mark} disabled={!selected}>Mark</Button>
       </Card>
 
       {selected && (
         loading ? (
-          <div className="flex justify-center py-10"><div className="w-6 h-6 rounded-full border-2 border-surface-200 border-t-brand-600 animate-spin" /></div>
+          <div className="flex justify-center py-10"><div className="w-6 h-6 rounded-full border-2 border-outline-variant border-t-brand-600 animate-spin" /></div>
         ) : records.length === 0 ? (
-          <p className="text-surface-500 text-sm">No attendance recorded for this staff member yet.</p>
+          <p className="text-on-surface-variant text-sm">No attendance recorded for this staff member yet.</p>
         ) : (
           <div className="space-y-1">
             {records.map((r) => (
               <Card key={r.id} className="px-4 py-3 flex items-center justify-between text-sm">
                 <div className="flex items-center gap-4">
                   <span className="font-mono">{new Date(r.date).toLocaleDateString()}</span>
-                  <span className="font-mono text-surface-400">{r.sessionsTaught} sessions</span>
+                  <span className="font-mono text-on-surface-variant">{r.sessionsTaught} sessions</span>
                 </div>
                 <EnumBadge value={r.status} />
               </Card>
