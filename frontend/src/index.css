@@ -3,24 +3,53 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Material Symbols Outlined — icon font for M3 */
+@layer base {
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined', sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 1.25rem;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
 @layer base {
   html, body, #root { height: 100%; }
 
   body {
-    @apply bg-surface-50 text-surface-900 font-sans antialiased;
+    @apply bg-background text-on-surface font-sans antialiased;
   }
 
   * {
-    @apply border-surface-200;
+    @apply border-outline-variant;
   }
 
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-brand-500;
+    @apply outline-2 outline-offset-2 outline-primary;
   }
 }
 
 @layer components {
   .tabular {
     @apply font-mono tabular-nums;
+  }
+
+  /* M3 motion primitives */
+  .motion-elevation {
+    transition: box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s cubic-bezier(0.2, 0, 0, 1);
+  }
+  .motion-scale {
+    transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1);
+  }
+  .motion-fade {
+    transition: opacity 0.2s cubic-bezier(0.2, 0, 0, 1);
   }
 }
