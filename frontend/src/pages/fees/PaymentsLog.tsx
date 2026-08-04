@@ -77,7 +77,7 @@ export default function PaymentsLog() {
       </Card>
 
       {loading ? (
-        <div className="flex justify-center py-12"><div className="w-6 h-6 rounded-full border-2 border-outline-variant border-t-brand-600 animate-spin" /></div>
+        <div className="flex justify-center py-12"><div className="w-6 h-6 rounded-full border-2 border-outline-variant border-t-primary animate-spin" /></div>
       ) : filtered.length === 0 ? (
         <Card className="p-8 text-center text-on-surface-variant">No payments found.</Card>
       ) : (
@@ -97,7 +97,7 @@ export default function PaymentsLog() {
               </thead>
               <tbody>
                 {filtered.map((p) => (
-                  <tr key={p.id} className="border-b border-surface-100 hover:bg-surface-container-low">
+                  <tr key={p.id} className="border-b border-outline-variant hover:bg-surface-container-low">
                     <td className="py-3 px-4">
                       <span className={clsx(
                         "inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium",

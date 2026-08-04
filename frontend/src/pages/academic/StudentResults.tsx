@@ -210,7 +210,7 @@ export default function StudentResults() {
               </thead>
               <tbody>
                 {results.map((r, i) => (
-                  <tr key={r.student.id} className="border-b border-surface-100 hover:bg-surface-container-low">
+                  <tr key={r.student.id} className="border-b border-outline-variant hover:bg-surface-container-low">
                     <td className="py-2 px-2 text-center text-on-surface-variant">{i + 1}</td>
                     <td className="py-2 px-3 font-medium text-on-surface whitespace-nowrap">
                       {r.student.firstName} {r.student.lastName}

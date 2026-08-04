@@ -78,7 +78,7 @@ export default function StudentDetail() {
         {tabs.map((t) => (
           <button key={t.key} onClick={() => setTab(t.key)}
             className={clsx("px-4 py-2.5 text-sm font-medium border-b-2 -mb-px transition-colors",
-              tab === t.key ? "border-brand-600 text-primary" : "border-transparent text-on-surface-variant hover:text-on-surface"
+              tab === t.key ? "border-primary text-primary" : "border-transparent text-on-surface-variant hover:text-on-surface"
             )}>
             {t.label}
           </button>
@@ -130,7 +130,7 @@ function FoodTab({ studentId }: { studentId: string }) {
           <h3 className="text-sm font-semibold text-on-surface mb-3">Food Items Brought In</h3>
           <div className="space-y-2">
             {contributions.map((l) => (
-              <div key={l.id} className="flex items-center justify-between text-sm py-2 border-b border-surface-100 last:border-0">
+              <div key={l.id} className="flex items-center justify-between text-sm py-2 border-b border-outline-variant last:border-0">
                 <div>
                   <span className="font-medium text-on-surface">{l.quantity} {l.unit} {l.itemName}</span>
                   {l.notes && <span className="text-on-surface-variant ml-2 text-xs">{l.notes}</span>}
@@ -147,7 +147,7 @@ function FoodTab({ studentId }: { studentId: string }) {
           <h3 className="text-sm font-semibold text-on-surface mb-3">Money Paid for Food</h3>
           <div className="space-y-2">
             {payments.map((l) => (
-              <div key={l.id} className="flex items-center justify-between text-sm py-2 border-b border-surface-100 last:border-0">
+              <div key={l.id} className="flex items-center justify-between text-sm py-2 border-b border-outline-variant last:border-0">
                 <div>
                   <span className="font-medium text-on-surface">KES {Number(l.estimatedValue).toLocaleString("en-KE", { minimumFractionDigits: 2 })}</span>
                   {l.notes && <span className="text-on-surface-variant ml-2 text-xs">{l.notes}</span>}
@@ -164,7 +164,7 @@ function FoodTab({ studentId }: { studentId: string }) {
           <h3 className="text-sm font-semibold text-on-surface mb-3">Food Consumed</h3>
           <div className="space-y-2">
             {consumption.map((l) => (
-              <div key={l.id} className="flex items-center justify-between text-sm py-2 border-b border-surface-100 last:border-0">
+              <div key={l.id} className="flex items-center justify-between text-sm py-2 border-b border-outline-variant last:border-0">
                 <div>
                   <span className="font-medium text-on-surface">{l.quantity} {l.unit} {l.itemName}</span>
                 </div>
@@ -234,7 +234,7 @@ function OverviewTab({ studentId }: { studentId: string }) {
         <h3 className="font-semibold text-on-surface">Guardians</h3>
         {guardians.length === 0 ? <p className="text-sm text-on-surface-variant">No guardians on file</p> : (
           guardians.map((g) => (
-            <div key={g.id} className="flex items-center justify-between py-2 border-b border-surface-100 last:border-0">
+            <div key={g.id} className="flex items-center justify-between py-2 border-b border-outline-variant last:border-0">
               <div><p className="text-sm font-medium">{g.name} {g.isPrimary && <span className="text-xs text-primary">Primary</span>}</p>
               <p className="text-xs text-on-surface-variant font-mono">{g.phone}</p></div>
               {g.smsOptOut && <span className="text-xs text-red-500">SMS Opted Out</span>}

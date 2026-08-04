@@ -57,7 +57,7 @@ export default function ParentLinks() {
         <EmptyState label="No parent links yet" description="Link parents to students so they can access the parent portal." />
       ) : (
         <Card>
-          <div className="divide-y divide-surface-200">
+          <div className="divide-y divide-outline-variant">
             {links.map((link) => (
               <div key={link.id} className="flex items-center justify-between px-5 py-3">
                 <div>

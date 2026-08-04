@@ -154,7 +154,7 @@ function CreateLeaveModal({ onClose, onDone }: { onClose: () => void; onDone: ()
               onFocus={() => setShowDropdown(true)}
               onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
               placeholder="Search student by name..."
-              className="w-full rounded-lg border border-outline px-3.5 py-2.5 text-sm bg-surface-container-lowest text-on-surface placeholder-surface-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+              className="w-full rounded-lg border border-outline px-3.5 py-2.5 text-sm bg-surface-container-lowest text-on-surface placeholder-outline-variant focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
             />
             {showDropdown && filtered.length > 0 && !selectedStudent && (
               <div className="absolute z-50 top-full left-0 right-0 mt-1 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xl max-h-60 overflow-y-auto">
@@ -163,7 +163,7 @@ function CreateLeaveModal({ onClose, onDone }: { onClose: () => void; onDone: ()
                     key={s.id}
                     type="button"
                     onMouseDown={() => { setSelectedStudent(s); setQuery(""); setShowDropdown(false); }}
-                    className="w-full text-left px-4 py-2.5 text-sm hover:bg-primary-container transition-colors border-b border-surface-100 last:border-0"
+                    className="w-full text-left px-4 py-2.5 text-sm hover:bg-primary-container transition-colors border-b border-outline-variant last:border-0"
                   >
                     <span className="font-medium text-on-surface">{s.firstName} {s.lastName}</span>
                     <span className="text-on-surface-variant ml-2">{s.grade}</span>

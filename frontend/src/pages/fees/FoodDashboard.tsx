@@ -119,7 +119,7 @@ export default function FoodDashboard() {
       />
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-gradient-to-br from-brand-50 to-brand-100 rounded-2xl p-4 border border-primary/20">
+        <div className="bg-gradient-to-br from-primary-container to-primary-container rounded-2xl p-4 border border-primary/20">
           <p className="text-xs font-medium text-primary uppercase tracking-wider">Daily Food Cost</p>
           <p className="text-2xl font-bold text-primary mt-1">
             <Money value={totalDailyCost} />
@@ -137,7 +137,7 @@ export default function FoodDashboard() {
         </div>
         <div className={clsx(
           "rounded-2xl p-4 border",
-          lowStock.length > 0 ? "bg-gradient-to-br from-red-50 to-red-100 border-red-200" : "bg-gradient-to-br from-surface-50 to-surface-100 border-outline-variant"
+          lowStock.length > 0 ? "bg-gradient-to-br from-red-50 to-red-100 border-red-200" : "bg-gradient-to-br from-surface-container to-surface-container border-outline-variant"
         )}>
           <p className={clsx("text-xs font-medium uppercase tracking-wider", lowStock.length > 0 ? "text-red-600" : "text-on-surface-variant")}>
             Low Stock Alerts
@@ -175,7 +175,7 @@ export default function FoodDashboard() {
                 <th className="px-4 py-3 font-medium">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-surface-100">
+            <tbody className="divide-y divide-outline-variant">
               {dashboard.map((d) => (
                 <tr key={d.preset.id} className={clsx("hover:bg-surface-container-low transition-colors", !usedInTimetable.has(d.preset.id) && d.dailyUsage === 0 && "opacity-60")}>
                   <td className="px-4 py-3">

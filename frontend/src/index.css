@@ -53,3 +53,28 @@
     transition: opacity 0.2s cubic-bezier(0.2, 0, 0, 1);
   }
 }
+
+
+/* M3 glass morphism utilities */
+@layer components {
+  .glass-surface {
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 18px;
+  }
+}
+
+/* Route transitions */
+@layer utilities {
+  .route-enter {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  .route-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+  }
+}

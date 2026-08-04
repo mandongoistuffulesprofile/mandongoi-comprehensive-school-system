@@ -54,7 +54,7 @@ export default function Reconciliation() {
       <PageHeader title="Payment Reconciliation" description="Manually match unmatched M-Pesa transactions to student invoices." />
 
       {loading ? (
-        <div className="flex justify-center py-12"><div className="w-6 h-6 rounded-full border-2 border-outline-variant border-t-brand-600 animate-spin" /></div>
+        <div className="flex justify-center py-12"><div className="w-6 h-6 rounded-full border-2 border-outline-variant border-t-primary animate-spin" /></div>
       ) : transactions.length === 0 ? (
         <Card className="p-8 text-center text-on-surface-variant">No unmatched transactions.</Card>
       ) : (

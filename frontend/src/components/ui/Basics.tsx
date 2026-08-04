@@ -67,7 +67,7 @@ export function EmptyState({
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center">
       <div className="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center mb-4">
-        <span className="material-symbols-outlined text-surface-500 text-2xl">folder_open</span>
+        <span className="material-symbols-outlined text-on-surface-variant text-2xl">folder_open</span>
       </div>
       <p className="text-on-surface font-medium">{label}</p>
       {description && <p className="text-on-surface-variant text-sm mt-1">{description}</p>}
@@ -135,8 +135,8 @@ const badgeColors: Record<string, string> = {
   male: "bg-blue-50 text-blue-700 border-blue-200",
   female: "bg-pink-50 text-pink-700 border-pink-200",
   teacher: "bg-purple-50 text-purple-700 border-purple-200",
-  support: "bg-surface-100 text-surface-700 border-surface-200",
-  schoolAdmin: "bg-brand-50 text-brand-700 border-brand-200",
+  support: "bg-surface-container text-on-surface border-outline-variant",
+  schoolAdmin: "bg-primary-container text-on-primary-container border-primary/30",
   accountant: "bg-cyan-50 text-cyan-700 border-cyan-200",
   parent: "bg-teal-50 text-teal-700 border-teal-200",
   flatRate: "bg-indigo-50 text-indigo-700 border-indigo-200",
@@ -145,7 +145,7 @@ const badgeColors: Record<string, string> = {
 
 export function EnumBadge({ value }: { value: string | undefined | null }) {
   if (!value) return null;
-  const cls = badgeColors[value] ?? "bg-surface-100 text-surface-600 border-surface-200";
+  const cls = badgeColors[value] ?? "bg-surface-container text-on-surface-variant border-outline-variant";
   return (
     <span
       className={clsx(

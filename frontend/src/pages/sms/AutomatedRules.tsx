@@ -43,7 +43,7 @@ export default function AutomatedRules() {
       />
 
       {loading ? (
-        <div className="flex justify-center py-10"><div className="w-6 h-6 rounded-full border-2 border-outline-variant border-t-brand-600 animate-spin" /></div>
+        <div className="flex justify-center py-10"><div className="w-6 h-6 rounded-full border-2 border-outline-variant border-t-primary animate-spin" /></div>
       ) : (
         <div className="space-y-2">
           {rules.length === 0 && <p className="text-on-surface-variant text-sm text-center py-10">No rules configured yet.</p>}

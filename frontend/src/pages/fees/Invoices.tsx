@@ -56,7 +56,7 @@ export default function Invoices() {
         {(["", "pending", "paid", "overdue"] as const).map((f) => (
           <button key={f} onClick={() => setBalanceFilter(f)}
             className={clsx("px-3.5 py-1.5 rounded-lg text-xs font-medium border transition-colors",
-              balanceFilter === f ? "bg-primary text-white border-brand-600" : "border-outline text-on-surface-variant hover:bg-surface-container-low")}>
+              balanceFilter === f ? "bg-primary text-white border-primary" : "border-outline text-on-surface-variant hover:bg-surface-container-low")}>
             {f === "" ? "All" : f[0].toUpperCase() + f.slice(1)}
           </button>
         ))}
@@ -190,7 +190,7 @@ function GenerateInvoiceModal({ onClose, onDone }: { onClose: () => void; onDone
               className="w-full rounded-lg border border-outline pl-9 pr-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
           </div>
           {studentSearch && filteredStudents.length > 0 && !studentId && (
-            <div className="mt-1 border border-outline-variant rounded-lg max-h-48 overflow-y-auto divide-y divide-surface-100">
+            <div className="mt-1 border border-outline-variant rounded-lg max-h-48 overflow-y-auto divide-y divide-outline-variant">
               {filteredStudents.map((s) => (
                 <button key={s.id} type="button" onClick={() => { setStudentId(s.id); setStudentSearch(`${s.firstName} ${s.lastName} · ${s.grade}`); }}
                   className="w-full text-left px-3 py-2.5 text-sm hover:bg-primary-container transition-colors">
@@ -404,7 +404,7 @@ function ReceiptsModal({ invoice, onClose }: { invoice: FeeInvoice; onClose: () 
   return (
     <Modal title="Payment Receipts" onClose={onClose} width="max-w-lg">
       {loading ? (
-        <div className="flex justify-center py-10"><div className="w-6 h-6 rounded-full border-2 border-outline-variant border-t-brand-600 animate-spin" /></div>
+        <div className="flex justify-center py-10"><div className="w-6 h-6 rounded-full border-2 border-outline-variant border-t-primary animate-spin" /></div>
       ) : receipts.length === 0 ? (
         <div className="text-center py-10"><p className="text-on-surface-variant text-sm">No receipts issued yet.</p><p className="text-xs text-outline-variant mt-1">Receipts are generated when a payment is recorded against this invoice.</p></div>
       ) : (
@@ -414,7 +414,7 @@ function ReceiptsModal({ invoice, onClose }: { invoice: FeeInvoice; onClose: () 
             <div className="text-right"><p className="text-xs text-on-surface-variant">Total Paid</p><p className="font-bold text-emerald-600">KES {totalPaid.toLocaleString("en-KE", { minimumFractionDigits: 2 })}</p></div>
             <div className="text-right"><p className="text-xs text-on-surface-variant">Balance</p><p className="font-bold" style={{ color: Number(invoice.balance) > 0 ? '#dc2626' : '#059669' }}>KES {Number(invoice.balance).toLocaleString("en-KE", { minimumFractionDigits: 2 })}</p></div>
           </div>
-          <div className="divide-y divide-surface-100">
+          <div className="divide-y divide-outline-variant">
             {receipts.map((r, i) => (
               <div key={r.id} className="py-3 flex items-center justify-between">
                 <div className="flex items-center gap-3">

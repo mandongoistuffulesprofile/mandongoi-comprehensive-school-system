@@ -123,10 +123,10 @@ export default function SystemLogs() {
       ) : logs.length === 0 ? (
         <Card className="p-10 text-center text-sm text-on-surface-variant">No audit logs found.</Card>
       ) : (
-        <Card className="overflow-hidden divide-y divide-surface-100">
+        <Card className="overflow-hidden divide-y divide-outline-variant">
           {logs.map((log) => (
             <div key={log.id} className="flex items-start gap-3 px-4 py-3 text-sm hover:bg-surface-container-low transition-colors">
-              <div className={clsx("mt-0.5 w-2 h-2 rounded-full shrink-0", CATEGORY_COLORS[log.category]?.split(" ")[0] || "bg-surface-300")} />
+              <div className={clsx("mt-0.5 w-2 h-2 rounded-full shrink-0", CATEGORY_COLORS[log.category]?.split(" ")[0] || "bg-surface-container-high")} />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className={clsx("px-1.5 py-0.5 rounded text-[10px] font-semibold", CATEGORY_COLORS[log.category] || "bg-surface-container text-on-surface-variant")}>

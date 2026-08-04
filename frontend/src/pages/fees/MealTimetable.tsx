@@ -221,7 +221,7 @@ export default function MealTimetable() {
               </thead>
               <tbody>
                 {MEALS.map((meal) => (
-                  <tr key={meal} className="border-b border-surface-100 last:border-0">
+                  <tr key={meal} className="border-b border-outline-variant last:border-0">
                     <td className="px-3 py-2 font-medium text-on-surface">
                       <span className="mr-1.5">{MEAL_ICONS[meal]}</span>
                       {MEAL_LABELS[meal]}
@@ -281,7 +281,7 @@ export default function MealTimetable() {
                 ))}
               </div>
             </div>
-            <div className="bg-gradient-to-br from-brand-50 to-brand-100 rounded-xl shadow-sm border border-primary/20 px-5 py-3">
+            <div className="bg-gradient-to-br from-primary-container to-primary-container rounded-xl shadow-sm border border-primary/20 px-5 py-3">
               <p className="text-xs text-primary uppercase tracking-wider">Weekly Total</p>
               <p className="text-xl font-bold text-primary mt-1">
                 <Money value={grandTotal} />

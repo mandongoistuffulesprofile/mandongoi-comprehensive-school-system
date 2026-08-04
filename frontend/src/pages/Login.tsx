@@ -74,7 +74,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex">
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary via-brand-700 to-primary p-12 flex-col justify-between relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary via-primary to-primary p-12 flex-col justify-between relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-72 h-72 bg-surface-container-lowest rounded-full blur-3xl" />
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-surface-container-lowest rounded-full blur-3xl" />
@@ -116,12 +116,12 @@ export default function Login() {
                 <div>
                   <label className="block text-sm font-medium text-on-surface mb-1.5">Username</label>
                   <input type="text" required value={username} onChange={(e) => setUsername(e.target.value)} placeholder="admin@school.edu"
-                    className="w-full rounded-lg border border-outline px-3.5 py-2.5 text-sm bg-surface-container-lowest text-on-surface placeholder-surface-400 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
+                    className="w-full rounded-lg border border-outline px-3.5 py-2.5 text-sm bg-surface-container-lowest text-on-surface placeholder-outline-variant transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-on-surface mb-1.5">Password</label>
                   <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password"
-                    className="w-full rounded-lg border border-outline px-3.5 py-2.5 text-sm bg-surface-container-lowest text-on-surface placeholder-surface-400 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
+                    className="w-full rounded-lg border border-outline px-3.5 py-2.5 text-sm bg-surface-container-lowest text-on-surface placeholder-outline-variant transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
                 </div>
 
                 <div className="flex justify-end">
@@ -168,7 +168,7 @@ export default function Login() {
                   <div>
                     <label className="block text-sm font-medium text-on-surface mb-1.5">Email</label>
                     <input type="email" required value={resetEmail} onChange={(e) => setResetEmail(e.target.value)} placeholder="admin@school.edu"
-                      className="w-full rounded-lg border border-outline px-3.5 py-2.5 text-sm bg-surface-container-lowest text-on-surface placeholder-surface-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
+                      className="w-full rounded-lg border border-outline px-3.5 py-2.5 text-sm bg-surface-container-lowest text-on-surface placeholder-outline-variant focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
                   </div>
                   <Button className="w-full" onClick={handleForgot} disabled={resetSending || !resetEmail}>
                     {resetSending ? "Sending..." : "Send Reset Link"}
@@ -184,7 +184,7 @@ export default function Login() {
                   <div>
                     <label className="block text-sm font-medium text-on-surface mb-1.5">New Password</label>
                     <input type="password" required value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder="Min 6 characters"
-                      className="w-full rounded-lg border border-outline px-3.5 py-2.5 text-sm bg-surface-container-lowest text-on-surface placeholder-surface-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
+                      className="w-full rounded-lg border border-outline px-3.5 py-2.5 text-sm bg-surface-container-lowest text-on-surface placeholder-outline-variant focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
                   </div>
                   {resetMsg && <p className="text-sm text-on-surface-variant">{resetMsg}</p>}
                   <Button className="w-full" onClick={handleReset} disabled={resetSending || !newPassword}>

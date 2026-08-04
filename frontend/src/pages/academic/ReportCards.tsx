@@ -392,7 +392,7 @@ export default function ReportCards() {
           <div className="flex items-center justify-between flex-wrap gap-3 mb-4">
             <div className="flex items-center gap-3">
               <span className="text-sm text-on-surface-variant font-medium">{students.length} students</span>
-              <span className="w-px h-4 bg-surface-200" />
+              <span className="w-px h-4 bg-surface-container" />
               <span className="text-sm text-on-surface-variant">Class avg: <span className="font-semibold text-on-surface">{classAvg.toFixed(1)}%</span></span>
               {selectedIds.size > 0 && (
                 <span className="text-xs text-primary font-medium bg-primary-container px-2.5 py-1 rounded-lg">{selectedIds.size} selected</span>
@@ -416,7 +416,7 @@ export default function ReportCards() {
             </div>
           </div>
 
-          <Card className="divide-y divide-surface-100 overflow-hidden">
+          <Card className="divide-y divide-outline-variant overflow-hidden">
             <div className="flex items-center gap-3 px-4 py-2.5 bg-surface-container-low/70 border-b border-outline-variant text-xs font-medium text-on-surface-variant">
               <input
                 type="checkbox"
@@ -486,13 +486,13 @@ export default function ReportCards() {
                   <input
                     value={teacherComments[s.id] || ""}
                     onChange={(e) => setTeacherComments({ ...teacherComments, [s.id]: e.target.value })}
-                    className="w-24 text-xs border-0 bg-transparent focus:bg-surface-container-low rounded px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-primary/30 placeholder-surface-300"
+                    className="w-24 text-xs border-0 bg-transparent focus:bg-surface-container-low rounded px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-primary/30 placeholder-outline"
                     placeholder="Comment..."
                   />
                   <input
                     value={headComments[s.id] || ""}
                     onChange={(e) => setHeadComments({ ...headComments, [s.id]: e.target.value })}
-                    className="w-24 text-xs border-0 bg-transparent focus:bg-surface-container-low rounded px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-primary/30 placeholder-surface-300"
+                    className="w-24 text-xs border-0 bg-transparent focus:bg-surface-container-low rounded px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-primary/30 placeholder-outline"
                     placeholder="Head..."
                   />
                   <button
@@ -550,7 +550,7 @@ export default function ReportCards() {
                       );
                     })}
                   </div>
-                  <div className="flex justify-center gap-4 pt-2 border-t border-surface-100">
+                  <div className="flex justify-center gap-4 pt-2 border-t border-outline-variant">
                     {[['EE', 'Exceeding'], ['ME', 'Meeting'], ['AE', 'Approaching'], ['BE', 'Below']].map(([code, label]) => (
                       <div key={code} className="flex items-center gap-1.5 text-xs text-on-surface-variant">
                         <div className="w-2.5 h-2.5 rounded-sm" style={{ background: barGradients[code] }} />

@@ -274,10 +274,10 @@ export default function MarksEntry() {
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-surface-container-low rounded-xl text-xs shadow-sm">
                   <span className="text-on-surface-variant font-semibold">{marks.length}</span>
                   <span className="text-on-surface-variant">students</span>
-                  <span className="w-px h-3 bg-surface-200" />
+                  <span className="w-px h-3 bg-surface-container" />
                   <span className="text-primary font-semibold">{filledCount}</span>
                   <span className="text-on-surface-variant">scored</span>
-                  <span className="w-px h-3 bg-surface-200" />
+                  <span className="w-px h-3 bg-surface-container" />
                   <span className="text-emerald-600 font-semibold">{savedCount}</span>
                   <span className="text-on-surface-variant">saved</span>
                 </div>
@@ -366,7 +366,7 @@ export default function MarksEntry() {
                       <tr><td colSpan={6} className="px-4 py-10 text-center text-sm text-on-surface-variant">No students match "{studentSearch}".</td></tr>
                     ) : displayMarks.map((m, i) => (
                       <tr key={m.studentId} className={clsx(
-                        "border-b border-surface-100 transition-colors duration-100",
+                        "border-b border-outline-variant transition-colors duration-100",
                         focusedIdx === i ? "bg-primary-container/40" : "hover:bg-surface-container-low/60",
                         m.score === "" && "bg-amber-50/20",
                       )}>
@@ -404,7 +404,7 @@ export default function MarksEntry() {
                                   "shadow-sm active:scale-90",
                                   m.performanceLevel === l
                                     ? l >= 3 ? "bg-emerald-100 text-emerald-700 shadow-sm ring-1 ring-emerald-300" : l === 2 ? "bg-amber-100 text-amber-700 shadow-sm ring-1 ring-amber-300" : "bg-red-100 text-red-700 shadow-sm ring-1 ring-red-300"
-                                    : "bg-surface-container text-on-surface-variant hover:bg-surface-200 hover:text-on-surface-variant hover:shadow-sm",
+                                    : "bg-surface-container text-on-surface-variant hover:bg-surface-container hover:text-on-surface-variant hover:shadow-sm",
                                 )}
                               >
                                 {l}

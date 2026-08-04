@@ -118,6 +118,13 @@ export default {
         sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
         mono: ["'JetBrains Mono'", "'IBM Plex Mono'", "monospace"],
       },
+      boxShadow: {
+        "m3-1": "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08)",
+        "m3-2": "0 3px 6px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.08)",
+        "m3-3": "0 6px 12px rgba(0,0,0,0.14), 0 3px 6px rgba(0,0,0,0.10)",
+        "m3-4": "0 10px 20px rgba(0,0,0,0.16), 0 4px 8px rgba(0,0,0,0.10)",
+        "m3-5": "0 16px 28px rgba(0,0,0,0.18), 0 6px 10px rgba(0,0,0,0.10)",
+      },
       animation: {
         "fade-in": "fadeIn 0.2s ease-out",
         "slide-up": "slideUp 0.2s ease-out",

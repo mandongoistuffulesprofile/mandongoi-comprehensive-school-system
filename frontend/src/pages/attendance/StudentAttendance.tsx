@@ -130,7 +130,7 @@ export default function StudentAttendancePage() {
       </Card>
 
       <Card className="overflow-hidden">
-        <div className="p-4 border-b border-surface-100">
+        <div className="p-4 border-b border-outline-variant">
           <div className="relative">
             <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -155,12 +155,12 @@ export default function StudentAttendancePage() {
                   "rounded-xl p-3 transition-all duration-150",
                   exStyle
                     ? `${exStyle.card}`
-                    : "bg-surface-container-low border border-surface-100 hover:border-outline-variant hover:shadow-sm",
+                    : "bg-surface-container-low border border-outline-variant hover:border-outline-variant hover:shadow-sm",
                 )}
               >
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex items-center gap-2 min-w-0">
-                    <div className={clsx("w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0", exStyle ? exStyle.badge : "bg-surface-300")}>
+                    <div className={clsx("w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0", exStyle ? exStyle.badge : "bg-surface-container-high")}>
                       {s.firstName[0]}{s.lastName[0]}
                     </div>
                     <div className="min-w-0">
@@ -234,7 +234,7 @@ export default function StudentAttendancePage() {
 
         {historyLoading ? (
           <div className="flex justify-center py-8">
-            <div className="w-6 h-6 rounded-full border-2 border-outline-variant border-t-brand-600 animate-spin" />
+            <div className="w-6 h-6 rounded-full border-2 border-outline-variant border-t-primary animate-spin" />
           </div>
         ) : !historyStudent ? (
           <div className="flex flex-col items-center gap-2 py-8 text-on-surface-variant">

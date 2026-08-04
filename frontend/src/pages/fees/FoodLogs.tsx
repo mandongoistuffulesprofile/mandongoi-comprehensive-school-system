@@ -132,7 +132,7 @@ export default function FoodLogs() {
 
       {!loading && logs.length > 0 && (
         <div className="grid grid-cols-4 gap-4 mb-6">
-          <div className="bg-gradient-to-br from-brand-50 to-brand-100 rounded-2xl p-4 border border-primary/20">
+          <div className="bg-gradient-to-br from-primary-container to-primary-container rounded-2xl p-4 border border-primary/20">
             <p className="text-xs font-medium text-primary uppercase tracking-wider">Entries</p>
             <p className="text-2xl font-bold text-primary mt-1">{filteredLogs.length}</p>
           </div>
@@ -156,7 +156,7 @@ export default function FoodLogs() {
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold text-on-surface">Log Food Item</h3>
             <button onClick={() => { setShowBulk(!showBulk); if (!showBulk) setSelectedStudent(null); }}
-              className={clsx("px-3 py-1.5 rounded-lg text-xs font-medium transition-colors", showBulk ? "bg-primary text-white" : "bg-surface-container text-on-surface-variant hover:bg-surface-200")}>
+              className={clsx("px-3 py-1.5 rounded-lg text-xs font-medium transition-colors", showBulk ? "bg-primary text-white" : "bg-surface-container text-on-surface-variant hover:bg-surface-container")}>
               {showBulk ? "Single Mode" : "Bulk Log"}
             </button>
           </div>
@@ -183,7 +183,7 @@ export default function FoodLogs() {
                 <div className="absolute left-0 right-0 top-full mt-1 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xl z-50 max-h-48 overflow-y-auto">
                   {itemSuggestions.map((p) => (
                     <button key={p.id} type="button" onMouseDown={() => { setItemName(p.itemName); setUnit(p.unit); setShowItemDropdown(false); }}
-                      className="w-full text-left px-3 py-2.5 text-sm hover:bg-primary-container transition-colors border-b border-surface-100 last:border-0">
+                      className="w-full text-left px-3 py-2.5 text-sm hover:bg-primary-container transition-colors border-b border-outline-variant last:border-0">
                       <span className="font-medium text-on-surface">{p.itemName}</span>
                       <span className="text-on-surface-variant ml-2">KES {Number(p.unitPrice).toLocaleString()}/{p.unit}</span>
                     </button>
@@ -255,7 +255,7 @@ export default function FoodLogs() {
             <div>
               <label className="text-xs text-on-surface-variant font-medium mb-1 block">Students</label>
               <button onClick={() => setShowBulk(true)}
-                className="w-full rounded-lg border border-outline px-3 py-2.5 text-sm text-left text-on-surface-variant hover:text-on-surface-variant hover:border-surface-400 transition-colors">
+                className="w-full rounded-lg border border-outline px-3 py-2.5 text-sm text-left text-on-surface-variant hover:text-on-surface-variant hover:border-outline transition-colors">
                 {bulkIds.size === 0 ? "Tap to select boarding students..." : `${bulkIds.size} student${bulkIds.size > 1 ? 's' : ''} selected`}
               </button>
               {bulkIds.size > 0 && (
@@ -299,7 +299,7 @@ export default function FoodLogs() {
               ) : filteredDropdown.map((s) => (
                 <div key={s.id} onClick={() => toggleBulk(s.id)}
                   className={clsx("flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-colors", bulkIds.has(s.id) ? "bg-primary-container border border-primary/20" : "hover:bg-surface-container-low border border-transparent")}>
-                  <div className={clsx("w-5 h-5 rounded border-2 flex items-center justify-center shrink-0", bulkIds.has(s.id) ? "bg-primary border-brand-600" : "border-outline")}>
+                  <div className={clsx("w-5 h-5 rounded border-2 flex items-center justify-center shrink-0", bulkIds.has(s.id) ? "bg-primary border-primary" : "border-outline")}>
                     {bulkIds.has(s.id) && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
                   </div>
                   <div className="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant text-xs font-bold flex items-center justify-center">{s.firstName[0]}{s.lastName[0]}</div>
@@ -315,7 +315,7 @@ export default function FoodLogs() {
       )}
 
       <div className="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant overflow-hidden">
-        <div className="p-4 border-b border-surface-100 flex items-center gap-3">
+        <div className="p-4 border-b border-outline-variant flex items-center gap-3">
           <svg className="w-4 h-4 text-on-surface-variant shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
           <input value={logSearch} onChange={(e) => setLogSearch(e.target.value)} placeholder="Search entries by student, item..."
             className="flex-1 text-sm outline-none" />
@@ -334,7 +334,7 @@ export default function FoodLogs() {
                 <th className="px-4 py-3 font-medium text-right">Value</th><th className="px-4 py-3 font-medium">Notes</th>
                 {isAdmin && <th className="px-4 py-3 font-medium text-right">Action</th>}
               </tr></thead>
-              <tbody className="divide-y divide-surface-100">
+              <tbody className="divide-y divide-outline-variant">
                 {filteredLogs.map((r) => (
                   <tr key={r.id} className="hover:bg-surface-container-low transition-colors">
                     <td className="px-4 py-3 text-on-surface-variant whitespace-nowrap">{new Date(r.loggedAt).toLocaleDateString("en-KE")}</td>

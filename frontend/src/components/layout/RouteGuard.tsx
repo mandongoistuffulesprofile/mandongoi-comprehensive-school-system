@@ -7,7 +7,7 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
   const { user, status } = useAuth();
   if (status !== "ready") {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4 text-surface-400">
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4 text-on-surface-variant">
         <Spinner className="w-8 h-8" />
         <p className="text-sm font-medium">Loading...</p>
       </div>
@@ -28,8 +28,8 @@ export function RequireRole({ roles, children }: { roles: Role[]; children: Reac
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m0 0v2m0-2h2m-2 0H10m9.364-7.364A9 9 0 1112 3a9 9 0 017.364 4.636z" />
           </svg>
         </div>
-        <h3 className="text-lg font-semibold text-surface-900 mb-1">Access Restricted</h3>
-        <p className="text-sm text-surface-500">You don't have permission to view this section.</p>
+        <h3 className="text-lg font-semibold text-on-surface mb-1">Access Restricted</h3>
+        <p className="text-sm text-on-surface-variant">You don't have permission to view this section.</p>
       </div>
     );
   }

@@ -27,7 +27,7 @@ export default function SmsLogs() {
             className={clsx(
               "px-3.5 py-1.5 rounded-lg text-xs font-medium border transition-colors",
               status === s
-                ? "bg-primary text-white border-brand-600"
+                ? "bg-primary text-white border-primary"
                 : "border-outline text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface",
             )}
           >

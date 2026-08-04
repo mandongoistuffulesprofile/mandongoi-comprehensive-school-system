@@ -227,9 +227,9 @@ function CreateCampaignFullPage({ onDone, onCancel }: { onDone: () => void; onCa
             ].map((opt) => (
               <label key={opt.value} className={clsx(
                 "flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-all duration-150 hover:scale-[1.01] hover:shadow-sm",
-                target === opt.value ? "border-brand-500 bg-primary-container" : "border-outline-variant hover:border-outline"
+                target === opt.value ? "border-primary bg-primary-container" : "border-outline-variant hover:border-outline"
               )}>
-                <input type="radio" name="target" checked={target === opt.value} onChange={() => setTarget(opt.value)} className="accent-brand-600" />
+                <input type="radio" name="target" checked={target === opt.value} onChange={() => setTarget(opt.value)} className="accent-primary" />
                 <div>
                   <p className="font-medium text-sm text-on-surface">{opt.label}</p>
                   <p className="text-xs text-on-surface-variant">{opt.desc}</p>

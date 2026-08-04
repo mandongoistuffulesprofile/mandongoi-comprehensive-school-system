@@ -393,7 +393,7 @@ export default function JournalEntry() {
               </div>
               <div className="space-y-3">
                 {advLines.map((line, i) => (
-                  <div key={i} className={clsx("pb-3", i < advLines.length - 1 && "border-b border-surface-100")}>
+                  <div key={i} className={clsx("pb-3", i < advLines.length - 1 && "border-b border-outline-variant")}>
                     <div className="sm:hidden text-xs font-medium text-on-surface-variant mb-2">Line {i + 1}</div>
                     <div className="grid grid-cols-1 sm:grid-cols-[1fr_140px_140px_32px] gap-2 sm:gap-3 items-start sm:items-center">
                       <Dropdown

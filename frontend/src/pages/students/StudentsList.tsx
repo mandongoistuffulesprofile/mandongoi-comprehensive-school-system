@@ -189,7 +189,7 @@ export default function StudentsList() {
       )}
 
       {deleting && (
-        <div className="fixed inset-0 bg-surface-900/50 backdrop-blur-sm flex items-start justify-center pt-16 z-50 animate-fade-in" onClick={() => setDeleting(null)}>
+        <div className="fixed inset-0 bg-inverse-surface/50 backdrop-blur-sm flex items-start justify-center pt-16 z-50 animate-fade-in" onClick={() => setDeleting(null)}>
           <div className="bg-surface-container-lowest w-full max-w-sm rounded-xl shadow-xl border border-outline-variant animate-slide-up" onClick={(e) => e.stopPropagation()}>
             <div className="p-6">
               <h3 className="text-lg font-semibold text-on-surface mb-2">Delete Student</h3>

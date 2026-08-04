@@ -35,7 +35,7 @@ export default function TrialBalance() {
               </thead>
               <tbody>
                 {rows.map((r) => (
-                  <tr key={r.accountId} className="border-t border-surface-100 hover:bg-surface-container-low">
+                  <tr key={r.accountId} className="border-t border-outline-variant hover:bg-surface-container-low">
                     <td className="px-4 py-3 font-mono text-on-surface-variant">{r.code}</td>
                     <td className="px-4 py-3 font-medium text-on-surface">{r.name}</td>
                     <td className="px-4 py-3"><EnumBadge value={r.type} /></td>

@@ -79,7 +79,7 @@ export default function StaffAttendancePage() {
 
       {selected && (
         loading ? (
-          <div className="flex justify-center py-10"><div className="w-6 h-6 rounded-full border-2 border-outline-variant border-t-brand-600 animate-spin" /></div>
+          <div className="flex justify-center py-10"><div className="w-6 h-6 rounded-full border-2 border-outline-variant border-t-primary animate-spin" /></div>
         ) : records.length === 0 ? (
           <p className="text-on-surface-variant text-sm">No attendance recorded for this staff member yet.</p>
         ) : (

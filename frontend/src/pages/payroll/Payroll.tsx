@@ -62,14 +62,14 @@ export function PayrollRuns() {
           <p className="text-xs font-medium text-emerald-600 uppercase tracking-wider">Paid</p>
           <p className="text-2xl font-bold text-emerald-900 mt-1">{paidCount}</p>
         </div>
-        <div className="bg-gradient-to-br from-surface-50 to-surface-100 rounded-xl p-4 border border-outline-variant">
+        <div className="bg-gradient-to-br from-surface-container to-surface-container rounded-xl p-4 border border-outline-variant">
           <p className="text-xs font-medium text-on-surface-variant uppercase tracking-wider">Total Runs</p>
           <p className="text-2xl font-bold text-on-surface mt-1">{runs.length}</p>
         </div>
       </div>
 
       <Card>
-        <div className="px-5 py-3 border-b border-surface-100 flex items-center gap-3">
+        <div className="px-5 py-3 border-b border-outline-variant flex items-center gap-3">
           <div className="flex items-center gap-1.5 text-xs text-on-surface-variant">
             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-500" /> Draft
@@ -405,7 +405,7 @@ export function PayrollRunDetail() {
                 {extraDuty.map((d) => {
                   const s = staffMap.get(d.staffId);
                   return (
-                    <tr key={d.staffId + "-" + d.sessionType} className="border-b border-surface-100 hover:bg-surface-container-low">
+                    <tr key={d.staffId + "-" + d.sessionType} className="border-b border-outline-variant hover:bg-surface-container-low">
                       <td className="py-2 px-3 font-medium text-on-surface">{d.staffName}</td>
                       <td className="py-2 px-3 text-xs text-on-surface-variant">{displayRole(s)}</td>
                       <td className="py-2 px-3">
@@ -457,7 +457,7 @@ export function PayrollRunDetail() {
 
       {/* Overall Reconciliation */}
       {(grouped.bomTeachers.length > 0 || grouped.supportStaff.length > 0 || extraDuty.length > 0) && (
-        <Card className="p-5 mb-6 bg-gradient-to-br from-surface-50 to-white border-2 border-outline-variant">
+        <Card className="p-5 mb-6 bg-gradient-to-br from-surface-container to-surface-container-lowest border-2 border-outline-variant">
           <h3 className="font-semibold text-on-surface mb-4 flex items-center gap-2">
             <span>📊</span>
             Payroll Reconciliation
