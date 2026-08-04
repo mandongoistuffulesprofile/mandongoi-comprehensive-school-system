@@ -9,12 +9,14 @@ export default function Login() {
   const { user, login } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [showForgot, setShowForgot] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
   const [resetToken, setResetToken] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [showNewPassword, setShowNewPassword] = useState(false);
   const [resetStep, setResetStep] = useState<"email" | "done" | "reset">("email");
   const [resetMsg, setResetMsg] = useState<string | null>(null);
   const [resetSending, setResetSending] = useState(false);
@@ -120,8 +122,24 @@ export default function Login() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-on-surface mb-1.5">Password</label>
-                  <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password"
-                    className="w-full rounded-lg border border-outline px-3.5 py-2.5 text-sm bg-surface-container-lowest text-on-surface placeholder-outline-variant transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter your password"
+                      className="w-full rounded-lg border border-outline px-3.5 py-2.5 pr-10 text-sm bg-surface-container-lowest text-on-surface placeholder-outline-variant transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors"
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                    >
+                      <span className="material-symbols-outlined text-lg">{showPassword ? "visibility_off" : "visibility"}</span>
+                    </button>
+                  </div>
                 </div>
 
                 <div className="flex justify-end">
@@ -131,7 +149,7 @@ export default function Login() {
                 </div>
 
                 {error && (
-                  <div className="flex items-center gap-2 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+                  <div className="flex items-center gap-2 text-sm text-error bg-error-container/20 border border-error/30 rounded-lg px-4 py-3">
                     <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -183,8 +201,24 @@ export default function Login() {
                 <div className="space-y-5">
                   <div>
                     <label className="block text-sm font-medium text-on-surface mb-1.5">New Password</label>
-                    <input type="password" required value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder="Min 6 characters"
-                      className="w-full rounded-lg border border-outline px-3.5 py-2.5 text-sm bg-surface-container-lowest text-on-surface placeholder-outline-variant focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
+                    <div className="relative">
+                      <input
+                        type={showNewPassword ? "text" : "password"}
+                        required
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        placeholder="Min 6 characters"
+                        className="w-full rounded-lg border border-outline px-3.5 py-2.5 pr-10 text-sm bg-surface-container-lowest text-on-surface placeholder-outline-variant focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowNewPassword(!showNewPassword)}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors"
+                        aria-label={showNewPassword ? "Hide password" : "Show password"}
+                      >
+                        <span className="material-symbols-outlined text-lg">{showNewPassword ? "visibility_off" : "visibility"}</span>
+                      </button>
+                    </div>
                   </div>
                   {resetMsg && <p className="text-sm text-on-surface-variant">{resetMsg}</p>}
                   <Button className="w-full" onClick={handleReset} disabled={resetSending || !newPassword}>
