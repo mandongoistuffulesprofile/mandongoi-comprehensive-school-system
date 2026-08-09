@@ -4,7 +4,7 @@ import { settingsApi } from "../../api/settings";
 import { useAuth } from "../../lib/auth";
 import { Button, PageHeader, Card, Money, Spinner } from "../../components/ui/Basics";
 import { PageNavigation } from "../../components/ui/PageNavigation";
-import { Modal } from "../../components/ui/Modal";
+import { Modal, ConfirmDialog } from "../../components/ui/Modal";
 import { DataTable } from "../../components/ui/DataTable";
 import { FormField } from "../../components/ui/FormField";
 import { useToast } from "../../lib/toast";
@@ -47,6 +47,8 @@ export default function FoodPresets() {
   const [stockQuantity, setStockQuantity] = useState("");
   const [reorderLevel, setReorderLevel] = useState("");
   const [saving, setSaving] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState<FoodPreset | null>(null);
+  const [confirmSave, setConfirmSave] = useState<FoodPreset | null>(null);
 
   function load() {
     setLoading(true);
@@ -74,8 +76,12 @@ export default function FoodPresets() {
     setEditing(row); setIsCreating(false);
   }
 
-  async function save() {
+  function requestSave() {
     if (!itemName || !unitPrice) { toast.add("error", "Item name and price are required"); return; }
+    setConfirmSave({ itemName, unitPrice, unit, stockQuantity, reorderLevel } as FoodPreset);
+  }
+
+  async function save() {
     setSaving(true);
     try {
       const payload = { itemName, unitPrice, unit, stockQuantity, reorderLevel, isActive: true };
@@ -86,7 +92,7 @@ export default function FoodPresets() {
         await api.put(`/food-presets/${editing.id}`, payload);
         toast.add("success", "Food preset updated");
       }
-      setEditing(null); setIsCreating(false); load();
+      setEditing(null); setIsCreating(false); setConfirmSave(null); load();
     } catch (e) { toast.add("error", e instanceof Error ? e.message : "Save failed"); }
     finally { setSaving(false); }
   }
@@ -101,9 +107,14 @@ export default function FoodPresets() {
     finally { setSavingCost(false); }
   }
 
+  function requestDelete(row: FoodPreset) {
+    setConfirmDelete(row);
+  }
+
   async function remove(id: string) {
     try { await api.delete(`/food-presets/${id}`); toast.add("success", "Preset removed"); load(); }
     catch (e) { toast.add("error", e instanceof Error ? e.message : "Failed"); }
+    setConfirmDelete(null);
   }
 
   return (
@@ -178,7 +189,7 @@ export default function FoodPresets() {
           actions={isAdmin ? (row) => (
             <div className="flex gap-1">
               <button onClick={() => openEdit(row)} className="px-2.5 py-1 text-xs font-medium text-primary hover:bg-primary-container rounded-lg">Edit</button>
-              <button onClick={() => remove(row.id)} className="px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-50 rounded-lg">Delete</button>
+              <button onClick={() => requestDelete(row)} className="px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-50 rounded-lg">Delete</button>
             </div>
           ) : undefined}
         />
@@ -198,11 +209,25 @@ export default function FoodPresets() {
             </div>
             <div className="flex justify-end gap-2 pt-2 border-t border-outline-variant">
               <Button variant="ghost" onClick={() => { setEditing(null); setIsCreating(false); }}>Cancel</Button>
-              <Button onClick={save} disabled={saving}>{saving ? "Saving..." : "Save"}</Button>
+              <Button onClick={requestSave} disabled={saving}>{saving ? "Saving..." : "Save"}</Button>
             </div>
           </div>
         </Modal>
       )}
+      <ConfirmDialog
+        title="Delete Food Preset"
+        message={confirmDelete ? `Are you sure you want to delete "${confirmDelete.itemName}"? This action cannot be undone.` : ""}
+        onConfirm={() => confirmDelete && remove(confirmDelete.id)}
+        onCancel={() => setConfirmDelete(null)}
+        danger
+      />
+
+      <ConfirmDialog
+        title="Save Food Preset"
+        message={confirmSave ? `Confirm saving "${confirmSave.itemName}" at KES ${confirmSave.unitPrice} (${confirmSave.unit})? Stock: ${confirmSave.stockQuantity}${confirmSave.unit}, Reorder at: ${confirmSave.reorderLevel}${confirmSave.unit}.` : ""}
+        onConfirm={save}
+        onCancel={() => setConfirmSave(null)}
+      />
     </div>
   );
 }
