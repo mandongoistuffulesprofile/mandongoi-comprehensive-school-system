@@ -741,6 +741,7 @@ export const schoolSettings = pgTable('school_settings', {
   classTeacherSignature: text('class_teacher_signature'),
   headTeacherSignature: text('head_teacher_signature'),
   payDay: smallint('pay_day').default(5),
+  collectiveFoodCost: numeric('collective_food_cost', { precision: 10, scale: 2 }).default('9000'),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
 });
 

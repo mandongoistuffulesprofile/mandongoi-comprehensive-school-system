@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { api } from "../../lib/api";
+import { settingsApi } from "../../api/settings";
 import { useAuth } from "../../lib/auth";
-import { Button, PageHeader, Card, Money } from "../../components/ui/Basics";
+import { Button, PageHeader, Card, Money, Spinner } from "../../components/ui/Basics";
 import { Modal } from "../../components/ui/Modal";
 import { DataTable } from "../../components/ui/DataTable";
 import { FormField } from "../../components/ui/FormField";
 import { useToast } from "../../lib/toast";
+import type { SchoolSettings } from "../../types";
 import clsx from "clsx";
 
 interface FoodPreset {
@@ -29,21 +31,34 @@ const UNIT_OPTIONS = [
 export default function FoodPresets() {
   const { user } = useAuth();
   const isAdmin = user?.role === "schoolAdmin";
+  const toast = useToast();
+
   const [rows, setRows] = useState<FoodPreset[]>([]);
+  const [settings, setSettings] = useState<SchoolSettings | null>(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<FoodPreset | null>(null);
   const [isCreating, setIsCreating] = useState(false);
+  const [collectiveCost, setCollectiveCost] = useState("9000");
+  const [savingCost, setSavingCost] = useState(false);
   const [itemName, setItemName] = useState("");
   const [unitPrice, setUnitPrice] = useState("");
   const [unit, setUnit] = useState("kg");
   const [stockQuantity, setStockQuantity] = useState("");
   const [reorderLevel, setReorderLevel] = useState("");
   const [saving, setSaving] = useState(false);
-  const toast = useToast();
 
   function load() {
     setLoading(true);
-    api.get<FoodPreset[]>("/food-presets").then(setRows).finally(() => setLoading(false));
+    Promise.all([
+      api.get<FoodPreset[]>("/food-presets"),
+      settingsApi.get().catch(() => null),
+    ])
+      .then(([rows, s]) => {
+        setRows(rows || []);
+        setSettings(s);
+        if (s?.collectiveFoodCost) setCollectiveCost(s.collectiveFoodCost);
+      })
+      .finally(() => setLoading(false));
   }
   useEffect(load, []);
 
@@ -75,6 +90,16 @@ export default function FoodPresets() {
     finally { setSaving(false); }
   }
 
+  async function saveCollectiveCost() {
+    setSavingCost(true);
+    try {
+      await settingsApi.update({ collectiveFoodCost: collectiveCost });
+      toast.add("success", "Collective food cost updated");
+      load();
+    } catch (e) { toast.add("error", e instanceof Error ? e.message : "Failed"); }
+    finally { setSavingCost(false); }
+  }
+
   async function remove(id: string) {
     try { await api.delete(`/food-presets/${id}`); toast.add("success", "Preset removed"); load(); }
     catch (e) { toast.add("error", e instanceof Error ? e.message : "Failed"); }
@@ -84,19 +109,53 @@ export default function FoodPresets() {
     <div className="max-w-7xl mx-auto">
       <PageHeader
         title="Food Presets"
-        description="Set food items and price per kg/litre for the Bring-Your-Own food programme. Staff selects these when logging food."
+        description={isAdmin ? "Collective food cost (KSH 9000 default) applies to all food items. Manage individual food items below." : "View food items and stock levels."}
         actions={isAdmin && (
           <Button onClick={openCreate} className="bg-gradient-to-r from-rose-600 to-rose-500 text-white shadow-lg shadow-rose-200 rounded-xl px-5 py-2.5">
             + New Food Preset
           </Button>
         )}
       />
+
+      {/* Collective Food Cost Setting */}
+      <Card className="p-5 mb-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="font-semibold text-on-surface">Collective Food Programme Cost</h3>
+            <p className="text-xs text-on-surface-variant mt-0.5">
+              This is the total cost (KSH) for all food items combined — applied collectively, not per-unit.
+            </p>
+          </div>
+          {isAdmin ? (
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-on-surface-variant">KES</span>
+              <input
+                type="number"
+                value={collectiveCost}
+                onChange={(e) => setCollectiveCost(e.target.value)}
+                className="w-28 rounded-lg border border-outline px-3 py-2 text-sm font-bold text-center focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+              />
+              <Button size="sm" onClick={saveCollectiveCost} disabled={savingCost}>
+                {savingCost ? "Saving..." : "Update"}
+              </Button>
+            </div>
+          ) : (
+            <Money value={collectiveCost} className="text-2xl font-bold text-primary" />
+          )}
+        </div>
+        {isAdmin && (
+          <div className="mt-3 p-3 bg-primary-container/30 rounded-lg">
+            <p className="text-xs text-on-surface-variant">
+              Current: <Money value={collectiveCost} /> | All food items in the meal timetable share this collective cost.
+            </p>
+          </div>
+        )}
+      </Card>
+
       <Card>
         <DataTable
           columns={[
             { header: "Item", cell: (r) => <span className="font-semibold">{r.itemName}</span> },
-            { header: "Price", cell: (r) => <Money value={r.unitPrice} className="font-bold" /> },
-            { header: "Per", cell: (r) => r.unit },
             { header: "In Stock", cell: (r) => {
               const stock = Number(r.stockQuantity || 0);
               const reorder = Number(r.reorderLevel || 0);

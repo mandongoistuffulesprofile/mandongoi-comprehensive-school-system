@@ -68,6 +68,7 @@ export default function MealTimetable() {
   const toast = useToast();
   const [templates, setTemplates] = useState<MealTemplate[]>([]);
   const [presets, setPresets] = useState<FoodPreset[]>([]);
+  const [settings, setSettings] = useState<SchoolSettings | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeDay, setActiveDay] = useState<string | null>(null);
   const [activeMeal, setActiveMeal] = useState<string | null>(null);

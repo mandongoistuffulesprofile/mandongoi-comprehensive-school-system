@@ -3,6 +3,7 @@ import { db } from '../db';
 import { mealTemplates, foodPresets } from '../models/schema';
 import { eq, and, sql } from 'drizzle-orm';
 import { requireRole } from '../middleware/rbac';
+import { logger } from '../utils/logger';
 import { AuthRequest } from '../middleware/auth';
 
 const router = Router();

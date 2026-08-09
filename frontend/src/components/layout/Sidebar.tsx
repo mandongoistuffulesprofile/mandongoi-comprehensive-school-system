@@ -77,7 +77,7 @@ const GROUPS: { label: string; roles: Role[]; items: { to: string; label: string
       { to: "/fees/meal-timetable", label: "Meal Timetable", roles: ["schoolAdmin", "teacher"], icon: "timetable" },
       { to: "/fees/food-dashboard", label: "Food Dashboard", roles: ["schoolAdmin", "teacher"], icon: "report" },
       { to: "/fees/food-presets", label: "Food Items & Stock", roles: ["schoolAdmin"], icon: "fees" },
-      { to: "/fees/food-logs", label: "Food Logs", roles: ["schoolAdmin", "teacher"], icon: "leaveNotes" },
+      { to: "/fees/food-logs", label: "Parent Contributions", roles: ["schoolAdmin", "teacher"], icon: "leaveNotes" },
     ],
   },
   {

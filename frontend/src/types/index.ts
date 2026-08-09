@@ -379,6 +379,7 @@ export interface SchoolSettings {
   classTeacherSignature?: string;
   headTeacherSignature?: string;
   payDay?: number;
+  collectiveFoodCost?: string;
 }
 
 export interface Notification {

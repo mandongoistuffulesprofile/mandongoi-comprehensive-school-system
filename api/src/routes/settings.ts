@@ -43,6 +43,7 @@ router.put('/', requireRole('schoolAdmin'), async (req: AuthRequest, res, next) 
       classTeacherSignature: req.body.classTeacherSignature,
       headTeacherSignature: req.body.headTeacherSignature,
       payDay: req.body.payDay,
+      collectiveFoodCost: req.body.collectiveFoodCost,
     };
     let [existing] = await db.select().from(schoolSettings).limit(1);
     if (existing) {

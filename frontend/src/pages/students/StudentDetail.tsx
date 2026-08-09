@@ -6,7 +6,7 @@ import { invoicesApi } from "../../api/fees";
 import { attendanceApi } from "../../api/attendance";
 import { assessmentsApi, reportCardsApi, learningAreasApi } from "../../api/academic";
 import { useAuth } from "../../lib/auth";
-import type { Assessment, FeeInvoice, Guardian, ReportCard, Student, StudentAttendance, LearningArea } from "../../types";
+import type { Assessment, FeeInvoice, Guardian, ReportCard, SchoolSettings, Student, StudentAttendance, LearningArea } from "../../types";
 import { EnumBadge, Money, CompetencyDots, PageHeader, Card, Button } from "../../components/ui/Basics";
 import { Modal } from "../../components/ui/Modal";
 import { FormField } from "../../components/ui/FormField";
@@ -441,6 +441,8 @@ function ReportCardsTab({ studentId, canWrite, canPublish }: { studentId: string
   const [cards, setCards] = useState<ReportCard[]>([]);
   const [learningAreas, setLearningAreas] = useState<LearningArea[]>([]);
   const [assessments, setAssessments] = useState<Assessment[]>([]);
+  const [settings, setSettings] = useState<SchoolSettings | null>(null);
+  const [attendance, setAttendance] = useState<StudentAttendance[]>([]);
   const [loading, setLoading] = useState(true);
   const toast = useToast();
 
@@ -450,72 +452,56 @@ function ReportCardsTab({ studentId, canWrite, canPublish }: { studentId: string
       reportCardsApi.listForStudent(studentId).catch(() => []),
       learningAreasApi.list().catch(() => []),
       assessmentsApi.listForStudent(studentId).catch(() => []),
-    ]).then(([c, la, as]) => { setCards(c); setLearningAreas(la); setAssessments(as); }).finally(() => setLoading(false));
+      settingsApi.get().catch(() => null),
+      attendanceApi.listForStudent(studentId).catch(() => []),
+    ]).then(([c, la, as, s, att]) => { setCards(c); setLearningAreas(la); setAssessments(as); setSettings(s); setAttendance(att); }).finally(() => setLoading(false));
   }
   useEffect(load, [studentId]);
 
   async function publish(id: string) { await reportCardsApi.publish(id); load(); toast.add("success", "Published"); }
 
-  function printReportCard(card: ReportCard) {
-    const studentName = document.querySelector("h1")?.textContent || "Student";
-    const grade = document.querySelector("[class*='text-on-surface-variant']")?.textContent || "";
-    const win = window.open("", "_blank");
-    if (!win) return;
+  function printStudentReportCard(card: ReportCard) {
     const termAssessments = assessments.filter((a) => a.term === card.term && a.academicYear === Number(card.academicYear));
-    win.document.write(`
-      <html><head><title>Report Card - ${studentName}</title>
-      <style>
-        body { font-family: 'Inter', sans-serif; padding: 40px; max-width: 800px; margin: 0 auto; color: #1a1510; }
-        h1 { font-size: 22px; text-align: center; margin-bottom: 2px; }
-        .school { text-align: center; color: #7a654d; font-size: 14px; margin-bottom: 4px; }
-        .sub { text-align: center; color: #9a8065; font-size: 12px; margin-bottom: 24px; }
-        .line { border-top: 2px solid #1a1510; margin: 16px 0; }
-        .info { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 16px; }
-        table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        th { background: #f0ece7; text-align: left; padding: 8px 12px; border-bottom: 2px solid #ded6cc; }
-        td { padding: 8px 12px; border-bottom: 1px solid #ded6cc; }
-        .score { text-align: center; }
-        .grade { text-align: center; font-weight: 600; }
-        .footer { margin-top: 32px; }
-        .comments { background: #faf8f6; padding: 16px; border-radius: 8px; font-size: 13px; line-height: 1.5; }
-        .sig { display: flex; justify-content: space-between; margin-top: 40px; }
-        .sig-line { border-top: 1px solid #000; width: 200px; padding-top: 4px; font-size: 11px; text-align: center; color: #7a654d; }
-      </style></head><body>
-        <h1>SCHOOL REPORT CARD</h1>
-        <p class="school">${grade}</p>
-        <p class="sub">Term ${card.term} · ${card.academicYear}</p>
-        <div class="line"></div>
-        <div class="info">
-          <span><strong>Student:</strong> ${studentName}</span>
-          <span><strong>Term:</strong> ${card.term}</span>
-          <span><strong>Year:</strong> ${card.academicYear}</span>
-        </div>
-        <table>
-          <tr><th>Subject</th><th class="score">Score</th><th class="grade">Grade</th><th>Remarks</th></tr>
-          ${termAssessments.map((a) => {
-            const area = learningAreas.find((la) => la.id === a.learningAreaId);
-            const perf = a.performanceLevel || 1;
-            const gradeText = perf >= 4 ? "Exceeding" : perf >= 3 ? "Meeting" : perf >= 2 ? "Approaching" : "Below";
-            return `<tr><td>${area?.name || "—"}</td><td class="score">${a.score || "—"}</td><td class="grade">${gradeText} (${perf}/4)</td><td>${a.remarks || "—"}</td></tr>`;
-          }).join("")}
-        </table>
-        <p style="text-align:right;margin-top:8px;font-size:12px;color:#9a8065;">Total Subjects: ${termAssessments.length}</p>
-        <div class="footer">
-          <div class="comments"><strong>Teacher's Comments:</strong><br>${card.teacherComments || "No comments."}</div>
-        </div>
-        <div class="sig">
-          <div class="sig-line">Class Teacher</div>
-          <div class="sig-line">Head Teacher</div>
-          <div class="sig-line">Parent/Guardian</div>
-        </div>
-        <script>window.print();window.close();</script>
-      </body></html>
-    `);
-    win.document.close();
+    const subjects = termAssessments.map((a) => {
+      const area = learningAreas.find((la) => la.id === a.learningAreaId);
+      const perf = a.performanceLevel || 1;
+      const gradeText = perf >= 4 ? "Exceeding" : perf >= 3 ? "Meeting" : perf >= 2 ? "Approaching" : "Below";
+      return {
+        name: area?.name || "—",
+        score: a.score || "—",
+        level: perf,
+        grade: gradeText,
+        remarks: a.remarks || "—",
+      };
+    });
+
+    const totalDays = attendance.length || 1;
+    const presentDays = attendance.filter((a) => a.status === "present").length;
+    const absentDays = attendance.filter((a) => a.status === "absent").length;
+    const lateDays = attendance.filter((a) => a.status === "late").length;
+    const excusedDays = attendance.filter((a) => a.status === "excused").length;
+
+    printReportCard({
+      schoolName: settings?.schoolName || "School",
+      schoolMotto: settings?.schoolMotto || "",
+      schoolPhone: settings?.schoolPhone || "",
+      schoolEmail: settings?.schoolEmail || "",
+      studentName: `${student?.firstName || ""} ${student?.lastName || ""}`.trim() || "Student",
+      admissionNumber: student?.nemisId || "",
+      gender: student?.gender || "",
+      grade: student?.grade || "",
+      level: "Primary",
+      term: card.term,
+      academicYear: card.academicYear,
+      subjects,
+      attendance: { total: attendance.length, present: presentDays, absent: absentDays, late: lateDays, excused: excusedDays },
+      teacherComments: card.teacherComments || "",
+      headTeacherComments: card.headTeacherComments || "",
+    });
   }
 
   function printAll() {
-    cards.filter((c) => c.publishedAt).forEach((c) => printReportCard(c));
+    cards.filter((c) => c.publishedAt).forEach((c) => printStudentReportCard(c));
   }
 
   if (loading) return <LoadingScreen />;
@@ -533,7 +519,7 @@ function ReportCardsTab({ studentId, canWrite, canPublish }: { studentId: string
             </div>
             <div className="flex gap-2">
               {canPublish && !c.publishedAt && <Button variant="secondary" size="sm" onClick={() => publish(c.id)}>Publish</Button>}
-              {c.publishedAt && <Button size="sm" onClick={() => printReportCard(c)}>🖨️ Print</Button>}
+              {c.publishedAt && <Button size="sm" onClick={() => printStudentReportCard(c)}>🖨️ Print</Button>}
             </div>
           </Card>
         ))}
