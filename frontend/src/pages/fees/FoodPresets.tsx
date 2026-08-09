@@ -214,20 +214,24 @@ export default function FoodPresets() {
           </div>
         </Modal>
       )}
-      <ConfirmDialog
-        title="Delete Food Preset"
-        message={confirmDelete ? `Are you sure you want to delete "${confirmDelete.itemName}"? This action cannot be undone.` : ""}
-        onConfirm={() => confirmDelete && remove(confirmDelete.id)}
-        onCancel={() => setConfirmDelete(null)}
-        danger
-      />
+      {confirmDelete && (
+        <ConfirmDialog
+          title="Delete Food Preset"
+          message={`Are you sure you want to delete "${confirmDelete.itemName}"? This action cannot be undone.`}
+          onConfirm={() => remove(confirmDelete.id)}
+          onCancel={() => setConfirmDelete(null)}
+          danger
+        />
+      )}
 
-      <ConfirmDialog
-        title="Save Food Preset"
-        message={confirmSave ? `Confirm saving "${confirmSave.itemName}" at KES ${confirmSave.unitPrice} (${confirmSave.unit})? Stock: ${confirmSave.stockQuantity}${confirmSave.unit}, Reorder at: ${confirmSave.reorderLevel}${confirmSave.unit}.` : ""}
-        onConfirm={save}
-        onCancel={() => setConfirmSave(null)}
-      />
+      {confirmSave && (
+        <ConfirmDialog
+          title="Save Food Preset"
+          message={`Confirm saving "${confirmSave.itemName}" at KES ${confirmSave.unitPrice} (${confirmSave.unit})? Stock: ${confirmSave.stockQuantity}${confirmSave.unit}, Reorder at: ${confirmSave.reorderLevel}${confirmSave.unit}.`}
+          onConfirm={save}
+          onCancel={() => setConfirmSave(null)}
+        />
+      )}
     </div>
   );
 }
