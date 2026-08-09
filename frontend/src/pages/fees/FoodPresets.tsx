@@ -49,6 +49,7 @@ export default function FoodPresets() {
   const [saving, setSaving] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<FoodPreset | null>(null);
   const [confirmSave, setConfirmSave] = useState<FoodPreset | null>(null);
+  const [confirmCost, setConfirmCost] = useState<string | null>(null);
 
   function load() {
     setLoading(true);
@@ -97,11 +98,17 @@ export default function FoodPresets() {
     finally { setSaving(false); }
   }
 
+  function requestCostSave() {
+    if (!collectiveCost) { toast.add("error", "Cost cannot be empty"); return; }
+    setConfirmCost(collectiveCost);
+  }
+
   async function saveCollectiveCost() {
     setSavingCost(true);
     try {
-      await settingsApi.update({ collectiveFoodCost: collectiveCost });
+      await settingsApi.update({ collectiveFoodCost: confirmCost || collectiveCost });
       toast.add("success", "Collective food cost updated");
+      setConfirmCost(null);
       load();
     } catch (e) { toast.add("error", e instanceof Error ? e.message : "Failed"); }
     finally { setSavingCost(false); }
@@ -149,7 +156,7 @@ export default function FoodPresets() {
                 onChange={(e) => setCollectiveCost(e.target.value)}
                 className="w-28 rounded-lg border border-outline px-3 py-2 text-sm font-bold text-center focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
               />
-              <Button size="sm" onClick={saveCollectiveCost} disabled={savingCost}>
+              <Button size="sm" onClick={requestCostSave} disabled={savingCost}>
                 {savingCost ? "Saving..." : "Update"}
               </Button>
             </div>
@@ -230,6 +237,15 @@ export default function FoodPresets() {
           message={`Confirm saving "${confirmSave.itemName}" at KES ${confirmSave.unitPrice} (${confirmSave.unit})? Stock: ${confirmSave.stockQuantity}${confirmSave.unit}, Reorder at: ${confirmSave.reorderLevel}${confirmSave.unit}.`}
           onConfirm={save}
           onCancel={() => setConfirmSave(null)}
+        />
+      )}
+
+      {confirmCost && (
+        <ConfirmDialog
+          title="Update Collective Food Cost"
+          message={`Change the collective food programme cost from KES ${collectiveCost} to KES ${confirmCost}? This affects all food items in the meal timetable.`}
+          onConfirm={saveCollectiveCost}
+          onCancel={() => setConfirmCost(null)}
         />
       )}
     </div>
