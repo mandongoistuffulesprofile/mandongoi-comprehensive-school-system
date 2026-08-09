@@ -4,6 +4,8 @@ import { payrollApi, payrollEntriesApi } from "../../api/payroll";
 import { staffApi } from "../../api/staff";
 import type { PayrollEntry, PayrollRun, Staff } from "../../types";
 import { Button, EnumBadge, Money, Spinner, Card, PageHeader } from "../../components/ui/Basics";
+import { PageNavigation } from "../../components/ui/PageNavigation";
+import { BackButton } from "../../components/ui/BackButton";
 import { DataTable } from "../../components/ui/DataTable";
 import { Modal } from "../../components/ui/Modal";
 import { FormField } from "../../components/ui/FormField";

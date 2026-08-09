@@ -8,6 +8,7 @@ import { settingsApi } from "../../api/settings";
 import { smsCampaignsApi } from "../../api/sms";
 import type { FeeInvoice, Student, Staff, SchoolSettings, SmsCampaign } from "../../types";
 import { Money, Spinner, Card } from "../../components/ui/Basics";
+import { BackButton } from "../../components/ui/BackButton";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
 

@@ -3,6 +3,7 @@ import { api } from "../../lib/api";
 import { settingsApi } from "../../api/settings";
 import { useAuth } from "../../lib/auth";
 import { Button, PageHeader, Card, Money, Spinner } from "../../components/ui/Basics";
+import { PageNavigation } from "../../components/ui/PageNavigation";
 import { Modal } from "../../components/ui/Modal";
 import { DataTable } from "../../components/ui/DataTable";
 import { FormField } from "../../components/ui/FormField";

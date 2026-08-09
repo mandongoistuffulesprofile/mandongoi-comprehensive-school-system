@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { ledgerApi, type JournalEntryRecord } from "../../api/ledger";
 import type { LedgerAccount } from "../../types";
 import { Button, Money, Card, PageHeader, Spinner } from "../../components/ui/Basics";
+import { PageNavigation } from "../../components/ui/PageNavigation";
 import { useAuth } from "../../lib/auth";
 import Dropdown from "../../components/ui/Dropdown";
 import { useToast } from "../../lib/toast";
