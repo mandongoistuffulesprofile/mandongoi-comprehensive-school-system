@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { authApi } from "../../api/auth";
 import type { Role } from "../../types";
-import { Button, PageHeader, Card } from "../../components/ui/Basics";
+import { Button, PageHeader, Card } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";;
 import { FormField } from "../../components/ui/FormField";
 import { useToast } from "../../lib/toast";
 
@@ -21,7 +22,11 @@ export default function Users() {
 
   return (
     <div>
-      <PageHeader title="Users" description="Register staff, accountants, and parent accounts." />
+      <PageNavigation title="Users" description="Register staff, accountants, and parent accounts."
+        quickSwitchers={[{ label: "Parent Accounts", to: "/parents/links" }, { label: "Paybills", to: "/settings/paybills" }]}
+        activeQuickSwitcher="/admin/users"
+        quickSwitchers={[{ label: "Parent Accounts", to: "/parents/links" }, { label: "Paybills", to: "/settings/paybills" }]}
+        activeQuickSwitcher="/admin/users" />
 
       <Card className="p-6 max-w-lg">
         <div className="space-y-5">

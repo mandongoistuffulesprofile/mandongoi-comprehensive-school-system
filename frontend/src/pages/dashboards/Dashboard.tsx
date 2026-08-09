@@ -126,6 +126,7 @@ function AdminDashboard() {
 
   return (
     <div className="animate-fade-in space-y-2">
+      <BackButton />  {/* Renders as "Log Out" on root path */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-lg font-bold text-on-surface">

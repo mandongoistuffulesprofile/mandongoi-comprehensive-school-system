@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { settingsApi } from "../api/settings";
-import { Button, Card, Spinner, PageHeader } from "../components/ui/Basics";
+import { Button, Card, Spinner, PageHeader } from "../components/ui/Basics"
+import { PageNavigation } from "../components/ui/PageNavigation";
 import { FormField } from "../components/ui/FormField";
 import { useToast } from "../lib/toast";
 import { api } from "../lib/api";
@@ -61,9 +62,13 @@ export default function SchoolSettings() {
 
   return (
     <div className="max-w-2xl animate-fade-in">
-      <PageHeader
+      <PageNavigation
         title="School Settings"
         description="Configure your school name, term dates, and system preferences."
+        quickSwitchers={[{ label: "Parent Accounts", to: "/parents/links" }, { label: "User Accounts", to: "/admin/users" }]}
+        activeQuickSwitcher="/settings"
+        quickSwitchers={[{ label: "Parent Accounts", to: "/parents/links" }, { label: "User Accounts", to: "/admin/users" }]}
+        activeQuickSwitcher="/settings"
         actions={<Button onClick={save} disabled={saving}>{saving ? "Saving..." : "Save Settings"}</Button>}
       />
 

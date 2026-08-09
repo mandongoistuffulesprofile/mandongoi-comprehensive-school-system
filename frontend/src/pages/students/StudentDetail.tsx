@@ -1,56 +1,78 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { studentsApi } from "../../api/students";
 import { guardiansApi } from "../../api/guardians";
 import { invoicesApi } from "../../api/fees";
 import { attendanceApi } from "../../api/attendance";
 import { assessmentsApi, reportCardsApi, learningAreasApi } from "../../api/academic";
 import { useAuth } from "../../lib/auth";
+import { useBreadcrumbOverride } from "../../contexts/BreadcrumbContext";
 import type { Assessment, FeeInvoice, Guardian, ReportCard, SchoolSettings, Student, StudentAttendance, LearningArea } from "../../types";
-import { EnumBadge, Money, CompetencyDots, PageHeader, Card, Button } from "../../components/ui/Basics";
+import { EnumBadge, Money, CompetencyDots, Card, Button, LoadingScreen } from "../../components/ui/Basics";
+import { PageNavigation } from "../../components/ui/PageNavigation";
 import { Modal } from "../../components/ui/Modal";
 import { FormField } from "../../components/ui/FormField";
 import Dropdown from "../../components/ui/Dropdown";
-import { LoadingScreen } from "../../components/ui/Basics";
 import { useToast } from "../../lib/toast";
-
 import { printReportCard } from "../../utils/printReportCard";
 import { settingsApi } from "../../api/settings";
 import { foodLogsApi, type FoodLog } from "../../api/food-logs";
-import clsx from "clsx";
 
 type Tab = "overview" | "guardians" | "invoices" | "attendance" | "assessments" | "report-cards" | "food";
+
+const STUDENT_DETAIL_TABS = [
+  { key: "overview" as Tab, label: "Overview" },
+  { key: "guardians" as Tab, label: "Guardians" },
+  { key: "invoices" as Tab, label: "Fees" },
+  { key: "attendance" as Tab, label: "Attendance" },
+  { key: "assessments" as Tab, label: "Marks" },
+  { key: "report-cards" as Tab, label: "Report Card" },
+  { key: "food" as Tab, label: "Food" },
+];
+
+const STUDENT_DETAIL_QUICK_SWITCHERS = [
+  { label: "Students", to: "/students" },
+  { label: "Marks Entry", to: "/academic/marks-entry" },
+  { label: "Class Results", to: "/academic/results" },
+  { label: "Attendance", to: "/attendance" },
+];
 
 export default function StudentDetail() {
   const { id = "" } = useParams();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [student, setStudent] = useState<Student | null>(null);
   const [tab, setTab] = useState<Tab>("overview");
   const [loading, setLoading] = useState(true);
+  const crumbs = useBreadcrumbOverride();
 
   useEffect(() => {
     studentsApi.get(id).then(setStudent).finally(() => setLoading(false));
   }, [id]);
 
+  useEffect(() => {
+    if (student) {
+      crumbs.setOverride(id, {
+        label: `${student.firstName} ${student.lastName}`,
+        link: `/students/${id}`,
+      });
+      return () => crumbs.clearOverride(id);
+    }
+  }, [student, id, crumbs]);
+
   if (loading) return <LoadingScreen label="Loading student..." />;
   if (!student) return <p className="text-on-surface-variant">Student not found.</p>;
 
-  const tabs: { key: Tab; label: string }[] = [
-    { key: "overview", label: "Overview" },
-    { key: "guardians", label: "Guardians" },
-    { key: "invoices", label: "Fees" },
-    { key: "attendance", label: "Attendance" },
-    { key: "assessments", label: "Marks" },
-    { key: "report-cards", label: "Report Card" },
-    { key: "food", label: "Food" },
-  ];
-
   return (
     <div className="animate-fade-in space-y-6">
-      <Link to="/students" className="text-sm font-medium text-primary hover:text-on-primary-container inline-flex items-center gap-1">
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-        Back to students
-      </Link>
+      <PageNavigation
+        backTo="/students"
+        backLabel="Back to students"
+        title={`${student.firstName} ${student.lastName}`}
+        description={`${student.level?.replace("_", " ")} · ${student.grade}`}
+        quickSwitchers={STUDENT_DETAIL_QUICK_SWITCHERS}
+        activeQuickSwitcher="/students"
+      />
 
       <Card className="p-6">
         <div className="flex items-start justify-between">
@@ -74,16 +96,11 @@ export default function StudentDetail() {
         </div>
       </Card>
 
-      <div className="flex gap-1 border-b border-outline-variant">
-        {tabs.map((t) => (
-          <button key={t.key} onClick={() => setTab(t.key)}
-            className={clsx("px-4 py-2.5 text-sm font-medium border-b-2 -mb-px transition-colors",
-              tab === t.key ? "border-primary text-primary" : "border-transparent text-on-surface-variant hover:text-on-surface"
-            )}>
-            {t.label}
-          </button>
-        ))}
-      </div>
+      <PageNavigation
+        tabs={STUDENT_DETAIL_TABS.map(t => ({ key: t.key, label: t.label }))}
+        activeTab={tab}
+        onTabChange={(k) => setTab(k as Tab)}
+      />
 
       {tab === "overview" && <OverviewTab studentId={id} />}
       {tab === "guardians" && <GuardiansTab studentId={id} canWrite={user?.role === "schoolAdmin"} />}

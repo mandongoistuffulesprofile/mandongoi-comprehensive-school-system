@@ -1,6 +1,7 @@
 import { useAuth } from "../../lib/auth";
 import { smsTemplatesApi } from "../../api/sms";
 import { ResourcePage } from "../../components/ui/ResourcePage";
+import { PageNavigation } from '../../components/ui/PageNavigation';
 import { EnumBadge } from "../../components/ui/Basics";
 import type { SmsTemplate } from "../../types";
 
@@ -9,7 +10,9 @@ export default function SmsTemplates() {
   const isAdmin = user?.role === "schoolAdmin";
 
   return (
-    <ResourcePage<SmsTemplate>
+      <ResourcePage<SmsTemplate>
+      quickSwitchers={[{ label: "Send Messages", to: "/sms/campaigns" }, { label: "Auto Messages", to: "/sms/automated-rules" }]}
+      activeQuickSwitcher="/sms/templates"
       title="SMS Templates"
       description="Reusable message templates used by campaigns and automated rules."
       canWrite={isAdmin}

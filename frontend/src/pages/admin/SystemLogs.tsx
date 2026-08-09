@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { PageHeader, Card, Spinner } from "../../components/ui/Basics";
+import { PageHeader, Card, Spinner } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";;
 import Dropdown from "../../components/ui/Dropdown";
 import { api } from "../../lib/api";
 import clsx from "clsx";
@@ -76,7 +77,11 @@ export default function SystemLogs() {
 
   return (
     <div className="animate-fade-in max-w-6xl">
-      <PageHeader title="System Logs" description="Audit trail of all system actions, filterable by category." />
+      <PageNavigation title="System Logs" description="Audit trail of all system actions, filterable by category."
+        quickSwitchers={[{ label: "School Settings", to: "/settings" }, { label: "Paybills", to: "/settings/paybills" }]}
+        activeQuickSwitcher="/admin/logs"
+        quickSwitchers={[{ label: "School Settings", to: "/settings" }, { label: "Paybills", to: "/settings/paybills" }]}
+        activeQuickSwitcher="/admin/logs" />
 
       <div className="flex items-center justify-between flex-wrap gap-3 mb-4">
         <div className="flex items-center gap-2 flex-wrap">

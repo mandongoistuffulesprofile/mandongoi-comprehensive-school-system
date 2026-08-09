@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { parentLinksApi } from "../../api/parentLinks";
-import { Button, Card, PageHeader, Spinner, EmptyState } from "../../components/ui/Basics";
+import { Button, Card, PageHeader, Spinner, EmptyState } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";;
 import { Modal } from "../../components/ui/Modal";
 import { FormField } from "../../components/ui/FormField";
 import { useToast } from "../../lib/toast";
@@ -45,9 +46,13 @@ export default function ParentLinks() {
 
   return (
     <div>
-      <PageHeader
+      <PageNavigation
         title="Parent Links"
         description="Assign parent accounts to students for the parent portal."
+        quickSwitchers={[{ label: "School Settings", to: "/settings" }, { label: "User Accounts", to: "/admin/users" }]}
+        activeQuickSwitcher="/parents/links"
+        quickSwitchers={[{ label: "School Settings", to: "/settings" }, { label: "User Accounts", to: "/admin/users" }]}
+        activeQuickSwitcher="/parents/links"
         actions={<Button onClick={() => setShowCreate(true)}>+ New Link</Button>}
       />
 

@@ -20,6 +20,8 @@ interface ResourcePageProps<T extends { id: string }> {
   canWrite?: boolean;
   extraHeaderActions?: React.ReactNode;
   onRowClick?: (row: T) => void;
+  quickSwitchers?: QuickSwitchersProps['items'];
+  activeQuickSwitcher?: string;
   formLayout?: "modal" | "fullPage";
 }
 
@@ -142,7 +144,7 @@ export function ResourcePage<T extends { id: string }>({
 
   return (
     <div>
-      <PageHeader
+      <PageNavigation
         title={title}
         description={description}
         actions={
@@ -151,6 +153,8 @@ export function ResourcePage<T extends { id: string }>({
             {canWrite && createItem && <Button onClick={openCreate}>+ New</Button>}
           </div>
         }
+        quickSwitchers={quickSwitchers}
+        activeQuickSwitcher={activeQuickSwitcher}
       />
 
       {error && (

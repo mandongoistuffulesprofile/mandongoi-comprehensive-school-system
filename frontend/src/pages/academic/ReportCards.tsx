@@ -5,7 +5,8 @@ import { invoicesApi } from "../../api/fees";
 import { settingsApi } from "../../api/settings";
 import { api } from "../../lib/api";
 import type { Student, LearningArea, Assessment, SchoolSettings } from "../../types";
-import { Button, PageHeader, Card, Spinner } from "../../components/ui/Basics";
+import { Button, PageHeader, Card, Spinner } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";;
 import { FormField } from "../../components/ui/FormField";
 import Dropdown from "../../components/ui/Dropdown";
 import { Modal } from "../../components/ui/Modal";
@@ -365,7 +366,11 @@ export default function ReportCards() {
 
   return (
     <div>
-      <PageHeader title="Report Cards" description="CBC-compliant report cards with competency-based grading." />
+      <PageNavigation title="Report Cards" description="CBC-compliant report cards with competency-based grading."
+        quickSwitchers={[{ label: "Class Results", to: "/academic/results" }, { label: "Attendance", to: "/attendance" }]}
+        activeQuickSwitcher="/academic/report-cards"
+        quickSwitchers={[{ label: "Class Results", to: "/academic/results" }, { label: "Attendance", to: "/attendance" }]}
+        activeQuickSwitcher="/academic/report-cards" />
 
       <Card className="p-5 space-y-4 mb-6">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 items-end">

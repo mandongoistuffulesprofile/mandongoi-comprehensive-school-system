@@ -3,7 +3,8 @@ import { invoicesApi, feeStructuresApi } from "../../api/fees";
 import { studentsApi } from "../../api/students";
 import { paybillsApi } from "../../api/paybills";
 import type { FeeInvoice, FeeStructure, PaymentMethod, Paybill, Receipt, Student } from "../../types";
-import { Button, EnumBadge, Money, PageHeader } from "../../components/ui/Basics";
+import { Button, EnumBadge, Money, PageHeader } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";;
 import { DataTable } from "../../components/ui/DataTable";
 import { Modal } from "../../components/ui/Modal";
 import { FormField } from "../../components/ui/FormField";
@@ -33,7 +34,11 @@ export default function Invoices() {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
-      <PageHeader title="Invoices" description="Fee invoices, payments, and M-Pesa reconciliation."
+      <PageNavigation title="Invoices" description="Fee invoices, payments, and M-Pesa reconciliation."
+        quickSwitchers={[{ label: "Set Term Fees", to: "/fees/structures" }, { label: "Reconciliation", to: "/fees/reconciliation" }, { label: "Payments Log", to: "/fees/payments" }]}
+        activeQuickSwitcher="/fees/invoices"
+      quickSwitchers={[{ label: "Set Term Fees", to: "/fees/structures" }, { label: "Reconciliation", to: "/fees/reconciliation" }, { label: "Payments Log", to: "/fees/payments" }]}
+        activeQuickSwitcher="/fees/invoices"
         actions={<div className="flex gap-2"><Button variant="secondary" onClick={() => setShowBulkGenerate(true)}>Generate for All</Button><Button onClick={() => setShowGenerate(true)}>+ Generate Invoice</Button></div>}
       />
 

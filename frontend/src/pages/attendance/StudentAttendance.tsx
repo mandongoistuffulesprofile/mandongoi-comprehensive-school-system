@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { studentsApi } from "../../api/students";
 import type { Student } from "../../types";
-import { Button, Card, PageHeader } from "../../components/ui/Basics";
+import { Button, Card, PageHeader } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";;
 import Dropdown from "../../components/ui/Dropdown";
 import { useToast } from "../../lib/toast";
 import { api } from "../../lib/api";
@@ -89,9 +90,11 @@ export default function StudentAttendancePage() {
 
   return (
     <div className="animate-fade-in max-w-5xl space-y-5">
-      <PageHeader
+      <PageNavigation
         title="Attendance"
         description="Only log absences, lateness, or excused students — everyone else is assumed present."
+        quickSwitchers={[{ label: "Students", to: "/students" }, { label: "Leave Notes", to: "/attendance/leave-notes" }]}
+        activeQuickSwitcher="/attendance"
       />
 
       <Card className={clsx("p-4 transition-all duration-300", allClear && "border-emerald-200/60 bg-emerald-50/20")}>

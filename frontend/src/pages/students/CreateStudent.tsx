@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { studentsApi } from "../../api/students";
 import { guardiansApi } from "../../api/guardians";
 import { Button, PageHeader, Card, EnumBadge } from "../../components/ui/Basics";
+import { BackButton } from "../../components/ui/BackButton";
 import { FormField } from "../../components/ui/FormField";
 import { useToast } from "../../lib/toast";
 import { LEVELS } from "../../types";
@@ -95,12 +96,10 @@ export default function CreateStudent() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="flex items-center gap-2 text-sm text-on-surface-variant mb-4">
-        <button onClick={() => navigate("/students")} className="hover:text-primary transition-colors">Students</button>
-        <span>/</span>
-        <span className="text-on-surface font-medium">New Student</span>
+      <div className="flex items-center gap-4 mb-4">
+        <BackButton to="/students" label="Back to Students" />
         {savedCount > 0 && (
-          <span className="ml-auto text-emerald-600 text-xs font-medium bg-emerald-50 px-3 py-1 rounded-full">
+          <span className="text-emerald-600 text-xs font-medium bg-emerald-50 px-3 py-1 rounded-full">
             {savedCount} saved this session
           </span>
         )}
@@ -184,7 +183,7 @@ export default function CreateStudent() {
       </div>
 
       <div className="mt-6 flex flex-wrap gap-3 justify-end">
-        <Button variant="ghost" onClick={() => navigate("/students")}>Cancel</Button>
+        <Button variant="secondary" onClick={() => navigate("/students")}>Cancel</Button>
         <Button
           onClick={() => save("another")}
           disabled={saving}

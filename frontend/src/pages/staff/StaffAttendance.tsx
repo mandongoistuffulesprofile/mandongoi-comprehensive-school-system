@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { staffApi, staffAttendanceApi } from "../../api/staff";
 import type { Staff, StaffAttendance, StaffAttendanceStatus } from "../../types";
-import { Button, EnumBadge, PageHeader, Card } from "../../components/ui/Basics";
+import { Button, EnumBadge, PageHeader, Card } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";;
 import Dropdown from "../../components/ui/Dropdown";
 import { useToast } from "../../lib/toast";
 
@@ -39,7 +40,11 @@ export default function StaffAttendancePage() {
 
   return (
     <div>
-      <PageHeader title="Staff Attendance" description="Feeds payroll entry generation for session-based staff." />
+      <PageNavigation title="Staff Attendance" description="Feeds payroll entry generation for session-based staff."
+        quickSwitchers={[{ label: "Staff Records", to: "/staff" }, { label: "Class Teachers", to: "/staff/class-teachers" }]}
+        activeQuickSwitcher="/staff/attendance"
+      quickSwitchers={[{ label: "Staff Records", to: "/staff" }, { label: "Class Teachers", to: "/staff/class-teachers" }]}
+        activeQuickSwitcher="/staff/attendance" />
 
       <Card className="p-5 flex flex-wrap items-end gap-3 mb-6">
         <div>

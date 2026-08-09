@@ -43,10 +43,12 @@ export function PayrollRuns() {
 
   return (
     <div>
-      <PageHeader
+      <PageNavigation
         title="Salaries & Payroll"
         description="Create monthly payroll runs, generate payslips from attendance, approve, and process payments."
         actions={<Button onClick={() => setShowCreate(true)}>+ New Run</Button>}
+        quickSwitchers={[{ label: "Staff Records", to: "/staff" }, { label: "Session Assignments", to: "/staff/session-assignments" }]}
+        activeQuickSwitcher="/payroll"
       />
 
       <div className="grid grid-cols-4 gap-4 mb-6">
@@ -338,10 +340,7 @@ export function PayrollRunDetail() {
 
   return (
     <div>
-      <Link to="/payroll" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-on-primary-container bg-primary-container hover:bg-primary-container px-3 py-1.5 rounded-lg transition-colors mb-4">
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-        Back to all runs
-      </Link>
+      <BackButton to="/payroll" label="Back to all runs" />
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-on-surface">{monthName} {run.year}</h1>

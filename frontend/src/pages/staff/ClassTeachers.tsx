@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
-import { PageHeader, Card, Button, Spinner } from "../../components/ui/Basics";
+import { PageHeader, Card, Button, Spinner } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";;
 import Dropdown from "../../components/ui/Dropdown";
 import { api } from "../../lib/api";
 import { staffApi } from "../../api/staff";
@@ -100,9 +101,13 @@ export default function ClassTeachers() {
 
   return (
     <div className="animate-fade-in max-w-4xl">
-      <PageHeader
+      <PageNavigation
         title="Class Teachers"
         description="Assign teachers to grades and upload their signature images for report cards."
+        quickSwitchers={[{ label: "Staff Records", to: "/staff" }, { label: "Staff Attendance", to: "/staff/attendance" }]}
+        activeQuickSwitcher="/staff/class-teachers"
+      quickSwitchers={[{ label: "Staff Records", to: "/staff" }, { label: "Staff Attendance", to: "/staff/attendance" }]}
+        activeQuickSwitcher="/staff/class-teachers"
         actions={<Button onClick={() => { setEditing("new"); setSelectedStaff(""); setSelectedGrade(""); setSelectedClass(""); setSigPreview(null); }}>+ Assign Teacher</Button>}
       />
 

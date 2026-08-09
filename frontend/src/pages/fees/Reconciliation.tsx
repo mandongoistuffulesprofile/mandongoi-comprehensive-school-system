@@ -3,7 +3,8 @@ import { paymentsApi } from "../../api/fees";
 import { studentsApi } from "../../api/students";
 import { invoicesApi } from "../../api/fees";
 import type { PaymentRecord, Student, FeeInvoice } from "../../types";
-import { Button, EnumBadge, Money, PageHeader, Card } from "../../components/ui/Basics";
+import { Button, EnumBadge, Money, PageHeader, Card } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";;
 import { Modal } from "../../components/ui/Modal";
 import Dropdown from "../../components/ui/Dropdown";
 import { useToast } from "../../lib/toast";
@@ -51,7 +52,11 @@ export default function Reconciliation() {
 
   return (
     <div>
-      <PageHeader title="Payment Reconciliation" description="Manually match unmatched M-Pesa transactions to student invoices." />
+      <PageNavigation title="Payment Reconciliation" description="Manually match unmatched M-Pesa transactions to student invoices."
+        quickSwitchers={[{ label: "Fee Payments", to: "/fees/invoices" }, { label: "Payments Log", to: "/fees/payments" }]}
+        activeQuickSwitcher="/fees/reconciliation"
+      quickSwitchers={[{ label: "Fee Payments", to: "/fees/invoices" }, { label: "Payments Log", to: "/fees/payments" }]}
+        activeQuickSwitcher="/fees/reconciliation" />
 
       {loading ? (
         <div className="flex justify-center py-12"><div className="w-6 h-6 rounded-full border-2 border-outline-variant border-t-primary animate-spin" /></div>

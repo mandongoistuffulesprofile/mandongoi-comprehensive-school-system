@@ -107,9 +107,12 @@ export default function FoodPresets() {
 
   return (
     <div className="max-w-7xl mx-auto">
-      <PageHeader
+      <PageNavigation
         title="Food Presets"
         description={isAdmin ? "Collective food cost (KSH 9000 default) applies to all food items. Manage individual food items below." : "View food items and stock levels."}
+        quickSwitchers={[{ label: "Meal Timetable", to: "/fees/meal-timetable" }, { label: "Food Dashboard", to: "/fees/food-dashboard" }, { label: "Parent Contributions", to: "/fees/food-logs" }]}
+
+        activeQuickSwitcher="/fees/food-presets"
         actions={isAdmin && (
           <Button onClick={openCreate} className="bg-gradient-to-r from-rose-600 to-rose-500 text-white shadow-lg shadow-rose-200 rounded-xl px-5 py-2.5">
             + New Food Preset

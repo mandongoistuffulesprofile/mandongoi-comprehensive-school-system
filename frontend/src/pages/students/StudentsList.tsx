@@ -4,6 +4,7 @@ import { useAuth } from "../../lib/auth";
 import { studentsApi } from "../../api/students";
 import { DataTable } from "../../components/ui/DataTable";
 import { Button, EnumBadge, PageHeader, Card } from "../../components/ui/Basics";
+import { PageNavigation } from "../../components/ui/PageNavigation";
 import { Modal } from "../../components/ui/Modal";
 import { FormField } from "../../components/ui/FormField";
 import Dropdown from "../../components/ui/Dropdown";
@@ -13,6 +14,12 @@ import { LEVELS } from "../../types";
 import type { PaginationInfo } from "../../components/ui/Pagination";
 
 
+
+const STUDENTS_QUICK_SWITCHERS = [
+  { label: "Students", to: "/students", active: true },
+  { label: "Marks Entry", to: "/academic/marks-entry" },
+  { label: "Attendance", to: "/attendance" },
+];
 
 export default function StudentsList() {
   const { user } = useAuth();
@@ -111,10 +118,12 @@ export default function StudentsList() {
 
   return (
     <div>
-      <PageHeader
+      <PageNavigation
         title="Students"
         description="Enrolled learners across all grades and classes."
         actions={isAdmin && <Button onClick={() => navigate("/students/new")}>+ New Student</Button>}
+        quickSwitchers={STUDENTS_QUICK_SWITCHERS}
+        activeQuickSwitcher="/students"
       />
 
       <div className="flex flex-wrap items-center gap-3 mb-4">

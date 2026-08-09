@@ -1,10 +1,13 @@
 import { ResourcePage } from "../../components/ui/ResourcePage";
+import { PageNavigation } from '../../components/ui/PageNavigation';
 import { paybillsApi } from "../../api/paybills";
 import type { Paybill } from "../../types";
 
 export default function Paybills() {
   return (
-    <ResourcePage<Paybill>
+      <ResourcePage<Paybill>
+      quickSwitchers={[{ label: "User Accounts", to: "/admin/users" }, { label: "System Logs", to: "/admin/logs" }]}
+      activeQuickSwitcher="/settings/paybills"
       title="Payment Methods"
       description="Configure M-Pesa paybill numbers for fee collection. Each paybill can have its own Daraja credentials."
       canWrite={true}

@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../lib/auth";
 import { staffApi } from "../../api/staff";
 import { ResourcePage } from "../../components/ui/ResourcePage";
+import { PageNavigation } from '../../components/ui/PageNavigation';
 import { EnumBadge, Money, Button } from "../../components/ui/Basics";
 import type { Staff } from "../../types";
 
@@ -18,7 +19,9 @@ export default function StaffList() {
   const isAdmin = user?.role === "schoolAdmin";
 
   return (
-    <ResourcePage<Staff>
+      <ResourcePage<Staff>
+      quickSwitchers={[{ label: "Staff Attendance", to: "/staff/attendance" }, { label: "Class Teachers", to: "/staff/class-teachers" }]}
+      activeQuickSwitcher="/staff"
       title="Staff"
       description="Teaching and support staff. BOM teachers get monthly salary; TSC get extra duty pay only."
       canWrite={isAdmin}

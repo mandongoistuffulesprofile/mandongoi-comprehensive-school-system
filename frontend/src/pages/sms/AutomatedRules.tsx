@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { automatedRulesApi, smsTemplatesApi } from "../../api/sms";
 import type { AutomatedSmsRule, SmsTemplate } from "../../types";
-import { Button, EnumBadge, PageHeader, Card } from "../../components/ui/Basics";
+import { Button, EnumBadge, PageHeader, Card } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";;
 import { Modal } from "../../components/ui/Modal";
 import { FormField } from "../../components/ui/FormField";
 import { useToast } from "../../lib/toast";
@@ -36,9 +37,13 @@ export default function AutomatedRules() {
 
   return (
     <div>
-      <PageHeader
+      <PageNavigation
         title="Automated SMS Rules"
         description="Trigger-based messaging: fee due/overdue, low attendance, results published."
+        quickSwitchers={[{ label: "Send Messages", to: "/sms/campaigns" }, { label: "Message History", to: "/sms/logs" }]}
+        activeQuickSwitcher="/sms/automated-rules"
+        quickSwitchers={[{ label: "Send Messages", to: "/sms/campaigns" }, { label: "Message History", to: "/sms/logs" }]}
+        activeQuickSwitcher="/sms/automated-rules"
         actions={<Button onClick={() => setShowCreate(true)}>+ New Rule</Button>}
       />
 

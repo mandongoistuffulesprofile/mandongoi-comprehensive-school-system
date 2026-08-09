@@ -1,6 +1,7 @@
 import { useAuth } from "../../lib/auth";
 import { ledgerApi } from "../../api/ledger";
 import { ResourcePage } from "../../components/ui/ResourcePage";
+import { PageNavigation } from '../../components/ui/PageNavigation';
 import { EnumBadge } from "../../components/ui/Basics";
 import type { LedgerAccount } from "../../types";
 
@@ -9,7 +10,9 @@ export default function LedgerAccounts() {
   const isAdmin = user?.role === "schoolAdmin";
 
   return (
-    <ResourcePage<LedgerAccount>
+      <ResourcePage<LedgerAccount>
+      quickSwitchers={[{ label: "Income & Expenses", to: "/ledger/trial-balance" }, { label: "Record Transaction", to: "/ledger/journal" }]}
+      activeQuickSwitcher="/ledger/accounts"
       title="Chart of Accounts"
       description="Categories where money is recorded — e.g., Cash, Fees Income, Salaries Expense. Every transaction moves money between these accounts."
       canWrite={isAdmin}
