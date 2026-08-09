@@ -39,6 +39,8 @@ export function ResourcePage<T extends { id: string }>({
   canWrite = true,
   extraHeaderActions,
   onRowClick,
+  quickSwitchers,
+  activeQuickSwitcher,
   formLayout = "modal",
 }: ResourcePageProps<T>) {
   const [rows, setRows] = useState<T[]>([]);
