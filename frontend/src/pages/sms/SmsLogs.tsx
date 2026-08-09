@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { smsLogsApi } from "../../api/sms";
 import type { SmsLog, SmsLogStatus } from "../../types";
 import { DataTable } from "../../components/ui/DataTable";
-import { EnumBadge, Money, PageHeader } from "../../components/ui/Basics"
-import { PageNavigation } from "../../components/ui/PageNavigation";;
+import { EnumBadge, Money } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";
 import clsx from "clsx";
 
 export default function SmsLogs() {
@@ -20,9 +20,7 @@ export default function SmsLogs() {
     <div>
       <PageNavigation title="SMS Logs" description="Delivery status per recipient message."
         quickSwitchers={[{ label: "Send Messages", to: "/sms/campaigns" }, { label: "Auto Messages", to: "/sms/automated-rules" }]}
-        activeQuickSwitcher="/sms/logs"
-        quickSwitchers={[{ label: "Send Messages", to: "/sms/campaigns" }, { label: "Auto Messages", to: "/sms/automated-rules" }]}
-        activeQuickSwitcher="/sms/logs" />
+        activeQuickSwitcher="/sms/logs"/>
 
       <div className="flex gap-2 mb-4">
         {(["", "queued", "sent", "delivered", "failed"] as const).map((s) => (

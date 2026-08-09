@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { settingsApi } from "../api/settings";
-import { Button, Card, Spinner, PageHeader } from "../components/ui/Basics"
+import { Button, Card, Spinner } from "../components/ui/Basics"
 import { PageNavigation } from "../components/ui/PageNavigation";
 import { FormField } from "../components/ui/FormField";
 import { useToast } from "../lib/toast";
@@ -66,10 +66,7 @@ export default function SchoolSettings() {
         title="School Settings"
         description="Configure your school name, term dates, and system preferences."
         quickSwitchers={[{ label: "Parent Accounts", to: "/parents/links" }, { label: "User Accounts", to: "/admin/users" }]}
-        activeQuickSwitcher="/settings"
-        quickSwitchers={[{ label: "Parent Accounts", to: "/parents/links" }, { label: "User Accounts", to: "/admin/users" }]}
-        activeQuickSwitcher="/settings"
-        actions={<Button onClick={save} disabled={saving}>{saving ? "Saving..." : "Save Settings"}</Button>}
+        activeQuickSwitcher="/settings"        actions={<Button onClick={save} disabled={saving}>{saving ? "Saving..." : "Save Settings"}</Button>}
       />
 
       <div className="space-y-6 mt-6">

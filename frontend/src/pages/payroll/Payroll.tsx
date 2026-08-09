@@ -48,8 +48,7 @@ export function PayrollRuns() {
         description="Create monthly payroll runs, generate payslips from attendance, approve, and process payments."
         actions={<Button onClick={() => setShowCreate(true)}>+ New Run</Button>}
         quickSwitchers={[{ label: "Staff Records", to: "/staff" }, { label: "Session Assignments", to: "/staff/session-assignments" }]}
-        activeQuickSwitcher="/payroll"
-      />
+        activeQuickSwitcher="/payroll"      />
 
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl p-4 border border-amber-200">

@@ -12,8 +12,7 @@ export default function LedgerAccounts() {
   return (
       <ResourcePage<LedgerAccount>
       quickSwitchers={[{ label: "Income & Expenses", to: "/ledger/trial-balance" }, { label: "Record Transaction", to: "/ledger/journal" }]}
-      activeQuickSwitcher="/ledger/accounts"
-      title="Chart of Accounts"
+      activeQuickSwitcher="/ledger/accounts"      title="Chart of Accounts"
       description="Categories where money is recorded — e.g., Cash, Fees Income, Salaries Expense. Every transaction moves money between these accounts."
       canWrite={isAdmin}
       fields={[

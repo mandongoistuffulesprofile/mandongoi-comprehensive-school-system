@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { api } from "../../lib/api";
 import { staffApi } from "../../api/staff";
 import { useAuth } from "../../lib/auth";
-import { Button, PageHeader, Card, Spinner } from "../../components/ui/Basics"
-import { PageNavigation } from "../../components/ui/PageNavigation";;
+import { Button, Card, Spinner } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";
 import Dropdown from "../../components/ui/Dropdown";
 import { useToast } from "../../lib/toast";
 import type { SessionAssignment, Staff } from "../../types";
@@ -95,10 +95,7 @@ export default function SessionAssignments() {
         title="Session Assignments"
         description="Assign teachers to Morning, Evening, and Weekend sessions. These feed into payroll extra duty calculations."
         quickSwitchers={[{ label: "Class Teachers", to: "/staff/class-teachers" }, { label: "Salaries & Payroll", to: "/payroll" }]}
-        activeQuickSwitcher="/staff/session-assignments"
-      quickSwitchers={[{ label: "Class Teachers", to: "/staff/class-teachers" }, { label: "Salaries & Payroll", to: "/payroll" }]}
-        activeQuickSwitcher="/staff/session-assignments"
-        actions={isAdmin && (
+        activeQuickSwitcher="/staff/session-assignments"        actions={isAdmin && (
           <div className="flex gap-2">
             <Button variant="secondary" onClick={generatePayments} disabled={generating}>
               {generating ? "Generating..." : "Generate for Payroll"}

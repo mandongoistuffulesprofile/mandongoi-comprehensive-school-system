@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { ledgerApi } from "../../api/ledger";
 import type { TrialBalanceRow } from "../../types";
-import { EnumBadge, Money, Card, PageHeader, Spinner } from "../../components/ui/Basics"
-import { PageNavigation } from "../../components/ui/PageNavigation";;
+import { EnumBadge, Money, Card, Spinner } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";
 
 export default function TrialBalance() {
   const [rows, setRows] = useState<TrialBalanceRow[]>([]);
@@ -19,9 +19,7 @@ export default function TrialBalance() {
     <div>
       <PageNavigation title="Account Balances" description="Shows every account with its total money out and money in. The totals must always match — this confirms all transactions are recorded correctly."
         quickSwitchers={[{ label: "Chart of Accounts", to: "/ledger/accounts" }, { label: "Record Transaction", to: "/ledger/journal" }]}
-        activeQuickSwitcher="/ledger/trial-balance"
-      quickSwitchers={[{ label: "Chart of Accounts", to: "/ledger/accounts" }, { label: "Record Transaction", to: "/ledger/journal" }]}
-        activeQuickSwitcher="/ledger/trial-balance" />
+        activeQuickSwitcher="/ledger/trial-balance"/>
 
       {loading ? (
         <Spinner />

@@ -71,8 +71,7 @@ export default function StudentDetail() {
         title={`${student.firstName} ${student.lastName}`}
         description={`${student.level?.replace("_", " ")} · ${student.grade}`}
         quickSwitchers={STUDENT_DETAIL_QUICK_SWITCHERS}
-        activeQuickSwitcher="/students"
-      />
+        activeQuickSwitcher="/students"      />
 
       <Card className="p-6">
         <div className="flex items-start justify-between">

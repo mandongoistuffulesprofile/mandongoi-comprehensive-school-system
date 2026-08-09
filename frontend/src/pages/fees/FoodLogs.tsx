@@ -3,8 +3,8 @@ import { foodLogsApi, type FoodLog } from "../../api/food-logs";
 import { studentsApi } from "../../api/students";
 import { settingsApi } from "../../api/settings";
 import { useAuth } from "../../lib/auth";
-import { Button, PageHeader, Money, Spinner } from "../../components/ui/Basics"
-import { PageNavigation } from "../../components/ui/PageNavigation";;
+import { Button, Money, Spinner } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";
 import { Modal } from "../../components/ui/Modal";
 import { useToast } from "../../lib/toast";
 import { api } from "../../lib/api";
@@ -167,10 +167,7 @@ export default function FoodLogs() {
     <div className="px-4 sm:px-6 lg:px-8">
       <PageNavigation title="Food Programme — Parent Contributions" description="Record food items brought in by parents for their children. (Meal consumption is tracked collectively via the Meal Timetable.)"
         quickSwitchers={[{ label: "Meal Timetable", to: "/fees/meal-timetable" }, { label: "Food Dashboard", to: "/fees/food-dashboard" }, { label: "Food Items & Stock", to: "/fees/food-presets" }]}
-        activeQuickSwitcher="/fees/food-logs"
-      quickSwitchers={[{ label: "Meal Timetable", to: "/fees/meal-timetable" }, { label: "Food Dashboard", to: "/fees/food-dashboard" }, { label: "Food Items & Stock", to: "/fees/food-presets" }]}
-        activeQuickSwitcher="/fees/food-logs" />
-
+        activeQuickSwitcher="/fees/food-logs"/>
       {/* Breadcrumbs — shows student name upon selection */}
       <nav aria-label="breadcrumb" className="flex items-center gap-2 text-sm text-on-surface-variant mb-4">
         <span className="text-on-surface-variant hover:text-on-surface cursor-pointer">Food Programme</span>

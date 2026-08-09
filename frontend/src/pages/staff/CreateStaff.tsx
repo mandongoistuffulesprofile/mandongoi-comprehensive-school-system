@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { staffApi } from "../../api/staff";
-import { Button, PageHeader, Card } from "../../components/ui/Basics"
-import { PageNavigation } from "../../components/ui/PageNavigation";;
+import { Button, Card } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";
 import { FormField } from "../../components/ui/FormField";
 import { useToast } from "../../lib/toast";
 
@@ -53,8 +53,7 @@ export default function CreateStaff() {
         title="New Staff"
         description="Add a teacher or support staff member."
         quickSwitchers={[{ label: "Staff Records", to: "/staff" }, { label: "Staff Attendance", to: "/staff/attendance" }]}
-        activeQuickSwitcher="/staff/new"
-      />
+        activeQuickSwitcher="/staff/new"      />
 
       <Card className="p-6 max-w-2xl">
         <div className="space-y-5">

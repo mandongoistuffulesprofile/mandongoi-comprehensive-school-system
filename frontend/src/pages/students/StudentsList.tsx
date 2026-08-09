@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../lib/auth";
 import { studentsApi } from "../../api/students";
 import { DataTable } from "../../components/ui/DataTable";
-import { Button, EnumBadge, PageHeader, Card } from "../../components/ui/Basics";
+import { Button, EnumBadge, Card } from "../../components/ui/Basics";
 import { PageNavigation } from "../../components/ui/PageNavigation";
 import { Modal } from "../../components/ui/Modal";
 import { FormField } from "../../components/ui/FormField";
@@ -123,8 +123,7 @@ export default function StudentsList() {
         description="Enrolled learners across all grades and classes."
         actions={isAdmin && <Button onClick={() => navigate("/students/new")}>+ New Student</Button>}
         quickSwitchers={STUDENTS_QUICK_SWITCHERS}
-        activeQuickSwitcher="/students"
-      />
+        activeQuickSwitcher="/students"      />
 
       <div className="flex flex-wrap items-center gap-3 mb-4">
         <div className="relative flex-1 max-w-md">

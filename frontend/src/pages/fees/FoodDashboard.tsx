@@ -1,8 +1,8 @@
 import { useEffect, useState, useMemo } from "react";
 import { api } from "../../lib/api";
 import { settingsApi } from "../../api/settings";
-import { PageHeader, Spinner, Money } from "../../components/ui/Basics"
-import { PageNavigation } from "../../components/ui/PageNavigation";;
+import { Spinner, Money } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";
 import type { SchoolSettings } from "../../types";
 import clsx from "clsx";
 
@@ -111,10 +111,7 @@ export default function FoodDashboard() {
         title="Food Dashboard"
         description="Stock levels, daily usage, and reorder alerts based on the meal timetable."
         quickSwitchers={[{ label: "Meal Timetable", to: "/fees/meal-timetable" }, { label: "Food Items & Stock", to: "/fees/food-presets" }, { label: "Parent Contributions", to: "/fees/food-logs" }]}
-        activeQuickSwitcher="/fees/food-dashboard"
-      quickSwitchers={[{ label: "Meal Timetable", to: "/fees/meal-timetable" }, { label: "Food Items & Stock", to: "/fees/food-presets" }, { label: "Parent Contributions", to: "/fees/food-logs" }]}
-        activeQuickSwitcher="/fees/food-dashboard"
-      />
+        activeQuickSwitcher="/fees/food-dashboard"      />
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <div className="bg-gradient-to-br from-primary-container to-primary-container rounded-2xl p-4 border border-primary/20">

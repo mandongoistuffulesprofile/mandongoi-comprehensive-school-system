@@ -186,8 +186,7 @@ export default function MealTimetable() {
         title="Daily Meal Timetable"
         description={isAdmin ? "Set fixed food quantities for each meal, each day. These are auto-consumed by the system daily." : "View the daily food plan for the school."}
         quickSwitchers={[{ label: "Food Dashboard", to: "/fees/food-dashboard" }, { label: "Food Items & Stock", to: "/fees/food-presets" }, { label: "Parent Contributions", to: "/fees/food-logs" }]}
-        activeQuickSwitcher="/fees/meal-timetable"
-      />
+        activeQuickSwitcher="/fees/meal-timetable"      />
 
       <div className="flex items-center gap-3 mb-6">
         <div>

@@ -21,8 +21,7 @@ export default function StaffList() {
   return (
       <ResourcePage<Staff>
       quickSwitchers={[{ label: "Staff Attendance", to: "/staff/attendance" }, { label: "Class Teachers", to: "/staff/class-teachers" }]}
-      activeQuickSwitcher="/staff"
-      title="Staff"
+      activeQuickSwitcher="/staff"      title="Staff"
       description="Teaching and support staff. BOM teachers get monthly salary; TSC get extra duty pay only."
       canWrite={isAdmin}
       fields={EDIT_FIELDS}

@@ -3,8 +3,8 @@ import { studentsApi } from "../../api/students";
 import { assessmentsApi, learningAreasApi } from "../../api/academic";
 import { settingsApi } from "../../api/settings";
 import type { Assessment, LearningArea, Student, SchoolSettings } from "../../types";
-import { Button, PageHeader, Card, Spinner } from "../../components/ui/Basics"
-import { PageNavigation } from "../../components/ui/PageNavigation";;
+import { Button, Card, Spinner } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";
 import { FormField } from "../../components/ui/FormField";
 import { useToast } from "../../lib/toast";
 import { LEVELS } from "../../types";
@@ -169,10 +169,7 @@ export default function StudentResults() {
     <div>
       <PageNavigation title="Class Results" description="View compiled exam results per class and subject."
         quickSwitchers={[{ label: "Marks Entry", to: "/academic/marks-entry" }, { label: "Report Cards", to: "/academic/report-cards" }]}
-        activeQuickSwitcher="/academic/results"
-        quickSwitchers={[{ label: "Marks Entry", to: "/academic/marks-entry" }, { label: "Report Cards", to: "/academic/report-cards" }]}
-        activeQuickSwitcher="/academic/results" />
-
+        activeQuickSwitcher="/academic/results"/>
       <Card className="p-5 space-y-4 mb-6">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 items-end">
           <FormField spec={{ name: "level", label: "Level", type: "select", required: true, options: LEVELS.map((l) => ({ value: l.value, label: l.label })) }} value={level} onChange={(v) => { setLevel(v as string); setGrade(""); }} />

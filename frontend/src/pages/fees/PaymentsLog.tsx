@@ -1,8 +1,8 @@
 import { useEffect, useState, useMemo } from "react";
 import { paymentsApi } from "../../api/fees";
 import type { PaymentRecord } from "../../types";
-import { Money, PageHeader, Card, EnumBadge } from "../../components/ui/Basics"
-import { PageNavigation } from "../../components/ui/PageNavigation";;
+import { Money, Card, EnumBadge } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";
 import Dropdown from "../../components/ui/Dropdown";
 import { useToast } from "../../lib/toast";
 import clsx from "clsx";
@@ -41,9 +41,7 @@ export default function PaymentsLog() {
     <div>
       <PageNavigation title="Payments Log" description="All payments (M-Pesa + manual) recorded in the system."
         quickSwitchers={[{ label: "Fee Payments", to: "/fees/invoices" }, { label: "Reconciliation", to: "/fees/reconciliation" }]}
-        activeQuickSwitcher="/fees/payments"
-      quickSwitchers={[{ label: "Fee Payments", to: "/fees/invoices" }, { label: "Reconciliation", to: "/fees/reconciliation" }]}
-        activeQuickSwitcher="/fees/payments" />
+        activeQuickSwitcher="/fees/payments"/>
 
       <Card className="p-4 mb-5">
         <div className="flex flex-wrap items-center gap-3">

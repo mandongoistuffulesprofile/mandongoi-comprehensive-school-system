@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { studentsApi } from "../../api/students";
-import { Button, Card, PageHeader, EnumBadge } from "../../components/ui/Basics"
-import { PageNavigation } from "../../components/ui/PageNavigation";;
+import { Button, Card, EnumBadge } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";
 import { Modal } from "../../components/ui/Modal";
 import { FormField } from "../../components/ui/FormField";
 import { DataTable } from "../../components/ui/DataTable";
@@ -74,10 +74,7 @@ export default function LeaveNotes() {
         title="Leave Notes"
         description="Record and manage student leave requests. Print leave notes for parent signatures."
         quickSwitchers={[{ label: "Attendance", to: "/attendance" }, { label: "Students", to: "/students" }]}
-        activeQuickSwitcher="/attendance/leave-notes"
-        quickSwitchers={[{ label: "Attendance", to: "/attendance" }, { label: "Students", to: "/students" }]}
-        activeQuickSwitcher="/attendance/leave-notes"
-        actions={<Button onClick={() => setShowCreate(true)}>+ New Leave Note</Button>}
+        activeQuickSwitcher="/attendance/leave-notes" actions={<Button onClick={() => setShowCreate(true)}>+ New Leave Note</Button>}
       />
 
       <DataTable

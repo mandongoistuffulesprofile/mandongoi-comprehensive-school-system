@@ -12,8 +12,7 @@ export default function SmsTemplates() {
   return (
       <ResourcePage<SmsTemplate>
       quickSwitchers={[{ label: "Send Messages", to: "/sms/campaigns" }, { label: "Auto Messages", to: "/sms/automated-rules" }]}
-      activeQuickSwitcher="/sms/templates"
-      title="SMS Templates"
+      activeQuickSwitcher="/sms/templates"      title="SMS Templates"
       description="Reusable message templates used by campaigns and automated rules."
       canWrite={isAdmin}
       fields={[

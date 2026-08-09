@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { feeStructuresApi } from "../../api/fees";
 import { useAuth } from "../../lib/auth";
-import { Button, PageHeader, Money, EnumBadge } from "../../components/ui/Basics"
-import { PageNavigation } from "../../components/ui/PageNavigation";;
+import { Button, Money, EnumBadge } from "../../components/ui/Basics"
+import { PageNavigation } from "../../components/ui/PageNavigation";
 import { FormField } from "../../components/ui/FormField";
 import { Modal } from "../../components/ui/Modal";
 import { DataTable } from "../../components/ui/DataTable";
@@ -96,10 +96,7 @@ export default function FeeStructures() {
         title="Fee Structures"
         description="Set term fees by grade and student type — tuition, activity, admin levies, boarding, and food programme."
         quickSwitchers={[{ label: "Fee Payments", to: "/fees/invoices" }, { label: "Reconciliation", to: "/fees/reconciliation" }, { label: "Payments Log", to: "/fees/payments" }]}
-        activeQuickSwitcher="/fees/structures"
-      quickSwitchers={[{ label: "Fee Payments", to: "/fees/invoices" }, { label: "Reconciliation", to: "/fees/reconciliation" }, { label: "Payments Log", to: "/fees/payments" }]}
-        activeQuickSwitcher="/fees/structures"
-        actions={isAdmin && (
+        activeQuickSwitcher="/fees/structures"        actions={isAdmin && (
           <Button onClick={openCreate} className="bg-gradient-to-r from-primary to-primary hover:from-primary hover:to-primary text-white shadow-lg shadow-primary/20 rounded-xl px-5 py-2.5">
             + New Fee Structure
           </Button>

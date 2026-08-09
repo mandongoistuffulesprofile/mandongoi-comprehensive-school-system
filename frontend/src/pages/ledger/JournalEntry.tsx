@@ -282,8 +282,7 @@ export default function JournalEntry() {
         backTo="/ledger/accounts"
         backLabel="Back to Chart of Accounts"
         quickSwitchers={[{ label: "Income & Expenses", to: "/ledger/trial-balance" }, { label: "Chart of Accounts", to: "/ledger/accounts" }]}
-        activeQuickSwitcher="/ledger/journal"
-      />
+        activeQuickSwitcher="/ledger/journal"      />
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <TemplateCard

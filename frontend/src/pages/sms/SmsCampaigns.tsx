@@ -47,8 +47,7 @@ export default function SmsCampaigns() {
         description="Send SMS to parents — fee reminders, term dates, results, and more."
         actions={isAdmin && <Button onClick={() => setShowNew(true)}>+ New Message</Button>}
         quickSwitchers={[{ label: "Message Templates", to: "/sms/templates" }, { label: "Auto Messages", to: "/sms/automated-rules" }, { label: "Message History", to: "/sms/logs" }]}
-        activeQuickSwitcher="/sms/campaigns"
-      />
+        activeQuickSwitcher="/sms/campaigns"      />
 
       <DataTable
         columns={[
