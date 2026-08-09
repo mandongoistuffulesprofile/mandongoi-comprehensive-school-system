@@ -165,9 +165,12 @@ export default function FoodLogs() {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
-      <PageNavigation title="Food Programme — Parent Contributions" description="Record food items brought in by parents for their children. (Meal consumption is tracked collectively via the Meal Timetable.)"
-        quickSwitchers={[{ label: "Meal Timetable", to: "/fees/meal-timetable" }, { label: "Food Dashboard", to: "/fees/food-dashboard" }, { label: "Food Items & Stock", to: "/fees/food-presets" }]}
-        activeQuickSwitcher="/fees/food-logs"/>
+      <div className="mx-auto max-w-4xl">
+        <PageNavigation title="Food Programme — Parent Contributions" description="Record food items brought in by parents for their children. (Meal consumption is tracked collectively via the Meal Timetable.)"
+          quickSwitchers={[{ label: "Meal Timetable", to: "/fees/meal-timetable" }, { label: "Food Dashboard", to: "/fees/food-dashboard" }, { label: "Food Items & Stock", to: "/fees/food-presets" }]}
+          activeQuickSwitcher="/fees/food-logs"
+        />
+      </div>
       {/* Breadcrumbs — shows student name upon selection */}
       <nav aria-label="breadcrumb" className="flex items-center gap-2 text-sm text-on-surface-variant mb-4">
         <span className="text-on-surface-variant hover:text-on-surface cursor-pointer">Food Programme</span>
@@ -185,7 +188,7 @@ export default function FoodLogs() {
       </nav>
 
       {!loading && contributionLogs.length > 0 && (
-        <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-3 gap-4 mb-6 w-full">
           <div className="bg-gradient-to-br from-primary-container to-primary-container rounded-2xl p-4 border border-primary/20">
             <p className="text-xs font-medium text-primary uppercase tracking-wider">Contributions</p>
             <p className="text-2xl font-bold text-primary mt-1">{filteredLogs.length}</p>
@@ -372,7 +375,7 @@ export default function FoodLogs() {
        )}
 
        {/* Entries table */}
-       <div className="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant overflow-hidden">
+       <div className="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant overflow-hidden mx-auto max-w-4xl">
         <div className="p-4 border-b border-outline-variant flex items-center gap-3">
           <svg
             className="w-4 h-4 text-on-surface-variant shrink-0"
