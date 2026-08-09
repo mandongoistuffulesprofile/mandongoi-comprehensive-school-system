@@ -114,9 +114,9 @@ export default function FoodDashboard() {
         activeQuickSwitcher="/fees/food-dashboard"      />
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-gradient-to-br from-primary-container to-primary-container rounded-2xl p-4 border border-primary/20">
-          <p className="text-xs font-medium text-primary uppercase tracking-wider">Collective Food Cost</p>
-          <p className="text-2xl font-bold text-primary mt-1">
+        <div className="bg-surface-container-low rounded-2xl p-4 border border-outline-variant">
+          <p className="text-xs font-medium text-on-surface-variant uppercase tracking-wider">Collective Food Cost</p>
+          <p className="text-2xl font-bold text-on-surface mt-1">
             <Money value={collectiveCost} />
           </p>
         </div>

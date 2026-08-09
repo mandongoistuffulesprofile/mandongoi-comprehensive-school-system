@@ -73,8 +73,8 @@ export default function SchoolSettings() {
         <Card className="p-6 space-y-5">
           <h3 className="font-semibold text-on-surface text-lg">School Information</h3>
           <FormField spec={{ name: "schoolName", label: "School Name", required: true }} value={settings.schoolName} onChange={(v) => update("schoolName", v as string)} />
-          <FormField spec={{ name: "schoolMotto", label: "School Motto", type: "text" }} value={settings.schoolMotto} onChange={(v) => update("schoolMotto", v as string)} />
-          <FormField spec={{ name: "schoolAddress", label: "Address", type: "text" }} value={settings.schoolAddress} onChange={(v) => update("schoolAddress", v as string)} />
+          <FormField spec={{ name: "schoolMotto", label: "School Motto", type: "text", helpText: "Shown on report cards and certificates" }} value={settings.schoolMotto} onChange={(v) => update("schoolMotto", v as string)} />
+          <FormField spec={{ name: "schoolAddress", label: "Address", type: "text", helpText: "Physical address of the school" }} value={settings.schoolAddress} onChange={(v) => update("schoolAddress", v as string)} />
           <div className="grid grid-cols-2 gap-4">
             <FormField spec={{ name: "schoolPhone", label: "Phone", type: "tel" }} value={settings.schoolPhone} onChange={(v) => update("schoolPhone", v as string)} />
             <FormField spec={{ name: "schoolEmail", label: "Email", type: "email" }} value={settings.schoolEmail} onChange={(v) => update("schoolEmail", v as string)} />
@@ -101,29 +101,29 @@ export default function SchoolSettings() {
         <Card className="p-6 space-y-5">
           <h3 className="font-semibold text-on-surface text-lg">Other Settings</h3>
           <div className="grid grid-cols-2 gap-4">
-            <FormField spec={{ name: "currency", label: "Currency", options: [
-              { value: "KES", label: "KES (Kenya Shilling)" },
-              { value: "UGX", label: "UGX (Uganda Shilling)" },
-              { value: "TZS", label: "TZS (Tanzania Shilling)" },
-              { value: "USD", label: "USD (US Dollar)" },
-            ]}} value={settings.currency} onChange={(v) => update("currency", v as string)} />
-            <FormField spec={{ name: "smsSenderId", label: "SMS Sender ID" }} value={settings.smsSenderId} onChange={(v) => update("smsSenderId", v as string)} />
+             <FormField spec={{ name: "currency", label: "Currency", options: [
+               { value: "KES", label: "KES (Kenya Shilling)" },
+               { value: "UGX", label: "UGX (Uganda Shilling)" },
+               { value: "TZS", label: "TZS (Tanzania Shilling)" },
+               { value: "USD", label: "USD (US Dollar)" },
+             ]}} value={settings.currency} onChange={(v) => update("currency", v as string)} helpText="Used for all fee and payment amounts" />
+             <FormField spec={{ name: "smsSenderId", label: "SMS Sender ID", helpText: "Alphanumeric ID shown on parent phones when receiving SMS" }} value={settings.smsSenderId} onChange={(v) => update("smsSenderId", v as string)} />
           </div>
         </Card>
 
         <Card className="p-6 space-y-5">
           <h3 className="font-semibold text-on-surface text-lg">Payroll Settings</h3>
           <p className="text-xs text-on-surface-variant">Configure salary payment day. The system will send in-app reminders before pay day.</p>
-          <FormField spec={{ name: "payDay", label: "Pay Day (day of month 1-31)", type: "number", min: 1, max: 31 }} value={settings.payDay} onChange={(v) => update("payDay", Number(v))} />
+          <FormField spec={{ name: "payDay", label: "Pay Day (day of month 1-31)", type: "number", min: 1, max: 31, helpText: "The system will send in-app reminders before pay day" }} value={settings.payDay} onChange={(v) => update("payDay", Number(v))} />
         </Card>
 
         <Card className="p-6 space-y-5">
           <h3 className="font-semibold text-on-surface text-lg">Extra Duty Session Rates</h3>
           <p className="text-xs text-on-surface-variant">These are the default rates for morning, evening, and weekend sessions paid to teachers (both BOM and TSC). Individual teachers can override these.</p>
           <div className="grid grid-cols-3 gap-4">
-            <FormField spec={{ name: "morningSessionRate", label: "Morning Session (KES)", type: "number" }} value={settings.morningSessionRate} onChange={(v) => update("morningSessionRate", v as string)} />
-            <FormField spec={{ name: "eveningSessionRate", label: "Evening Session (KES)", type: "number" }} value={settings.eveningSessionRate} onChange={(v) => update("eveningSessionRate", v as string)} />
-            <FormField spec={{ name: "weekendSessionRate", label: "Weekend Session (KES)", type: "number" }} value={settings.weekendSessionRate} onChange={(v) => update("weekendSessionRate", v as string)} />
+             <FormField spec={{ name: "morningSessionRate", label: "Morning Session (KES)", type: "number", helpText: "Default rate for morning extra-duty sessions" }} value={settings.morningSessionRate} onChange={(v) => update("morningSessionRate", v as string)} />
+             <FormField spec={{ name: "eveningSessionRate", label: "Evening Session (KES)", type: "number", helpText: "Default rate for evening extra-duty sessions" }} value={settings.eveningSessionRate} onChange={(v) => update("eveningSessionRate", v as string)} />
+             <FormField spec={{ name: "weekendSessionRate", label: "Weekend Session (KES)", type: "number", helpText: "Default rate for weekend extra-duty sessions" }} value={settings.weekendSessionRate} onChange={(v) => update("weekendSessionRate", v as string)} />
           </div>
         </Card>
 
@@ -134,9 +134,11 @@ export default function SchoolSettings() {
           <div className="border-t border-outline-variant pt-4">
             <label className="block text-sm font-medium text-on-surface mb-2">Head Teacher Signature</label>
             <div className="flex items-end gap-3">
-              <div className="flex-1">
-                <input ref={sigUploadRef} type="file" accept="image/png,image/jpeg,image/gif,image/webp" className="block w-full text-sm text-on-surface-variant file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-medium file:bg-primary-container file:text-on-primary-container hover:file:bg-primary-container" />
-              </div>
+             <div className="flex-1">
+               <label className="block text-sm font-medium text-on-surface mb-2">Head Teacher Signature</label>
+               <input ref={sigUploadRef} type="file" accept="image/png,image/jpeg,image/gif,image/webp" className="block w-full text-sm text-on-surface-variant file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-medium file:bg-primary-container file:text-on-primary-container hover:file:bg-primary-container" />
+               <p className="text-xs text-on-surface-variant mt-1">PNG, JPEG, GIF or WebP. Appears on printed report cards.</p>
+             </div>
               <Button size="sm" onClick={() => uploadSignature("head")} disabled={uploadingSig === "head"}>
                 {uploadingSig === "head" ? "Uploading..." : "Upload"}
               </Button>

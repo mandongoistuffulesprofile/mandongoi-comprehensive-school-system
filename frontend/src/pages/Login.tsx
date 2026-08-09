@@ -122,6 +122,7 @@ export default function Login() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-on-surface mb-1.5">Password</label>
+                  <p className="text-xs text-on-surface-variant -mt-1 mb-1.5">Min 6 characters</p>
                   <div className="relative">
                     <input
                       type={showPassword ? "text" : "password"}

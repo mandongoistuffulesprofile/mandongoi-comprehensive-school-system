@@ -223,18 +223,31 @@ export default function FoodPresets() {
       )}
       {confirmDelete && (
         <ConfirmDialog
+          variant="delete"
           title="Delete Food Preset"
-          message={`Are you sure you want to delete "${confirmDelete.itemName}"? This action cannot be undone.`}
+          message={`Are you sure you want to delete "${confirmDelete.itemName}"?`}
+          supporting="This action cannot be undone."
+          fields={[
+            { label: "Item", value: confirmDelete.itemName },
+            { label: "Unit Price", value: `KES ${confirmDelete.unitPrice}` },
+            { label: "Unit", value: confirmDelete.unit },
+          ]}
           onConfirm={() => remove(confirmDelete.id)}
           onCancel={() => setConfirmDelete(null)}
-          danger
         />
       )}
 
       {confirmSave && (
         <ConfirmDialog
+          variant="save"
           title="Save Food Preset"
-          message={`Confirm saving "${confirmSave.itemName}" at KES ${confirmSave.unitPrice} (${confirmSave.unit})? Stock: ${confirmSave.stockQuantity}${confirmSave.unit}, Reorder at: ${confirmSave.reorderLevel}${confirmSave.unit}.`}
+          message={`Confirm saving "${confirmSave.itemName}"?`}
+          fields={[
+            { label: "Price", value: `KES ${confirmSave.unitPrice}` },
+            { label: "Unit", value: confirmSave.unit },
+            { label: "Stock", value: `${confirmSave.stockQuantity} ${confirmSave.unit}` },
+            { label: "Reorder at", value: `${confirmSave.reorderLevel} ${confirmSave.unit}` },
+          ]}
           onConfirm={save}
           onCancel={() => setConfirmSave(null)}
         />
@@ -242,8 +255,14 @@ export default function FoodPresets() {
 
       {confirmCost && (
         <ConfirmDialog
+          variant="update"
           title="Update Collective Food Cost"
-          message={`Change the collective food programme cost from KES ${collectiveCost} to KES ${confirmCost}? This affects all food items in the meal timetable.`}
+          message="Change the collective food programme cost?"
+          supporting="This affects all food items in the meal timetable."
+          fields={[
+            { label: "From", value: `KES ${collectiveCost}` },
+            { label: "To", value: `KES ${confirmCost}` },
+          ]}
           onConfirm={saveCollectiveCost}
           onCancel={() => setConfirmCost(null)}
         />

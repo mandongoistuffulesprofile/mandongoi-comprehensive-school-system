@@ -126,7 +126,7 @@ export default function CreateStudent() {
             <FormField spec={{ name: "level", label: "Level", type: "select", required: true, options: LEVELS.map((l) => ({ value: l.value, label: l.label })) }} value={level} onChange={(v) => { setLevel(v as string); setGrade(""); }} />
             <FormField spec={{ name: "grade", label: "Grade", type: "select", required: true, options: gradeOptions.map((g) => ({ value: g, label: g })) }} value={grade} onChange={(v) => setGrade(v as string)} />
           </div>
-          <FormField spec={{ name: "nemisId", label: "NEMIS ID (optional)" }} value={nemisId} onChange={(v) => setNemisId(v as string)} />
+          <FormField spec={{ name: "nemisId", label: "NEMIS ID (optional)", helpText: "National Education Management Information System identifier" }} value={nemisId} onChange={(v) => setNemisId(v as string)} />
           <FormField spec={{ name: "enrollmentDate", label: "Enrollment Date (optional)", type: "date", max: new Date().toISOString().slice(0, 10) }} value={enrollmentDate} onChange={(v) => setEnrollmentDate(v as string)} />
         </Card>
 

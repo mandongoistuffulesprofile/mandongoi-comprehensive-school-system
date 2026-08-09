@@ -62,15 +62,15 @@ export default function CreateStaff() {
             <FormField spec={{ name: "phone", label: "Phone", required: true, placeholder: "+2547..." }} value={phone} onChange={(v) => setPhone(v as string)} />
           </div>
           <FormField spec={{ name: "email", label: "Email", type: "email", placeholder: "staff@school.edu" }} value={email} onChange={(v) => setEmail(v as string)} />
-          <FormField spec={{ name: "role", label: "Role", type: "select", required: true, options: [{ value: "teacher", label: "Teacher" }, { value: "support", label: "Support" }] }} value={role} onChange={(v) => { setRole(v as string); if (v === "support") { setTeacherType("bom"); setEmploymentType("flatRate"); setBaseRate(""); setExtraSessionRate(""); } }} />
+          <FormField spec={{ name: "role", label: "Role", type: "select", required: true, options: [{ value: "teacher", label: "Teacher" }, { value: "support", label: "Support" }], helpText: "Teachers can be BOM (monthly salary) or TSC (extra-duty only)" }} value={role} onChange={(v) => { setRole(v as string); if (v === "support") { setTeacherType("bom"); setEmploymentType("flatRate"); setBaseRate(""); setExtraSessionRate(""); } }} />
 
           {role === "teacher" && (
             <>
-              <FormField spec={{ name: "teacherType", label: "Teacher Type", type: "select", required: true, options: [{ value: "bom", label: "BOM (Monthly Salary)" }, { value: "tsc", label: "TSC (Extra Duty Only)" }] }} value={teacherType} onChange={(v) => { setTeacherType(v as string); setEmploymentType(v === "bom" ? "flatRate" : "sessionBased"); }} />
-              <FormField spec={{ name: "employmentType", label: "Employment Type", type: "select", required: true, options: [{ value: "flatRate", label: "Flat Rate" }, { value: "sessionBased", label: "Session Based" }] }} value={employmentType} onChange={(v) => setEmploymentType(v as string)} />
+              <FormField spec={{ name: "teacherType", label: "Teacher Type", type: "select", required: true, options: [{ value: "bom", label: "BOM (Monthly Salary)" }, { value: "tsc", label: "TSC (Extra Duty Only)" }], helpText: "BOM teachers receive a fixed monthly salary; TSC teachers are paid per extra-duty session" }} value={teacherType} onChange={(v) => { setTeacherType(v as string); setEmploymentType(v === "bom" ? "flatRate" : "sessionBased"); }} />
+              <FormField spec={{ name: "employmentType", label: "Employment Type", type: "select", required: true, options: [{ value: "flatRate", label: "Flat Rate" }, { value: "sessionBased", label: "Session Based" }], helpText: "Flat rate = fixed monthly amount; session based = paid per session attended" }} value={employmentType} onChange={(v) => setEmploymentType(v as string)} />
               <FormField spec={{ name: "baseRate", label: "Base Rate (KES)", type: "number", step: "0.01", required: true, helpText: teacherType === "tsc" ? "Per-session rate for TSC teachers" : "Monthly salary for BOM teachers" }} value={baseRate} onChange={(v) => setBaseRate(v as string)} />
               {teacherType === "bom" && (
-                <FormField spec={{ name: "extraSessionRate", label: "Extra Session Rate (KES)", type: "number", step: "0.01", helpText: "Override default morning/evening/weekend rate (optional)" }} value={extraSessionRate} onChange={(v) => setExtraSessionRate(v as string)} />
+                <FormField spec={{ name: "extraSessionRate", label: "Extra Session Rate (KES)", type: "number", step: "0.01", helpText: "Override the default morning/evening/weekend rate for this teacher (optional)" }} value={extraSessionRate} onChange={(v) => setExtraSessionRate(v as string)} />
               )}
             </>
           )}

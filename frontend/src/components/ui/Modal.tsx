@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import type { ReactNode } from "react";
 import { Button } from "./Basics";
 
@@ -36,6 +37,18 @@ export function Modal({
   );
 }
 
+export interface ConfirmDialogProps {
+  title: string;
+  message: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+  danger?: boolean;
+  loading?: boolean;
+  variant?: "delete" | "save" | "update" | "default";
+  supporting?: string;
+  fields?: Array<{ label: string; value: string }>;
+}
+
 export function ConfirmDialog({
   title,
   message,
@@ -43,24 +56,76 @@ export function ConfirmDialog({
   onCancel,
   danger,
   loading,
-}: {
-  title: string;
-  message: string;
-  onConfirm: () => void;
-  onCancel: () => void;
-  danger?: boolean;
-  loading?: boolean;
-}) {
+  variant = "default",
+  supporting,
+  fields,
+}: ConfirmDialogProps) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const confirmRef = useRef<HTMLButtonElement>(null);
+
+  // Determine effective variant for button styling
+  const isDanger = danger || variant === "delete";
+
+  useEffect(() => {
+    confirmRef.current?.focus();
+
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onCancel();
+      if (e.key === "Tab" && dialogRef.current) {
+        const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
+          "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])"
+        );
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [onCancel]);
+
   return (
     <Modal title={title} onClose={onCancel} width="max-w-sm">
-      <p className="text-sm text-on-surface-variant mb-6">{message}</p>
-      <div className="flex justify-end gap-2">
-        <Button variant="ghost" onClick={onCancel} disabled={loading}>
-          Cancel
-        </Button>
-        <Button variant={danger ? "danger" : "primary"} onClick={onConfirm} disabled={loading}>
-          {loading ? "Processing..." : "Confirm"}
-        </Button>
+      <div ref={dialogRef}>
+        <p className="text-sm text-on-surface-variant mb-2">{message}</p>
+        {supporting && (
+          <p className="text-xs italic text-on-surface-variant mb-3">
+            {supporting}
+          </p>
+        )}
+        {fields && fields.length > 0 && (
+          <dl className="mt-3 space-y-1.5 text-sm">
+            {fields.map((f) => (
+              <div key={f.label} className="flex justify-between gap-4">
+                <dt className="text-on-surface-variant">{f.label}</dt>
+                <dd className="font-medium text-on-surface tabular-nums">
+                  {f.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        )}
+        <div className="flex justify-end gap-2 mt-6 pt-4 border-t border-outline-variant">
+          <Button variant="ghost" onClick={onCancel} disabled={loading}>
+            Cancel
+          </Button>
+          <Button
+            ref={confirmRef}
+            variant={isDanger ? "danger" : "primary"}
+            onClick={onConfirm}
+            disabled={loading}
+          >
+            {loading ? "Processing..." : isDanger ? "Delete" : "Confirm"}
+          </Button>
+        </div>
       </div>
     </Modal>
   );
